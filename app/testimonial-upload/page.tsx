@@ -104,7 +104,7 @@ export default function TestimonialUploadPage() {
         contentType: file.type,
       };
 
-      const response = await fetch("/api/getVideoUploadUrl", {
+      const sasResponse = await fetch("/api/getVideoUploadUrl", {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // Required for JSON data
@@ -112,17 +112,25 @@ export default function TestimonialUploadPage() {
         body: JSON.stringify(fileInfo),
       });
 
-      const result = await response.json();
+      const result = await sasResponse.json();
 
-      if (response.ok) {
+      if (sasResponse.ok) {
         setUploadStatus({
           success: true,
           message: "Azure container URL created successfully",
         });
 
         // TODO: receive containerUrl and implement post request to Azure URL
-        console.log(result);
+        const sasUrl = result.uploadUrl;
 
+        const azureResponse = await fetch(sasUrl, {
+          method: "PUT",
+          body: file,
+          headers: {
+            "x-ms-blob-type": "BlockBlob", // Required for Azure
+            "Content-Type": file.type, // e.g., 'video/mp4'
+          },
+        });
         // TODO: use FormData to add metadata to MongoDB
 
         // Reset form after successful upload
