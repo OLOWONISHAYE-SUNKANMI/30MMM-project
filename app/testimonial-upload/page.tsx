@@ -106,6 +106,9 @@ export default function TestimonialUploadPage() {
 
       const response = await fetch("/api/getVideoUploadUrl", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Required for JSON data
+        },
         body: JSON.stringify(fileInfo),
       });
 

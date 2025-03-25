@@ -8,6 +8,7 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     const { filename, contentType } = await request.json();
+    let extension;
 
     // Validate that the content type is a video
     if (contentType && !contentType.startsWith("video/")) {
