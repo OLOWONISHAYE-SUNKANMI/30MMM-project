@@ -5,9 +5,8 @@ import {
 } from "@azure/storage-blob";
 import { NextResponse } from "next/server";
 
-export async function POST() {
+export async function POST(request) {
   try {
-    // Parse the request body
     const { filename, contentType } = await request.json();
 
     // Validate that the content type is a video

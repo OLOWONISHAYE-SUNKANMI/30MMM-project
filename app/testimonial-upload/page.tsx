@@ -99,9 +99,14 @@ export default function TestimonialUploadPage() {
       formData.append("day", day);
       formData.append("video", file);
 
-      const response = await fetch("/api/upload-video-v2", {
+      const fileInfo = {
+        filename: file.name,
+        contentType: file.type,
+      };
+
+      const response = await fetch("/api/getVideoUploadUrl", {
         method: "POST",
-        body: formData,
+        body: JSON.stringify(fileInfo),
       });
 
       const result = await response.json();
@@ -109,8 +114,13 @@ export default function TestimonialUploadPage() {
       if (response.ok) {
         setUploadStatus({
           success: true,
-          message: "Video uploaded successfully!",
+          message: "Azure container URL created successfully",
         });
+
+        // TODO: receive containerUrl and implement post request to Azure URL
+        console.log(result);
+
+        // TODO: use FormData to add metadata to MongoDB
 
         // Reset form after successful upload
         setFile(null);
