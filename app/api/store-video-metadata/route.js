@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 
 export default async function POST(request) {
@@ -18,7 +19,7 @@ export default async function POST(request) {
     const client = await clientPromise;
 
     // mongodb will create this db and collection if they don't already exist
-    const collection = client.db("testimonials").collection("video-uploads");
+    const collection = client.db().collection("video-uploads");
 
     await collection.insertOne({
       cohort,
@@ -30,6 +31,11 @@ export default async function POST(request) {
       FileType,
       imageUrl,
     });
+
+    return NextResponse.json(
+      { message: "Data saved successfully", data1, data2 },
+      { status: 201 },
+    );
   } catch (error) {
     console.log("error in storing metadata: ", error);
   }

@@ -119,7 +119,7 @@ export default function TestimonialUploadPage() {
 
       // Step 2 revision:
       const uploadPromise = fetch(sasUrl, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "x-ms-blob-type": "BlockBlob",
           "Content-Type": file.type,
