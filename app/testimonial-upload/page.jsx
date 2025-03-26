@@ -190,7 +190,7 @@ export default function TestimonialUploadPage() {
           day,
           fileName: file.name,
           fileType: file.type,
-          blobUrl: sasUrl.split("?")[0], // Store the base URL without SAS token
+          blobUrl: sasUrl,
         }),
       });
 

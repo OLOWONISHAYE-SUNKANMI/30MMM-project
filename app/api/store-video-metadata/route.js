@@ -11,9 +11,9 @@ export async function POST(request) {
       lastName,
       week,
       day,
-      cleanFilename,
-      FileType,
-      imageUrl,
+      fileName,
+      fileType,
+      blobUrl,
     } = await request.json();
 
     const client = await clientPromise;
@@ -21,15 +21,20 @@ export async function POST(request) {
     // mongodb will create this db and collection if they don't already exist
     const collection = client.db().collection("video-uploads");
 
+    // Create a new document with timestamp fields
+    const now = new Date();
+
     await collection.insertOne({
       cohort,
       firstName,
       lastName,
       week,
       day,
-      cleanFilename,
-      FileType,
-      imageUrl,
+      fileName,
+      fileType,
+      blobUrl,
+      createdAt: now,
+      updatedAt: now,
     });
 
     return NextResponse.json(
