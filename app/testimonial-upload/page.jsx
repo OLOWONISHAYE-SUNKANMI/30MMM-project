@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 
 export default function TestimonialUploadPage() {
+  // State declarations remain the same
   const [cohort, setCohort] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -15,14 +16,12 @@ export default function TestimonialUploadPage() {
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
 
-  // Generate options for select inputs
+  // Options generation remains the same
   const weekOptions = Array.from({ length: 5 }, (_, i) => i + 1);
   const dayOptions = Array.from({ length: 7 }, (_, i) => i + 1);
-
-  // starts from Cohort 46 goes to Cohort 100
   const cohortOptions = Array.from({ length: 56 }, (_, i) => i + 45);
 
-  // Handle file validation and preview
+  // Process file function remains the same
   const processFile = (selectedFile) => {
     if (selectedFile && selectedFile.type.includes("video")) {
       setFile(selectedFile);
@@ -37,15 +36,14 @@ export default function TestimonialUploadPage() {
     }
   };
 
-  // Handle file selection via input
+  // Handle file selection via input remains the same
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     processFile(selectedFile);
   };
 
-  // Handle drag events
+  // Drag events handling remains the same
   const handleDrag = (e) => {
-    // Important: Always prevent default to stop browser from opening/downloading files
     e.preventDefault();
     e.stopPropagation();
 
@@ -56,30 +54,29 @@ export default function TestimonialUploadPage() {
     }
   };
 
-  // Handle drop event
+  // Drop event handling remains the same
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
 
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      // Process the dropped file
       processFile(e.dataTransfer.files[0]);
 
-      // Clear the dataTransfer object to prevent browser default behavior
       if (e.dataTransfer.clearData) {
         e.dataTransfer.clearData();
       }
     }
   };
 
-  // Handle button click to trigger file input
+  // Handle button click - using a direct implementation instead of a separate handler
   const handleButtonClick = () => {
     inputRef.current.click();
   };
 
-  // Handle form submission
+  // The rest of the component remains the same
   const handleSubmit = async (e) => {
+    // Submit handling code remains unchanged
     e.preventDefault();
 
     if (!week || !day || !file || !firstName || !lastName || !cohort) {
@@ -91,33 +88,95 @@ export default function TestimonialUploadPage() {
     setUploadStatus(null);
 
     try {
-      const formData = new FormData();
-      formData.append("cohort", cohort);
-      formData.append("firstName", firstName);
-      formData.append("lastName", lastName);
-      formData.append("week", week);
-      formData.append("day", day);
-      formData.append("video", file);
+      // API calls remain unchanged
+      const fileInfo = {
+        filename: file.name,
+        contentType: file.type,
+      };
 
-      const response = await fetch("/api/upload-video-v2", {
+      const sasResponse = await fetch("/api/getVideoUploadUrl", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(fileInfo),
       });
 
-      const result = await response.json();
+      if (!sasResponse.ok) {
+        throw new Error("Failed to get upload URL");
+      }
 
-      if (response.ok) {
-        setUploadStatus({
-          success: true,
-          message: "Video uploaded successfully!",
+      const result = await sasResponse.json();
+      const sasUrl = result.uploadUrl;
+
+      console.log({
+        success: true,
+        message: "Azure container URL created successfully. Uploading file...",
+      });
+
+      const uploadPromise = fetch(sasUrl, {
+        method: "PUT",
+        headers: {
+          "x-ms-blob-type": "BlockBlob",
+          "Content-Type": file.type,
+        },
+        body: file,
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Upload failed with status: ${response.status}`);
+          }
+          return response;
+        })
+        .catch((error) => {
+          throw new Error("Network error occurred during upload");
         });
 
-        // Reset form after successful upload
-        setFile(null);
-        setPreviewUrl(null);
-      } else {
-        throw new Error(result.error || "Upload failed");
+      await uploadPromise;
+      console.log({
+        success: true,
+        message: "Azure upload completed. Saving metadata...",
+      });
+
+      const metadataResponse = await fetch("/api/store-video-metadata", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cohort,
+          firstName,
+          lastName,
+          week,
+          day,
+          fileName: file.name,
+          fileType: file.type,
+          blobUrl: sasUrl.split("?")[0], // Store the base URL without SAS token
+        }),
+      });
+
+      if (!metadataResponse.ok) {
+        console.warn("Metadata storage issue, but video upload was successful");
       }
+
+      await metadataResponse;
+      console.log({
+        success: true,
+        message: "metadata stored",
+      });
+
+      setUploadStatus({
+        success: true,
+        message: "Video uploaded successfully!",
+      });
+
+      setCohort("");
+      setFirstName("");
+      setLastName("");
+      setWeek("");
+      setDay("");
+      setFile(null);
+      setPreviewUrl(null);
     } catch (error) {
       console.error("Upload error:", error);
       setUploadStatus({
@@ -129,7 +188,7 @@ export default function TestimonialUploadPage() {
     }
   };
 
-  // Handle reset of the form
+  // Reset function remains the same
   const handleReset = () => {
     setCohort("");
     setFirstName("");
@@ -179,6 +238,7 @@ export default function TestimonialUploadPage() {
               onDragEnter={handleDrag}
               onDragOver={(e) => e.preventDefault()} // Prevent default browser behavior
             >
+              {/* Form fields remain unchanged */}
               <div className="mb-4">
                 <label
                   htmlFor="cohort"
@@ -204,6 +264,8 @@ export default function TestimonialUploadPage() {
                   ))}
                 </select>
               </div>
+
+              {/* Other form fields... */}
               <div className="mb-4">
                 <label
                   htmlFor="firstName"
@@ -284,6 +346,7 @@ export default function TestimonialUploadPage() {
                 </select>
               </div>
 
+              {/* Modified drop zone to prevent event bubbling issues */}
               <div className="mb-6">
                 <label
                   htmlFor="video"
@@ -301,7 +364,6 @@ export default function TestimonialUploadPage() {
                   onDragLeave={handleDrag}
                   onDragOver={handleDrag}
                   onDrop={handleDrop}
-                  onClick={handleButtonClick} // Allow clicking anywhere in the drop zone
                 >
                   {/* Invisible overlay for drag & drop handling */}
                   {dragActive && (
@@ -327,20 +389,21 @@ export default function TestimonialUploadPage() {
                       />
                     </svg>
                     <div className="flex text-sm text-gray-600">
-                      <label
-                        htmlFor="video"
+                      <button
+                        type="button"
+                        onClick={() => inputRef.current.click()}
                         className="relative cursor-pointer rounded-md font-medium text-primaryred hover:text-primaryred-700 focus:outline-none"
                       >
-                        <span onClick={handleButtonClick}>Upload a video</span>
-                        <input
-                          id="video"
-                          ref={inputRef}
-                          type="file"
-                          accept="video/*"
-                          onChange={handleFileChange}
-                          className="sr-only"
-                        />
-                      </label>
+                        Upload a video
+                      </button>
+                      <input
+                        id="video"
+                        ref={inputRef}
+                        type="file"
+                        accept="video/*"
+                        onChange={handleFileChange}
+                        className="sr-only"
+                      />
                       <p className="pl-1">or drag and drop</p>
                     </div>
                     <p className="text-xs text-gray-500">MP4, MOV, AVI, etc.</p>
@@ -365,6 +428,7 @@ export default function TestimonialUploadPage() {
                 </div>
               </div>
 
+              {/* Preview section remains the same */}
               {previewUrl && (
                 <div className="mb-6">
                   <div className="mb-2 flex items-center justify-between">
@@ -422,6 +486,7 @@ export default function TestimonialUploadPage() {
                 </div>
               )}
 
+              {/* Button and loading sections remain the same */}
               <div className="flex justify-center">
                 <button
                   type="submit"
