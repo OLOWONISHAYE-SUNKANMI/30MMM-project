@@ -257,6 +257,16 @@ export default function TestimonialUploadPage() {
           brother&apos;s life!
         </p>
 
+        <p className="mx-auto mb-8 max-w-3xl text-justify">
+          <span className="font-bold">NOTE:</span> based on common broadband
+          upload speeds (~10 mbps) each video may take several minutes to
+          upload. There is a progress tracker to display the upload progress as
+          the videos are being stored. Please do not leave this page before
+          seeing the{" "}
+          <span className="text-green-500">Video uploaded successfully!</span>{" "}
+          message.
+        </p>
+
         <div className="mx-auto max-w-md">
           {uploadStatus && uploadStatus.success && uploadStatus.completed ? (
             <div className="rounded-lg border border-green-200 bg-green-50 p-6 text-center">
