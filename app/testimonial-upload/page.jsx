@@ -109,7 +109,7 @@ export default function TestimonialUploadPage() {
       const result = await sasResponse.json();
       const sasUrl = result.uploadUrl;
 
-      setUploadStatus({
+      console.log({
         success: true,
         message: "Azure container URL created successfully. Uploading file...",
       });
@@ -133,6 +133,10 @@ export default function TestimonialUploadPage() {
         });
 
       await uploadPromise;
+      console.log({
+        success: true,
+        message: "Azure upload completed. Saving metadata...",
+      });
 
       const metadataResponse = await fetch("/api/store-video-metadata", {
         method: "POST",
@@ -156,6 +160,11 @@ export default function TestimonialUploadPage() {
       }
 
       await metadataResponse;
+      console.log({
+        success: true,
+        message: "metadata stored",
+      });
+
       setUploadStatus({
         success: true,
         message: "Video uploaded successfully!",
