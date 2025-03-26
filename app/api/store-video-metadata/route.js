@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 
-export default async function POST(request) {
+export async function POST(request) {
   // creating a client
   // connecting to MongoDB
   try {
@@ -33,10 +33,19 @@ export default async function POST(request) {
     });
 
     return NextResponse.json(
-      { message: "Data saved successfully", data1, data2 },
+      {
+        message: `${Date.now()} - Data saved for ${cohort} - ${firstName} ${lastName}`,
+      },
       { status: 201 },
     );
   } catch (error) {
     console.log("error in storing metadata: ", error);
+    return NextResponse.json(
+      {
+        message: "Data not saved for ${cohort} - ${firstName} ${lastName}",
+        error,
+      },
+      { status: 500 },
+    );
   }
 }
