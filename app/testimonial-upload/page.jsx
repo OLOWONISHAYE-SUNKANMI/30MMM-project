@@ -117,35 +117,24 @@ export default function TestimonialUploadPage() {
         message: "Azure container URL created successfully. Uploading file...",
       });
 
-      // Step 2: Use XMLHttpRequest instead of fetch for better control over CORS
-      const uploadPromise = new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-
-        xhr.open("PUT", sasUrl, true);
-        xhr.setRequestHeader("x-ms-blob-type", "BlockBlob");
-        xhr.setRequestHeader("Content-Type", file.type);
-
-        xhr.onload = function () {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            resolve(xhr);
-          } else {
-            reject(new Error(`Upload failed with status: ${xhr.status}`));
+      // Step 2 revision:
+      const uploadPromise = fetch(sasUrl, {
+        method: "POST",
+        headers: {
+          "x-ms-blob-type": "BlockBlob",
+          "Content-Type": file.type,
+        },
+        body: file,
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Upload failed with status: ${response.status}`);
           }
-        };
-
-        xhr.onerror = function () {
-          reject(new Error("Network error occurred during upload"));
-        };
-
-        xhr.upload.onprogress = function (e) {
-          if (e.lengthComputable) {
-            const percentComplete = (e.loaded / e.total) * 100;
-            console.log(`Upload progress: ${percentComplete.toFixed(2)}%`);
-          }
-        };
-
-        xhr.send(file);
-      });
+          return response;
+        })
+        .catch((error) => {
+          throw new Error("Network error occurred during upload");
+        });
 
       await uploadPromise;
 
