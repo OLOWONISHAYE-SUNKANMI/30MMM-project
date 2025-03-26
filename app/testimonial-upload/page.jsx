@@ -3,7 +3,6 @@
 import { useRef, useState } from "react";
 
 export default function TestimonialUploadPage() {
-  // State declarations remain the same
   const [cohort, setCohort] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -14,14 +13,17 @@ export default function TestimonialUploadPage() {
   const [uploadStatus, setUploadStatus] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [dragActive, setDragActive] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const inputRef = useRef(null);
 
-  // Options generation remains the same
+  // Generate options for select inputs
   const weekOptions = Array.from({ length: 5 }, (_, i) => i + 1);
   const dayOptions = Array.from({ length: 7 }, (_, i) => i + 1);
+
+  // starts from Cohort 46 goes to Cohort 100
   const cohortOptions = Array.from({ length: 56 }, (_, i) => i + 45);
 
-  // Process file function remains the same
+  // Handle file validation and preview
   const processFile = (selectedFile) => {
     if (selectedFile && selectedFile.type.includes("video")) {
       setFile(selectedFile);
@@ -36,14 +38,15 @@ export default function TestimonialUploadPage() {
     }
   };
 
-  // Handle file selection via input remains the same
+  // Handle file selection via input
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     processFile(selectedFile);
   };
 
-  // Drag events handling remains the same
+  // Handle drag events
   const handleDrag = (e) => {
+    // Important: Always prevent default to stop browser from opening/downloading files
     e.preventDefault();
     e.stopPropagation();
 
@@ -54,29 +57,30 @@ export default function TestimonialUploadPage() {
     }
   };
 
-  // Drop event handling remains the same
+  // Handle drop event
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
 
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      // Process the dropped file
       processFile(e.dataTransfer.files[0]);
 
+      // Clear the dataTransfer object to prevent browser default behavior
       if (e.dataTransfer.clearData) {
         e.dataTransfer.clearData();
       }
     }
   };
 
-  // Handle button click - using a direct implementation instead of a separate handler
+  // Handle button click to trigger file input
   const handleButtonClick = () => {
     inputRef.current.click();
   };
 
-  // The rest of the component remains the same
+  // Handle form submission with progress tracking
   const handleSubmit = async (e) => {
-    // Submit handling code remains unchanged
     e.preventDefault();
 
     if (!week || !day || !file || !firstName || !lastName || !cohort) {
@@ -86,9 +90,17 @@ export default function TestimonialUploadPage() {
 
     setIsUploading(true);
     setUploadStatus(null);
+    setUploadProgress(0);
 
     try {
-      // API calls remain unchanged
+      // STEP 1: Get the Azure SAS URL
+      setUploadStatus({
+        success: true,
+        message: "Preparing upload...",
+        step: 1,
+        totalSteps: 3,
+      });
+
       const fileInfo = {
         filename: file.name,
         contentType: file.type,
@@ -109,33 +121,60 @@ export default function TestimonialUploadPage() {
       const result = await sasResponse.json();
       const sasUrl = result.uploadUrl;
 
-      console.log({
+      // STEP 2: Upload the file with progress tracking
+      setUploadStatus({
         success: true,
-        message: "Azure container URL created successfully. Uploading file...",
+        message: "Uploading video to Azure...",
+        step: 2,
+        totalSteps: 3,
       });
 
-      const uploadPromise = fetch(sasUrl, {
-        method: "PUT",
-        headers: {
-          "x-ms-blob-type": "BlockBlob",
-          "Content-Type": file.type,
-        },
-        body: file,
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Upload failed with status: ${response.status}`);
+      // Create a new XMLHttpRequest to track upload progress
+      const xhr = new XMLHttpRequest();
+
+      // Create a promise that resolves when the upload is complete
+      const uploadPromise = new Promise((resolve, reject) => {
+        xhr.open("PUT", sasUrl, true);
+        xhr.setRequestHeader("x-ms-blob-type", "BlockBlob");
+        xhr.setRequestHeader("Content-Type", file.type);
+
+        // Track upload progress
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const percentComplete = Math.round(
+              (event.loaded / event.total) * 100,
+            );
+            setUploadProgress(percentComplete);
           }
-          return response;
-        })
-        .catch((error) => {
-          throw new Error("Network error occurred during upload");
-        });
+        };
+
+        // Handle upload completion
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(xhr.response);
+          } else {
+            reject(new Error(`Upload failed with status: ${xhr.status}`));
+          }
+        };
+
+        // Handle upload error
+        xhr.onerror = () => {
+          reject(new Error("Network error occurred during upload"));
+        };
+
+        // Start the upload
+        xhr.send(file);
+      });
 
       await uploadPromise;
-      console.log({
+      setUploadProgress(100);
+
+      // STEP 3: Store metadata
+      setUploadStatus({
         success: true,
-        message: "Azure upload completed. Saving metadata...",
+        message: "Saving metadata...",
+        step: 3,
+        totalSteps: 3,
       });
 
       const metadataResponse = await fetch("/api/store-video-metadata", {
@@ -159,17 +198,16 @@ export default function TestimonialUploadPage() {
         console.warn("Metadata storage issue, but video upload was successful");
       }
 
-      await metadataResponse;
-      console.log({
-        success: true,
-        message: "metadata stored",
-      });
-
+      // Success!
       setUploadStatus({
         success: true,
         message: "Video uploaded successfully!",
+        step: 3,
+        totalSteps: 3,
+        completed: true,
       });
 
+      // Reset form after successful upload
       setCohort("");
       setFirstName("");
       setLastName("");
@@ -188,7 +226,7 @@ export default function TestimonialUploadPage() {
     }
   };
 
-  // Reset function remains the same
+  // Handle reset of the form
   const handleReset = () => {
     setCohort("");
     setFirstName("");
@@ -198,6 +236,7 @@ export default function TestimonialUploadPage() {
     setFile(null);
     setPreviewUrl(null);
     setUploadStatus(null);
+    setUploadProgress(0);
   };
 
   return (
@@ -219,7 +258,7 @@ export default function TestimonialUploadPage() {
         </p>
 
         <div className="mx-auto max-w-md">
-          {uploadStatus && uploadStatus.success ? (
+          {uploadStatus && uploadStatus.success && uploadStatus.completed ? (
             <div className="rounded-lg border border-green-200 bg-green-50 p-6 text-center">
               <p className="mb-4 text-lg text-green-700">
                 {uploadStatus.message}
@@ -238,7 +277,6 @@ export default function TestimonialUploadPage() {
               onDragEnter={handleDrag}
               onDragOver={(e) => e.preventDefault()} // Prevent default browser behavior
             >
-              {/* Form fields remain unchanged */}
               <div className="mb-4">
                 <label
                   htmlFor="cohort"
@@ -264,8 +302,6 @@ export default function TestimonialUploadPage() {
                   ))}
                 </select>
               </div>
-
-              {/* Other form fields... */}
               <div className="mb-4">
                 <label
                   htmlFor="firstName"
@@ -346,7 +382,6 @@ export default function TestimonialUploadPage() {
                 </select>
               </div>
 
-              {/* Modified drop zone to prevent event bubbling issues */}
               <div className="mb-6">
                 <label
                   htmlFor="video"
@@ -391,7 +426,7 @@ export default function TestimonialUploadPage() {
                     <div className="flex text-sm text-gray-600">
                       <button
                         type="button"
-                        onClick={() => inputRef.current.click()}
+                        onClick={handleButtonClick}
                         className="relative cursor-pointer rounded-md font-medium text-primaryred hover:text-primaryred-700 focus:outline-none"
                       >
                         Upload a video
@@ -428,7 +463,6 @@ export default function TestimonialUploadPage() {
                 </div>
               </div>
 
-              {/* Preview section remains the same */}
               {previewUrl && (
                 <div className="mb-6">
                   <div className="mb-2 flex items-center justify-between">
@@ -486,7 +520,6 @@ export default function TestimonialUploadPage() {
                 </div>
               )}
 
-              {/* Button and loading sections remain the same */}
               <div className="flex justify-center">
                 <button
                   type="submit"
@@ -517,31 +550,44 @@ export default function TestimonialUploadPage() {
 
               {isUploading && (
                 <div className="mt-6 text-center">
-                  <div className="inline-block animate-roll">
-                    <svg
-                      className="h-8 w-8 text-primaryred"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
+                  <div className="relative pt-1">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="inline-block text-xs font-semibold text-description-gray">
+                          {uploadStatus?.message || "Uploading..."}
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <span className="inline-block text-xs font-semibold text-description-gray">
+                          {uploadProgress}%
+                        </span>
+                      </div>
+                    </div>
+                    <div className="mb-4 mt-2 flex h-2 overflow-hidden rounded bg-gray-200 text-xs">
+                      <div
+                        style={{ width: `${uploadProgress}%` }}
+                        className="flex flex-col justify-center whitespace-nowrap bg-primaryred text-center text-white shadow-none"
+                      ></div>
+                    </div>
+                    <div className="flex items-center justify-between text-xs text-description-gray">
+                      <div>
+                        {uploadStatus?.step && uploadStatus?.totalSteps && (
+                          <span>
+                            Step {uploadStatus.step} of{" "}
+                            {uploadStatus.totalSteps}
+                          </span>
+                        )}
+                      </div>
+                      <div>
+                        {file && (
+                          <span>
+                            {Math.round((file.size / (1024 * 1024)) * 10) / 10}{" "}
+                            MB
+                          </span>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <p className="mt-2 text-description-gray">
-                    Uploading your video to Azure...
-                  </p>
                 </div>
               )}
 
