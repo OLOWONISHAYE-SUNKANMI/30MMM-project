@@ -91,14 +91,7 @@ export default function TestimonialUploadPage() {
     setUploadStatus(null);
 
     try {
-      const formData = new FormData();
-      formData.append("cohort", cohort);
-      formData.append("firstName", firstName);
-      formData.append("lastName", lastName);
-      formData.append("week", week);
-      formData.append("day", day);
-      formData.append("video", file);
-
+      // Step 1: Get the upload URL from your API
       const fileInfo = {
         filename: file.name,
         contentType: file.type,
@@ -107,42 +100,91 @@ export default function TestimonialUploadPage() {
       const sasResponse = await fetch("/api/getVideoUploadUrl", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // Required for JSON data
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(fileInfo),
       });
 
-      const result = await sasResponse.json();
-
-      if (sasResponse.ok) {
-        setUploadStatus({
-          success: true,
-          message: "Azure container URL created successfully",
-        });
-
-        // TODO: receive containerUrl and implement post request to Azure URL
-        const sasUrl = result.uploadUrl;
-
-        const azureResponse = await fetch(sasUrl, {
-          mode: "cors",
-          method: "PUT",
-          body: file,
-          headers: {
-            "x-ms-blob-type": "BlockBlob", // Required for Azure
-            "Content-Type": file.type, // e.g., 'video/mp4'
-          },
-        });
-
-        console.log(azureResponse);
-
-        // TODO: use FormData to add metadata to MongoDB
-
-        // Reset form after successful upload
-        setFile(null);
-        setPreviewUrl(null);
-      } else {
-        throw new Error(result.error || "Upload failed");
+      if (!sasResponse.ok) {
+        throw new Error("Failed to get upload URL");
       }
+
+      const result = await sasResponse.json();
+      const sasUrl = result.uploadUrl;
+
+      setUploadStatus({
+        success: true,
+        message: "Azure container URL created successfully. Uploading file...",
+      });
+
+      // Step 2: Use XMLHttpRequest instead of fetch for better control over CORS
+      const uploadPromise = new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+
+        xhr.open("PUT", sasUrl, true);
+        xhr.setRequestHeader("x-ms-blob-type", "BlockBlob");
+        xhr.setRequestHeader("Content-Type", file.type);
+
+        xhr.onload = function () {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(xhr);
+          } else {
+            reject(new Error(`Upload failed with status: ${xhr.status}`));
+          }
+        };
+
+        xhr.onerror = function () {
+          reject(new Error("Network error occurred during upload"));
+        };
+
+        xhr.upload.onprogress = function (e) {
+          if (e.lengthComputable) {
+            const percentComplete = (e.loaded / e.total) * 100;
+            console.log(`Upload progress: ${percentComplete.toFixed(2)}%`);
+          }
+        };
+
+        xhr.send(file);
+      });
+
+      await uploadPromise;
+
+      // Step 3: Once upload is successful, save metadata to MongoDB
+      const metadataResponse = await fetch("/api/store-video-metadata", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cohort,
+          firstName,
+          lastName,
+          week,
+          day,
+          fileName: file.name,
+          fileType: file.type,
+          blobUrl: sasUrl.split("?")[0], // Store the base URL without SAS token
+        }),
+      });
+
+      if (!metadataResponse.ok) {
+        console.warn("Metadata storage issue, but video upload was successful");
+      }
+
+      // Success!
+      setUploadStatus({
+        success: true,
+        message: "Video uploaded successfully!",
+      });
+
+      // Reset form after successful upload
+      setCohort("");
+      setFirstName("");
+      setLastName("");
+      setWeek("");
+      setDay("");
+      setFile(null);
+      setPreviewUrl(null);
     } catch (error) {
       console.error("Upload error:", error);
       setUploadStatus({
