@@ -124,6 +124,7 @@ export default function TestimonialUploadPage() {
         const sasUrl = result.uploadUrl;
 
         const azureResponse = await fetch(sasUrl, {
+          mode: "cors",
           method: "PUT",
           body: file,
           headers: {
@@ -131,6 +132,9 @@ export default function TestimonialUploadPage() {
             "Content-Type": file.type, // e.g., 'video/mp4'
           },
         });
+
+        console.log(azureResponse);
+
         // TODO: use FormData to add metadata to MongoDB
 
         // Reset form after successful upload
