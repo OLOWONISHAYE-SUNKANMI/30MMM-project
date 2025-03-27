@@ -7,7 +7,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    const { filename, contentType } = await request.json();
+    const { filename, contentType, cohort, firstName, lastName, week, day } =
+      await request.json();
     let extension;
 
     // Validate that the content type is a video
@@ -56,7 +57,8 @@ export async function POST(request) {
       }
     }
 
-    const blobName = `video-${Date.now()}-${Math.random().toString(36).substring(2, 15)}${extension}`;
+    // cohort, firstName, lastName, week, day
+    const blobName = `${cohort}/${firstName}_${lastName}/wk-${week}/day-${day}/video-${Date.now()}-${Math.random().toString(36).substring(2, 15)}${extension}`;
 
     // Create Credentials
     const sharedKeyCredential = new StorageSharedKeyCredential(

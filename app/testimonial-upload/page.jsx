@@ -94,6 +94,7 @@ export default function TestimonialUploadPage() {
 
     try {
       // STEP 1: Get the Azure SAS URL
+      console.log("Step 1 starting, creating SAS URL...");
       setUploadStatus({
         success: true,
         message: "Preparing upload...",
@@ -104,6 +105,11 @@ export default function TestimonialUploadPage() {
       const fileInfo = {
         filename: file.name,
         contentType: file.type,
+        cohort: cohort,
+        firstName: firstName,
+        lastName: lastName,
+        week: week,
+        day: day,
       };
 
       const sasResponse = await fetch("/api/getVideoUploadUrl", {
@@ -122,6 +128,7 @@ export default function TestimonialUploadPage() {
       const sasUrl = result.uploadUrl;
 
       // STEP 2: Upload the file with progress tracking
+      console.log("Step 1 complete, uploading video to azure...");
       setUploadStatus({
         success: true,
         message: "Uploading video to Azure...",
@@ -170,6 +177,7 @@ export default function TestimonialUploadPage() {
       setUploadProgress(100);
 
       // STEP 3: Store metadata
+      console.log("Step 2 complete, storing metadata to mongodb...");
       setUploadStatus({
         success: true,
         message: "Saving metadata...",
@@ -199,6 +207,7 @@ export default function TestimonialUploadPage() {
       }
 
       // Success!
+      console.log("Step 3 complete, success");
       setUploadStatus({
         success: true,
         message: "Video uploaded successfully!",
@@ -302,6 +311,7 @@ export default function TestimonialUploadPage() {
                   className="block w-full rounded-lg border border-gray-300 bg-formfield px-4 py-2 focus:border-primaryred focus:ring-primaryred"
                 >
                   <option value="">-- Select Cohort --</option>
+                  <option value="no-cohort">-- Not Assigned A Cohort --</option>
                   {cohortOptions.map((num) => (
                     <option
                       key={`cohort-${num}`}
