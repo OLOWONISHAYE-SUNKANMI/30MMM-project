@@ -9,7 +9,7 @@ import VideoBackground from "./VideoBackground";
 // original: "max-w-3xl mx-auto mb-8 text-lg italic text-black drop-shadow-xl sm:text-xl md:text-2xl md:text-white lg:text-3xl"
 
 export function HeroSection() {
-  const videoSources = ["/videos/hero-3_1080_16-9.mp4"];
+  const videoSources = ["/videos/CLEAN HERO VIDEO- LATEST.mp4"];
 
   return (
     <section className="relative mt-[85px] flex min-h-[100dvh] w-full flex-col justify-end text-center after:absolute after:inset-0 after:bg-black/15">
