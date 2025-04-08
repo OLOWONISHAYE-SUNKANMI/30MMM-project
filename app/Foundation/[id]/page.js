@@ -1,4 +1,5 @@
 // app/Foundation/[id]/page.js
+
 import React from "react";
 import { ObjectId } from "mongodb";
 import Divider from "@/components/common/Divider";
@@ -8,12 +9,15 @@ import MainLesson from "@/components/Foundation/MainLesson";
 import Quotes from "@/components/Foundation/Quotes";
 import ReadingTime from "@/components/Foundation/ReadingTime";
 import ReflectionBox from "@/components/Foundation/ReflectionBox";
+import ReflectionResponse from "@/components/Foundation/ReflectionResponse";
 import ScripturesSection from "@/components/Foundation/ScripturesSection";
 // import SectionTitle from "@/components/Foundation/SectionTitle"; --> TO DO: will update in future
 // import SidePanel from "@/components/Foundation/SidePanel/SidePanel"; --> TO DO: will update in future
 import SubTitle from "@/components/Foundation/SubTitle";
 import Title from "@/components/Foundation/Title";
 import clientPromise from "@/lib/mongodb";
+
+// import TextArea from "./textArea";
 
 // Server-side data fetching function
 async function getDevotionalData(id) {
@@ -45,9 +49,9 @@ export default async function Foundation(props) {
 
     return (
       <div className="mt-16 flex w-full flex-col justify-between px-2 py-2 md:px-4 md:py-4 lg:px-[1vw] lg:py-[1vh]">
-        <div className="flex flex-col items-center mt-8">
-          <div className="flex flex-col lg:max-w-10xl md:max-w-7xl">
-            <div className="flex flex-col items-start mb-8 bg-white md:flex-col">
+        <div className="mt-8 flex flex-col items-center">
+          <div className="lg:max-w-10xl flex flex-col md:max-w-7xl">
+            <div className="mb-8 flex flex-col items-start bg-white md:flex-col">
               <div className="mt-[3vh]">
                 <Title
                   weekTitle={devotionalData.weekTitle}
@@ -63,13 +67,13 @@ export default async function Foundation(props) {
                 />
               </div>
 
-              <div className="flex justify-center w-full">
+              <div className="flex w-full justify-center">
                 <div className="flex items-center justify-center">
                   <MainImage videoId={devotionalData.videoId} />
                 </div>
               </div>
 
-              <div className="flex justify-center w-full">
+              <div className="flex w-full justify-center">
                 <Quotes />
               </div>
 
@@ -85,10 +89,15 @@ export default async function Foundation(props) {
                 <MainLesson devotionText={devotionalData.devotionText} />
               </div>
 
-              <div className="mt-[6vh] flex w-full justify-center">
-                <ReflectionBox
-                  reflectionQuestion={devotionalData.reflectionQuestion}
-                />
+              <div className="flex w-full flex-col items-center">
+                <div className="mt-[6vh] flex w-full justify-center">
+                  <ReflectionBox
+                    reflectionQuestion={devotionalData.reflectionQuestion}
+                  />
+                </div>
+                <div className="mt-[6vh] flex w-full justify-center">
+                  <ReflectionResponse />
+                </div>
               </div>
 
               <Divider />
@@ -103,7 +112,7 @@ export default async function Foundation(props) {
     );
   } catch (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex min-h-screen items-center justify-center">
         <p className="text-red-500">
           Error loading devotional: {error.message}
         </p>
