@@ -44,22 +44,21 @@ export default function NavBar() {
       "/",
       "/founders-bio",
       "/about",
-      "/Scholarship",
-      "/Scholarship-Application",
+      "/scholarship",
+      "/scholarship-application",
       "/individuals",
       "/churches",
     ],
     hideButtons: [
-      "/LogIn",
-      "/SignUp",
-      "/Pricing",
-      "/AnotherPathToHide",
-      "/Dashboard",
-      "/DevLinks",
-      "/Foundation",
-      "/Settings",
+      "/login",
+      "/signup",
+      "/pricing",
+      "/dashboard",
+      "/sitemap",
+      "/devotional",
+      "/settings",
       "/payment",
-      "/Contact",
+      "/contact",
       "/donate",
     ],
     default: [],
@@ -94,7 +93,7 @@ export default function NavBar() {
           <NavLink href="/founders-bio">Founder&apos;s Bio</NavLink>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <NavLink href="/Scholarship">Scholarship</NavLink>
+          <NavLink href="/scholarship">Scholarship</NavLink>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -132,7 +131,7 @@ export default function NavBar() {
     { name: "Clean for Individuals", href: "/individuals" },
     { name: "Clean for Churches", href: "/churches" },
     { name: "Founder's Bio", href: "/founders-bio" },
-    { name: "Scholarship", href: "/Scholarship" },
+    { name: "Scholarship", href: "/scholarship" },
   ];
 
   const navLinks = (
@@ -147,7 +146,7 @@ export default function NavBar() {
   const renderButtons = () => {
     if (routes.landing.includes(pathname)) {
       return (
-        <NavLink href="/Pricing">
+        <NavLink href="/pricing">
           <Button
             variant="outline"
             className="w-full border-primary-red text-primary-red hover:bg-primary-red hover:text-white"
@@ -164,7 +163,7 @@ export default function NavBar() {
 
     return (
       <>
-        <NavLink href="/LogIn">
+        <NavLink href="/login">
           <Button
             variant="outline"
             className="w-full border-primary-red text-primary-red hover:bg-primary-red hover:text-white"
@@ -172,7 +171,7 @@ export default function NavBar() {
             Log In
           </Button>
         </NavLink>
-        <NavLink href="/SignUp">
+        <NavLink href="/signup">
           <Button className="w-full bg-primary-red text-white hover:bg-red-800">
             Sign Up
           </Button>
