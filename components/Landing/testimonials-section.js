@@ -7,8 +7,8 @@ export function TestimonialsSection() {
     },
     {
       quote:
-        "The CLEAN program gave me the tools and support I needed to break free from pornography and rebuild trust with my wife.",
-      name: "Clean Participant",
+        "Yessir! Loooking forward to it fam. I know this will be transcending! Appreciate you and thankful that God chose you to have the courage to share what he revealed to you to bless the lives of use men!",
+      name: "Luis Pesantes",
     },
     {
       quote:
