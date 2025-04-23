@@ -2,13 +2,13 @@ export function TestimonialsSection() {
   const testimonials = [
     {
       quote:
-        "CLEAN has transformed our men’s ministry. Men are opening up, seeking help, and finding freedom like never before.",
-      name: "Pastor John Doe, Zion Church",
+        "Pastor Donovan, I truly appreciate you and your team. Being with you all feels like home. There's a rare and rich grace upon you that's undeniable. I've been in the trenches for a long time, and what you have is something special. Thank you for being a place of refuge and authenticity.",
+      name: "Pastor Antonio, Zion Church",
     },
     {
       quote:
-        "The CLEAN program gave me the tools and support I needed to break free from pornography and rebuild trust with my wife.",
-      name: "Clean Participant",
+        "Yessir! Loooking forward to it fam. I know this will be transcending! Appreciate you and thankful that God chose you to have the courage to share what he revealed to you to bless the lives of use men!",
+      name: "Luis Pesantes",
     },
     {
       quote:
