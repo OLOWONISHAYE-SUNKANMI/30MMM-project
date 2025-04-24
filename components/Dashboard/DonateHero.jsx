@@ -1,10 +1,10 @@
 // The mobile version of the DonateHero is a MESS
 // TODO: Fix the mobile version of the DonateHero
 
-export default function DonateHero() {
+export default function DonateHero({ onClick }) {
   return (
     <>
-      <div className="relative mx-auto h-80 w-[90%] max-w-[1000px] justify-self-center rounded-3xl bg-primaryred-900 bg-donate-mobile bg-top bg-no-repeat max-md:max-w-[340px] md:h-60 md:bg-donate-desktop md:bg-right">
+      <div  onClick={onClick} style={{ cursor: 'pointer' }} className="relative mx-auto h-80 w-[90%] max-w-[1000px] justify-self-center rounded-3xl bg-primaryred-900 bg-donate-mobile bg-top bg-no-repeat max-md:max-w-[340px] md:h-60 md:bg-donate-desktop md:bg-right">
         <div className="ml-3 mt-3 flex h-[270px] w-[330px] flex-col items-center justify-start max-md:mt-[120px] max-md:hidden max-md:w-[500px] max-md:flex-wrap md:h-[210px] md:items-start md:justify-between">
           <h3 className="text-[28px] font-bold tracking-wide text-white">
             Donate
@@ -48,7 +48,7 @@ export default function DonateHero() {
                 </div>
               </div>
               <div className="flex w-[152px] items-center justify-center gap-2.5 self-stretch rounded-[40px] bg-red-700 px-6 py-[11px]">
-                <div className="text-center text-base font-bold leading-relaxed text-white">
+                <div className="text-base font-bold leading-relaxed text-center text-white">
                   Donate
                 </div>
               </div>

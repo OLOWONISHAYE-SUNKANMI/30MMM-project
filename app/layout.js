@@ -17,6 +17,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+    <head>
+      <script async="async" src="https://www.pledge.to/assets/widget.js"></script>
+    </head>
       <ClerkProvider
         appearance={{
           variables: { colorPrimary: "#000000" },
