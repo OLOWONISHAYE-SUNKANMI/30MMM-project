@@ -1,0 +1,10 @@
+import React from "react";
+
+export default function Header() {
+  return (
+    <div>
+      <h1 className="mb-4 text-3xl font-bold">Privacy Policy for Clean LMS</h1>
+      <p className="mb-4 italic">Last modified: [Work In Progress]</p>
+    </div>
+  );
+}
