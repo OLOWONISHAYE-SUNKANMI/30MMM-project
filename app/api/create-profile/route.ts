@@ -59,6 +59,8 @@ export async function POST(request) {
       },
     });
 
+    // TODO: add in user profile update for profileComplete field
+
     return NextResponse.json({
       success: true,
       profile: updatedProfile,
