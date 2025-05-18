@@ -70,34 +70,28 @@ export default function LogIn() {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      await signIn.email(
-        {
-          email: values.email,
-          password: values.password,
+    await signIn.email(
+      {
+        email: values.email,
+        password: values.password,
+      },
+      {
+        onResponse: () => {
+          setLoading(false);
         },
-        {
-          onResponse: () => {
-            setLoading(false);
-          },
-          onRequest: () => {
-            setError(null);
-            setLoading(true);
-          },
-          onSuccess: () => {
-            toast.success("Logged in successfully");
-            router.push(CALLBACK_URL);
-          },
-          onError: (ctx) => {
-            toast.error(ctx.error.message);
-          },
+        onRequest: () => {
+          setError(null);
+          setLoading(true);
         },
-      );
-    } catch (error) {
-      setError(error?.message);
-      toast.error(error?.message ?? "Something went wrong");
-      setLoading(false);
-    }
+        onSuccess: () => {
+          toast.success("Logged in successfully");
+          router.push(CALLBACK_URL);
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
+      },
+    );
   };
 
   return (

@@ -25,6 +25,11 @@ export const auth = betterAuth({
         type: "boolean",
         defaultValue: false,
       },
+      paidAt: {
+        type: "date",
+        defaultValue: null,
+        required: false,
+      },
     },
   },
   database: prismaAdapter(prisma!, {
@@ -59,6 +64,12 @@ export const auth = betterAuth({
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    },
+  },
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 10 * 60, // Cache duration in seconds
     },
   },
   plugins: [
