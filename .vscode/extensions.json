@@ -3,11 +3,9 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss",
-    "mgmcdermott.vscode-language-babel",
-    "gruntfuggly.todo-tree",
     "mattpocock.ts-error-translator",
     "Prisma.prisma",
-    "AvneeshAgarwal.react-nextjs-snippets",
-    "aaron-bond.better-comments"
+    "aaron-bond.better-comments",
+    "christian-kohler.npm-intellisense"
   ]
 }
