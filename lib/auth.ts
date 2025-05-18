@@ -25,11 +25,6 @@ export const auth = betterAuth({
         type: "boolean",
         defaultValue: false,
       },
-      paidAt: {
-        type: "date",
-        defaultValue: null,
-        required: false,
-      },
     },
   },
   database: prismaAdapter(prisma!, {
