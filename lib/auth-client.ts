@@ -12,8 +12,8 @@ export const authClient = createAuthClient({
     emailOTPClient(),
     oneTapClient({
       clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
-      cancelOnTapOutside: false,
-      autoSelect: false,
+      cancelOnTapOutside: true,
+      autoSelect: true,
       promptOptions: {
         baseDelay: 2000,
         maxAttempts: 5,
