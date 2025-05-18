@@ -20,15 +20,18 @@ export const auth = betterAuth({
       premium: {
         type: "boolean",
         defaultValue: false,
+        input: false,
       },
       profileCompleted: {
         type: "boolean",
         defaultValue: false,
+        input: false,
       },
       paidAt: {
         type: "date",
         defaultValue: null,
         required: false,
+        input: false,
       },
     },
   },
