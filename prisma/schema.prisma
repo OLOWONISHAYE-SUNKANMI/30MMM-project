@@ -45,6 +45,19 @@ type PaymentDetails {
   pledgeEmail   String?
 }
 
+model DiscountCode {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  code               String   @unique
+  discount_type      String
+  minimum_payment    Float
+  widget_id          String
+  usage_limit        Int
+  expiration_date    DateTime
+  current_usage_count Int
+
+  @@map("discount_codes")
+}
+
 model Session {
   id             String   @id @default(cuid()) @map("_id")
   userId         String
