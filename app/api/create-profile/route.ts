@@ -1,9 +1,9 @@
 // app/api/profile/route.js
 import prisma from "@/db"; // Use your existing prisma import
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth"; // Import your auth instance
 
-export async function POST(request) {
+export async function POST(request: NextRequest) {
   try {
     // TODO: review this auth method, it may not be the best way to check if a user is logged in
     // also, may need to check how to mock a user session existing
@@ -59,7 +59,14 @@ export async function POST(request) {
       },
     });
 
-    // TODO: add in user profile update for profileComplete field
+    // Update the user record to mark the profile as completed
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        profileCompleted: true,
+      },
+    });
+    
 
     return NextResponse.json({
       success: true,
