@@ -6,7 +6,7 @@
   "editor.inlineSuggest.showToolbar": "onHover",
   "editor.inlineSuggest.edits.allowCodeShifting": "horizontal",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "never"
+    "source.fixAll.eslint": "explicit"
   },
 
   "prettier.tabWidth": 2,

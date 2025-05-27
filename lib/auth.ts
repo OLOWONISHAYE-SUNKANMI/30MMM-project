@@ -11,8 +11,6 @@ import {
   openAPI,
 } from "better-auth/plugins";
 
-console.info("BETTER_AUTH_URL is currently: ", process.env.BETTER_AUTH_URL);
-
 export const auth = betterAuth({
   // baseURL: baseUrl,
   user: {
@@ -67,12 +65,6 @@ export const auth = betterAuth({
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    },
-  },
-  session: {
-    cookieCache: {
-      enabled: true,
-      maxAge: 10 * 60, // Cache duration in seconds
     },
   },
   plugins: [
