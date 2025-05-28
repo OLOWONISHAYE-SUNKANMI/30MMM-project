@@ -14,14 +14,13 @@ import {
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { useReadLocalStorage } from "@/hooks/use-read-localstorage";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -34,12 +33,11 @@ const FormSchema = z.object({
   }),
 });
 
-export default function EmailVerification() {
+export default function EmailVerification({ email }: { email?: string }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const email = useReadLocalStorage<string | null>("email");
 
-  console.log("Email from localStorage:", email);
+  console.log("Email from searchParams: ", email);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -78,11 +76,21 @@ export default function EmailVerification() {
   }
 
   return (
-    <Card className="h-full self-center justify-self-stretch border-none shadow-none outline-none lg:h-[800px]">
+    <Card className="z-10 flex flex-col justify-start max-md:justify-between space-y-10 shadow-none lg:pt-20 border-none outline-none h-full">
+      <Image
+        className="block z-10 mx-auto -mt-16 md:mt-16"
+        src="/logo.png"
+        alt="Logo"
+        width={120}
+        height={120}
+      />
+      <h1 className="md:mb-6 font-semibold text-4xl text-center">
+        Verify Email Address
+      </h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid w-full place-content-center items-start gap-y-10 space-y-10 text-center"
+          className="items-start place-content-center gap-y-10 space-y-10 grid w-full text-center"
         >
           <CardContent>
             <FormField
@@ -90,7 +98,7 @@ export default function EmailVerification() {
               name="pin"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="mr-auto text-lg lg:text-2xl">
+                  <FormLabel className="mr-auto">
                     Please enter the 6-digit code sent to your email to verify
                     your address
                   </FormLabel>
@@ -103,10 +111,10 @@ export default function EmailVerification() {
                       <InputOTPGroup className="mx-auto">
                         <InputOTPSlot index={0} />
                         <InputOTPSlot index={1} />
-                        <InputOTPSeparator />
+
                         <InputOTPSlot index={2} />
                         <InputOTPSlot index={3} />
-                        <InputOTPSeparator />
+
                         <InputOTPSlot index={4} />
                         <InputOTPSlot index={5} />
                       </InputOTPGroup>
@@ -121,29 +129,28 @@ export default function EmailVerification() {
               )}
             />
           </CardContent>
-          <CardFooter>
-            <div
-              className={cn(
-                "flex w-full items-center gap-2",
-                "flex-col justify-between",
-              )}
+        </form>
+        <CardFooter>
+          <div
+            className={cn(
+              "flex w-full flex-col items-center justify-between gap-2",
+            )}
+          >
+            <Button
+              type="submit"
+              className="block w-fit"
+              disabled={loading}
             >
-              <Button
-                type="submit"
-                className="block w-fit"
-                disabled={loading}
-              >
-                {loading ? (
-                  <Loader2
-                    size={16}
-                    className="animate-spin"
-                  />
-                ) : (
-                  "Verify Email"
-                )}
-              </Button>
-            </div>
-            <div className="mt-5 block w-full items-center justify-center gap-2 text-center text-sm font-light">
+              {loading ? (
+                <Loader2
+                  size={16}
+                  className="animate-spin"
+                />
+              ) : (
+                "Verify Email"
+              )}
+            </Button>
+            <div className="block justify-center items-center gap-2 mt-5 w-full font-light text-sm text-center">
               <span className="gap-2 tracking-tight">
                 Didn&apos;t receive the code?{" "}
               </span>
@@ -155,13 +162,13 @@ export default function EmailVerification() {
                     type: "email-verification",
                   });
                 }}
-                className="font-semibold tracking-tighter text-primary-red"
+                className="font-semibold text-primary-red tracking-tighter"
               >
                 Request New Code
               </Button>
             </div>
-          </CardFooter>
-        </form>
+          </div>
+        </CardFooter>
       </Form>
     </Card>
   );

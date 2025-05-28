@@ -18,8 +18,8 @@ export const authClient = createAuthClient({
       cancelOnTapOutside: true,
       autoSelect: true,
       promptOptions: {
-        baseDelay: 2000,
-        maxAttempts: 5,
+        baseDelay: 10000,
+        maxAttempts: 2,
       },
     }),
   ],
