@@ -30,19 +30,25 @@ model User {
   sessions         Session[]
   accounts         Account[]
   userProfile      UserProfile?
+  profile          Profile?
   premium          Boolean          @default(false)
   paymentDetails   PaymentDetails[] // Changed to an array
-  profileCompleted Boolean?         @default(false) // New field added here
+  profileCompleted Boolean         @default(false) // New field added here
 
   @@map("user")
 }
 
 type PaymentDetails {
   paymentMethod String // 'pledge' or any other payment method
-  paymentType   String // 'Sign-Up Fee', 'Donation'
+  paymentType   PaymentType // 'Sign-Up Fee', 'Donation'
   amountPaid    Float? // Use Float for monetary values
-  paidAt        DateTime?
+  paidAt        DateTime? 
   pledgeEmail   String?
+}
+
+enum PaymentType {
+  signup_fee
+  donation
 }
 
 model DiscountCode {
@@ -103,6 +109,21 @@ model Verification {
   updatedAt  DateTime @updatedAt
 
   @@map("verification")
+}
+
+type Profile {
+  firstName         String?
+  lastName          String?
+  birthDate         DateTime?
+  maritalStatus     String?
+  childrenCount     Int?
+  churchAffiliation String?
+  email             String?
+  phoneNumber       String?
+  address           String?
+  city              String?
+  state             String?
+  zipcode           String?
 }
 
 model UserProfile {
