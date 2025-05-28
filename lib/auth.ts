@@ -87,22 +87,24 @@ export const auth = betterAuth({
           case "email-verification":
             await sendEmail({
               to: email,
-              subject: "Use this code to verify your email address",
-              text: `Your OTP code is: ${otp}`,
+              subject:
+                "Verify your Email Address with The Clean Program by Thirty Mighty Men",
+              text: `Enter the following 6 digit One-Time Passcode on our website. Your code is: ${otp}`,
             });
             break;
           case "forget-password":
             await sendEmail({
               to: email,
-              subject: "Use this code to reset your password",
-              text: `Your OTP code is: ${otp}`,
+              subject:
+                "Reset your Password with The Clean Program by Thirty Mighty Men",
+              text: `Enter the following 6-digit One-Time Passcode on our website in order to create a new password. Your code is: ${otp}`,
             });
             break;
           case "sign-in":
             await sendEmail({
               to: email,
-              subject: "Use this code to sign in",
-              text: `Your OTP code is: ${otp}`,
+              subject: "Sign into The Clean Program by Thirty Mighty Men",
+              text: `Enter the following 6-digit One-Time Passcode on our website in order to sign in with your account. Your code is: ${otp}`,
             });
             break;
           default:
