@@ -39,5 +39,6 @@
   "[tailwindcss]": {
     "tailwindCSS.hovers": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "postman.settings.dotenv-detection-notification-visibility": false
 }
