@@ -3,13 +3,13 @@ import YouTubeVideo from "./YouTubeVideoPlayerv2";
 
 export function ChurchRoleSection() {
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container px-4 mx-auto">
+    <section className="bg-gray-50 py-12">
+      <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Left Column: Content */}
           <div className="space-y-6">
             <div>
-              <h2 className="text-sm font-semibold tracking-wide uppercase text-primary">
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-primary">
                 The Church&apos;s Role in Healing
               </h2>
               <h3 className="mt-2 text-3xl font-bold md:text-4xl">
@@ -27,7 +27,7 @@ export function ChurchRoleSection() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-start">
                   <svg
-                    className="w-5 h-5 mr-2 text-red-500 shrink-0"
+                    className="mr-2 h-5 w-5 shrink-0 text-red-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -44,7 +44,7 @@ export function ChurchRoleSection() {
                 </li>
                 <li className="flex items-start">
                   <svg
-                    className="w-5 h-5 mr-2 text-red-500 shrink-0"
+                    className="mr-2 h-5 w-5 shrink-0 text-red-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -61,7 +61,7 @@ export function ChurchRoleSection() {
                 </li>
                 <li className="flex items-start">
                   <svg
-                    className="w-5 h-5 mr-2 text-red-500 shrink-0"
+                    className="mr-2 h-5 w-5 shrink-0 text-red-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -91,7 +91,7 @@ export function ChurchRoleSection() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-start">
                   <svg
-                    className="w-5 h-5 mr-2 text-green-500 shrink-0"
+                    className="mr-2 h-5 w-5 shrink-0 text-green-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -107,7 +107,7 @@ export function ChurchRoleSection() {
                 </li>
                 <li className="flex items-start">
                   <svg
-                    className="w-5 h-5 mr-2 text-green-500 shrink-0"
+                    className="mr-2 h-5 w-5 shrink-0 text-green-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -123,7 +123,7 @@ export function ChurchRoleSection() {
                 </li>
                 <li className="flex items-start">
                   <svg
-                    className="w-5 h-5 mr-2 text-green-500 shrink-0"
+                    className="mr-2 h-5 w-5 shrink-0 text-green-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -142,8 +142,8 @@ export function ChurchRoleSection() {
 
             <div className="pt-4">
               <Link
-                href="/Pricing"
-                className="inline-flex items-center px-6 py-3 text-sm font-medium text-white rounded-md bg-primary-red hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-red"
+                href="/SignUp"
+                className="inline-flex items-center rounded-md bg-primary-red px-6 py-3 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-primary-red focus:ring-offset-2"
               >
                 Get Started Now
               </Link>
@@ -153,7 +153,7 @@ export function ChurchRoleSection() {
           {/* Right Column: Video and Stats */}
           <div className="space-y-6">
             <YouTubeVideo videoId="3reik8Pkt60" />
-            <div className="p-6 bg-white rounded-lg shadow-md">
+            <div className="rounded-lg bg-white p-6 shadow-md">
               <h4 className="mb-4 text-lg font-semibold">Impact of CLEAN</h4>
               <p className="mb-4 text-sm text-muted-foreground">
                 Churches with programs like CLEAN are{" "}
@@ -168,7 +168,7 @@ export function ChurchRoleSection() {
                 struggles.
               </p>
             </div>
-            <div className="text-xs text-right text-muted-foreground">
+            <div className="text-right text-xs text-muted-foreground">
               <Link
                 href="https://www.barna.com/trends/church-and-porn/"
                 className="hover:underline"

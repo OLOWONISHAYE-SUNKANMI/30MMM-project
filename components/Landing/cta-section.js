@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export function CTASection() {
   return (
-    <section className="py-16 bg-white text-primary-red">
-      <div className="container px-4 mx-auto text-center">
+    <section className="bg-white py-16 text-primary-red">
+      <div className="container mx-auto px-4 text-center">
         <h2 className="mb-6 text-3xl font-bold md:text-4xl">
           Ready to Transform Your Life?
         </h2>
@@ -11,8 +11,8 @@ export function CTASection() {
           Join us in becoming men who lead with purpose, integrity, and faith.
         </p>
         <Link
-          href="/Pricing"
-          className="p-2 bg-white border-4 rounded-md text-prmary-red hover:bg-primary-red/90 border-primary-red hover:text-white"
+          href="/SignUp"
+          className="text-prmary-red rounded-md border-4 border-primary-red bg-white p-2 hover:bg-primary-red/90 hover:text-white"
         >
           Get Started Today
         </Link>
