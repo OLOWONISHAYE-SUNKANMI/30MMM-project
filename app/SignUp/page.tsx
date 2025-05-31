@@ -17,6 +17,11 @@ export default function SignUpPage({
 
   useEffect(() => {
     const oneTap = async () => {
+       if (!process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID) {
+      console.error("Google Client ID is missing. Please check your environment variables.");
+      toast.error("Authentication configuration error");
+      return;
+    }
       authClient.oneTap({
         callbackURL: CALLBACK_URL,
         fetchOptions: {
