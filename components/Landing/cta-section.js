@@ -11,7 +11,7 @@ export function CTASection() {
           Join us in becoming men who lead with purpose, integrity, and faith.
         </p>
         <Link
-          href="/SignUp"
+          href="/individuals"
           className="text-prmary-red rounded-md border-4 border-primary-red bg-white p-2 hover:bg-primary-red/90 hover:text-white"
         >
           Get Started Today

@@ -142,7 +142,7 @@ export function ChurchRoleSection() {
 
             <div className="pt-4">
               <Link
-                href="/SignUp"
+                href="/individuals"
                 className="inline-flex items-center rounded-md bg-primary-red px-6 py-3 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-primary-red focus:ring-offset-2"
               >
                 Get Started Now
