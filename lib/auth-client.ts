@@ -15,18 +15,27 @@ export const authClient = createAuthClient({
     emailOTPClient(),
     oneTapClient({
       clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
-      cancelOnTapOutside: true,
-      autoSelect: true,
+      cancelOnTapOutside: false,
+      autoSelect: false,
+      context: "signin",
       promptOptions: {
-        baseDelay: 10000,
+        baseDelay: 1000,
         maxAttempts: 2,
       },
     }),
   ],
   fetchOptions: {
     onError(e) {
+      console.error(
+        "OneTap error: ",
+        e.error.message,
+        e.error.status,
+        e.error.statusText,
+      );
       if (e.error.status === 429) {
         toast.error("Too many requests. Please try again later.");
+      } else {
+        toast.error("Sorry! An unknown error occurred.");
       }
     },
   },
