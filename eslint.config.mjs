@@ -13,6 +13,18 @@ const eslintConfig = [
       "@typescript-eslint/no-unused-expressions": "warn",
       "@typescript-eslint/no-require-imports": "warn",
     },
+    ignorePatterns: [
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/generated/**",
+      "**/.vercel/**",
+      "**/.vscode/**",
+      "**/certificates/**",
+      "**/coverage/**",
+      "**/__ARCHIVE__/**",
+      "**/public/**",
+      "**/sample-data/**",
+    ],
   }),
 ];
 
