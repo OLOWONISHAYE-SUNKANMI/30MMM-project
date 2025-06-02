@@ -1,17 +1,15 @@
 "use server";
 
 import prisma from "@/db";
-import Prisma from "@/generated/client";
-import { auth } from "@/lib/auth";
+import type { Profile, User } from "@/generated/client";
 import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 const session = await auth.api.getSession({
   headers: await headers(),
 });
 
-export type ProfileData = Prisma.Profile;
-
-export type User = Prisma.User;
+export type ProfileData = Profile;
 
 export type UpdateProfileResponse = {
   message?: string;
