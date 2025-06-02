@@ -20,5 +20,5 @@
     "^(@/app|@/components|@/hooks|@/lib)(/.*)$",
     "^[.]"
   ],
-  "importOrderParserPlugins": ["javascript", "jsx"]
+  "importOrderParserPlugins": ["javascript", "jsx", "typescript", "tsx"]
 }
