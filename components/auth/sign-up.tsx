@@ -1,17 +1,18 @@
 "use client";
 
+import { useState } from "react";
+import type { ResponseContext } from "better-auth/react";
+import { Loader2, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
 import { cn, convertImageToBase64 } from "@/lib/utils";
-import { Loader2, X } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
-import { toast } from "sonner";
 
 export default function SignUp({ callbackUrl }: { callbackUrl?: string }) {
   const [firstName, setFirstName] = useState("");
@@ -27,6 +28,7 @@ export default function SignUp({ callbackUrl }: { callbackUrl?: string }) {
   const pathname = usePathname();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // TODO: Replace the Base64 encoded image URL with an upload to Azure Blob Storage
     const file = e.target.files?.[0];
     if (file) {
       setImage(file);
@@ -48,8 +50,12 @@ export default function SignUp({ callbackUrl }: { callbackUrl?: string }) {
         onRequest: (ctx) => {
           setLoading(true);
         },
-        onResponse: (ctx) => {
+        onResponse: (ctx: ResponseContext) => {
+          toast.info("Server has responded, redirecting...");
           setLoading(false);
+        },
+        onSuccess: async (ctx) => {
+          toast.success(ctx.data.user ?? "Signed in successfully");
         },
       },
     );
@@ -62,48 +68,48 @@ export default function SignUp({ callbackUrl }: { callbackUrl?: string }) {
       )}
     >
       <Image
-        className="block z-10 mx-auto -mt-16 md:mt-16"
+        className="z-10 mx-auto -mt-16 block md:mt-16"
         src="/logo.png"
         alt="Logo"
         width={120}
         height={120}
       />
-      <h1 className="md:mb-6 font-semibold text-4xl text-center">Sign Up</h1>
+      <h1 className="text-center text-4xl font-semibold md:mb-6">Sign Up</h1>
       {/* Google Sign Up Button */}
       <button
         disabled={loading}
-        className="flex justify-center justify-self-center items-center gap-7 columns-1 shadow-md mx-auto my-4 py-2 rounded-2xl outline outline-1 outline-primary-red w-5/6"
+        className="mx-auto my-4 flex w-5/6 columns-1 items-center justify-center gap-7 justify-self-center rounded-2xl py-2 shadow-md outline outline-1 outline-primary-red"
         onClick={handleGoogleSignUp}
       >
         <Image
-          className="object-cover overflow-x-clip contain-layout"
+          className="overflow-x-clip object-cover contain-layout"
           src="/googlelogo.png"
           width={20}
           height={20}
           alt="Google Logo"
         />
-        <div className="font-semibold text-primary-red text-lg">
+        <div className="text-lg font-semibold text-primary-red">
           Sign Up with Google
         </div>
       </button>
       {/* Divider */}
-      <div className="flex items-center gap-x-5 md:my-2 px-52 w-full">
-        <hr className="flex-auto border-1 border-gray-300 w-2/6" />
-        <p className="text-black text-base">or</p>
-        <hr className="flex-auto border-1 border-gray-300 w-2/6" />
+      <div className="flex w-full items-center gap-x-5 px-52 md:my-2">
+        <hr className="border-1 w-2/6 flex-auto border-gray-300" />
+        <p className="text-base text-black">or</p>
+        <hr className="border-1 w-2/6 flex-auto border-gray-300" />
       </div>
 
       {/* Form */}
-      <Card className="shadow-none border-none outline-none w-full">
+      <Card className="w-full border-none shadow-none outline-none">
         <CardContent>
-          <div className="gap-4 grid">
-            <div className="gap-4 grid grid-cols-2">
-              <div className="gap-2 grid">
+          <div className="grid gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
                 <Label htmlFor="first-name">First name</Label>
                 <Input
                   id="first-name"
                   placeholder="Max"
-                  className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
+                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                   required
                   onChange={(e) => {
                     setFirstName(e.target.value);
@@ -111,12 +117,12 @@ export default function SignUp({ callbackUrl }: { callbackUrl?: string }) {
                   value={firstName}
                 />
               </div>
-              <div className="gap-2 grid">
+              <div className="grid gap-2">
                 <Label htmlFor="last-name">Last name</Label>
                 <Input
                   id="last-name"
                   placeholder="Robinson"
-                  className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
+                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                   required
                   onChange={(e) => {
                     setLastName(e.target.value);
@@ -125,13 +131,13 @@ export default function SignUp({ callbackUrl }: { callbackUrl?: string }) {
                 />
               </div>
             </div>
-            <div className="gap-2 grid">
+            <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="m@example.com"
-                className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
+                className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                 required
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -139,23 +145,23 @@ export default function SignUp({ callbackUrl }: { callbackUrl?: string }) {
                 value={email}
               />
             </div>
-            <div className="gap-2 grid">
+            <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
-                className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
+                className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="new-password"
                 placeholder="Password"
               />
             </div>
-            <div className="gap-2 grid">
+            <div className="grid gap-2">
               <Label htmlFor="password">Confirm Password</Label>
               <Input
                 id="password_confirmation"
-                className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
+                className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                 type="password"
                 value={passwordConfirmation}
                 onChange={(e) => setPasswordConfirmation(e.target.value)}
@@ -163,16 +169,16 @@ export default function SignUp({ callbackUrl }: { callbackUrl?: string }) {
                 placeholder="Confirm Password"
               />
             </div>
-            <div className="gap-2 grid">
+            <div className="grid gap-2">
               <Label htmlFor="image">Profile Image (optional)</Label>
-              <div className="flex justify-center items-end gap-4">
+              <div className="flex items-end justify-center gap-4">
                 {imagePreview && (
-                  <div className="relative rounded-sm w-16 h-16 overflow-hidden">
+                  <div className="relative h-16 w-16 overflow-hidden rounded-sm">
                     <Image
                       src={imagePreview}
                       alt="Profile preview"
+                      className="h-auto max-w-16 rounded-full object-cover"
                       layout="fill"
-                      objectFit="cover"
                     />
                   </div>
                 )}
@@ -186,7 +192,7 @@ export default function SignUp({ callbackUrl }: { callbackUrl?: string }) {
                   />
                   {imagePreview && (
                     <X
-                      className="cursor-pointer"
+                      className="cursor-pointer rounded-full outline-1 outline-red-500 hover:fill-red-500 hover:text-red-500"
                       onClick={() => {
                         setImage(null);
                         setImagePreview(null);
@@ -207,22 +213,22 @@ export default function SignUp({ callbackUrl }: { callbackUrl?: string }) {
                   name: `${firstName} ${lastName}`,
                   image: image ? await convertImageToBase64(image) : "",
                   fetchOptions: {
-                    onResponse: () => {
-                      setLoading(false);
-                    },
                     onRequest: () => {
                       toast.info("Creating your account...");
                       setLoading(true);
+                    },
+                    onResponse: () => {
+                      setLoading(false);
                     },
                     onError: (ctx) => {
                       toast.error(ctx.error.message);
                     },
                     onSuccess: async () => {
                       toast.success("Account created successfully");
-
-                      router.push(
-                        pathname + "?step=verify" + `&email=${email}`,
+                      toast.info(
+                        "Please check your email to verify your account",
                       );
+                      router.push(pathname + `?step=verify&email=${email}`);
                     },
                   },
                 });
@@ -250,11 +256,11 @@ export default function SignUp({ callbackUrl }: { callbackUrl?: string }) {
       </Card>
 
       {/* Login Link */}
-      <div className="inline-flex justify-center items-center gap-2 mb-5 w-full font-light text-xs text-center">
+      <div className="mb-5 inline-flex w-full items-center justify-center gap-2 text-center text-xs font-light">
         <span className="gap-2 tracking-tight">Already have an account?</span>
         <Link
           href="/Login"
-          className="text-primary-red tracking-tighter"
+          className="tracking-tighter text-primary-red"
         >
           Log in
         </Link>
