@@ -96,6 +96,7 @@ model Account {
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   idToken String?
 
+  @@index([userId])
   @@map("account")
 }
 
@@ -107,6 +108,7 @@ model Verification {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
+  @@index([identifier])
   @@map("verification")
 }
 
