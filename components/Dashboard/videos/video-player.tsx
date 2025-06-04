@@ -20,7 +20,58 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { videos } from "@/sample-data/devotional-videos"; // Adjust the import path as necessary
+
+// Sample video data
+const videos = [
+  {
+    id: 1,
+    videoUrl:
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    title: "The knockout came quick👊💥",
+    subtitle: "Part 2",
+    category: "Drama",
+    description:
+      "Replying to @Kasi Smith955 Bounty Hunter D - Part 2 if you knock me out keep your car 😂 #bountyhunterd #repo #knockedout ...",
+    likes: "161.2K",
+    comments: "2104",
+    bookmarks: "11.7K",
+    shares: "2122",
+    username: "bountyhunterD",
+    userImage: "/placeholder.svg?height=48&width=48",
+  },
+  {
+    id: 2,
+    videoUrl:
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    title: "Amazing trick shot🏀✨",
+    subtitle: "First try",
+    category: "Sports",
+    description:
+      "You won't believe this trick shot I made on the first try! #basketball #trickshot #amazing",
+    likes: "89.4K",
+    comments: "1432",
+    bookmarks: "7.3K",
+    shares: "1845",
+    username: "trickmaster",
+    userImage: "/placeholder.svg?height=48&width=48",
+  },
+  {
+    id: 3,
+    videoUrl:
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    title: "Cutest pet ever🐰❤️",
+    subtitle: "Watch till end",
+    category: "Pets",
+    description:
+      "My bunny doing the funniest thing ever! Wait for it... #cute #bunny #petlover",
+    likes: "203.7K",
+    comments: "3298",
+    bookmarks: "15.2K",
+    shares: "2756",
+    username: "animalover",
+    userImage: "/placeholder.svg?height=48&width=48",
+  },
+];
 
 export default function VideoPlayer() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
@@ -92,91 +143,13 @@ export default function VideoPlayer() {
 
   return (
     <TooltipProvider>
-      <div className="flex w-full max-w-[500px] flex-col items-center gap-4">
-        {/* External Navigation Controls - Top */}
-        <div className="flex w-full items-center justify-between px-4">
-          {/* Up Navigation */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full border border-gray-300 p-3 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
-                onClick={goToPreviousVideo}
-                disabled={currentVideoIndex === 0}
-                aria-label="Previous video"
-              >
-                <ChevronUp className="h-6 w-6" />
-                <span className="sr-only">Go to previous video</span>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Previous Video</p>
-            </TooltipContent>
-          </Tooltip>
-
-          {/* Video Progress Indicators */}
-          <div
-            className="flex gap-2"
-            role="tablist"
-            aria-label="Video navigation"
-          >
-            {videos.map((video, index) => (
-              <Tooltip key={index}>
-                <TooltipTrigger asChild>
-                  <button
-                    onClick={() => setCurrentVideoIndex(index)}
-                    className={`h-2 w-8 rounded-full transition-all duration-200 ${
-                      index === currentVideoIndex
-                        ? "bg-gray-800"
-                        : "bg-gray-300 hover:bg-gray-500"
-                    }`}
-                    role="tab"
-                    aria-selected={index === currentVideoIndex}
-                    aria-label={`Go to video ${index + 1}: ${video.title}`}
-                  />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>
-                    Video {index + 1}: {video.title}
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-            ))}
-          </div>
-
-          {/* Down Navigation */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full border border-gray-300 p-3 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
-                onClick={goToNextVideo}
-                disabled={currentVideoIndex === videos.length - 1}
-                aria-label="Next video"
-              >
-                <ChevronDown className="h-6 w-6" />
-                <span className="sr-only">Go to next video</span>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Next Video</p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
-
-        {/* Video Player Container */}
+      <div className="mx-auto flex min-h-screen w-full max-w-[900px] flex-col">
+        {/* Video Player Container - Exactly 70% of viewport height */}
         <div
-          className="relative h-[calc(100vh-200px)] w-full max-w-[400px] overflow-hidden rounded-lg border border-gray-200 bg-black shadow-2xl"
+          className="m-2 h-[70vh] w-full overflow-hidden rounded-lg border border-gray-200 bg-black shadow-2xl"
           ref={containerRef}
         >
-          {/* Error message */}
-          <div className="absolute left-0 right-0 top-0 z-20 bg-neutral-800/90 py-2 text-center text-sm text-white">
-            Maximum number of attempts reached. Try again later.
-          </div>
-
-          {/* Video container */}
+          {/* Video container - completely clean */}
           <div className="relative h-full w-full">
             {videos.map((video, index) => (
               <div
@@ -188,9 +161,7 @@ export default function VideoPlayer() {
                 }`}
               >
                 <video
-                  ref={(el) => {
-                    videoRefs.current[index] = el;
-                  }}
+                  ref={(el) => { videoRefs.current[index] = el; }}
                   className="h-full w-full object-cover"
                   src={video.videoUrl}
                   loop
@@ -198,187 +169,268 @@ export default function VideoPlayer() {
                   muted={isMuted}
                   aria-label={`Video: ${video.title} by ${video.username}`}
                 />
-
-                {/* Mute/Unmute button */}
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={toggleMute}
-                      className="absolute left-4 top-14 z-10 rounded-full bg-black/40 p-2 text-white transition-colors hover:bg-black/60"
-                      aria-label={isMuted ? "Unmute video" : "Mute video"}
-                    >
-                      {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{isMuted ? "Unmute" : "Mute"}</p>
-                  </TooltipContent>
-                </Tooltip>
-
-                {/* Video text overlays */}
-                <div className="absolute left-0 right-0 top-1/4 z-10 flex flex-col items-center text-white">
-                  <div className="mb-2 rounded-lg bg-white px-4 py-2 text-xl font-bold text-black">
-                    {video.title}
-                  </div>
-                  <div className="rounded-lg bg-white px-4 py-1 text-lg font-bold text-black">
-                    {video.subtitle}
-                  </div>
-                </div>
-
-                {/* Interaction buttons */}
-                <div className="absolute bottom-24 right-2 z-10 flex flex-col items-center gap-6">
-                  {/* Profile */}
-                  <div className="flex flex-col items-center">
-                    <Avatar className="h-12 w-12 border-2 border-white">
-                      <AvatarImage
-                        src={video.userImage || "/placeholder.svg"}
-                      />
-                      <AvatarFallback>
-                        <User />
-                      </AvatarFallback>
-                    </Avatar>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className="mt-1 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-red-500 text-xs text-white transition-colors hover:bg-red-600">
-                          +
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Follow @{video.username}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </div>
-
-                  {/* Like */}
-                  <div className="flex flex-col items-center">
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-white hover:bg-transparent hover:text-red-500"
-                          onClick={() => toggleLike(video.id)}
-                          aria-label={
-                            likedVideos.includes(video.id)
-                              ? "Unlike video"
-                              : "Like video"
-                          }
-                        >
-                          <Heart
-                            className={`h-8 w-8 ${likedVideos.includes(video.id) ? "fill-red-500 text-red-500" : "fill-transparent"}`}
-                          />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>
-                          {likedVideos.includes(video.id) ? "Unlike" : "Like"}
-                        </p>
-                      </TooltipContent>
-                    </Tooltip>
-                    <span className="text-xs font-semibold text-white">
-                      {video.likes}
-                    </span>
-                  </div>
-
-                  {/* Comments */}
-                  <div className="flex flex-col items-center">
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-white hover:bg-transparent"
-                          aria-label="View comments"
-                        >
-                          <MessageCircle className="h-8 w-8" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Comments</p>
-                      </TooltipContent>
-                    </Tooltip>
-                    <span className="text-xs font-semibold text-white">
-                      {video.comments}
-                    </span>
-                  </div>
-
-                  {/* Bookmark */}
-                  <div className="flex flex-col items-center">
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-white hover:bg-transparent"
-                          onClick={() => toggleBookmark(video.id)}
-                          aria-label={
-                            bookmarkedVideos.includes(video.id)
-                              ? "Remove bookmark"
-                              : "Bookmark video"
-                          }
-                        >
-                          <Bookmark
-                            className={`h-8 w-8 ${bookmarkedVideos.includes(video.id) ? "fill-white" : "fill-transparent"}`}
-                          />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>
-                          {bookmarkedVideos.includes(video.id)
-                            ? "Remove Bookmark"
-                            : "Bookmark"}
-                        </p>
-                      </TooltipContent>
-                    </Tooltip>
-                    <span className="text-xs font-semibold text-white">
-                      {video.bookmarks}
-                    </span>
-                  </div>
-
-                  {/* Share */}
-                  <div className="flex flex-col items-center">
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-white hover:bg-transparent"
-                          aria-label="Share video"
-                        >
-                          <Share2 className="h-8 w-8" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Share</p>
-                      </TooltipContent>
-                    </Tooltip>
-                    <span className="text-xs font-semibold text-white">
-                      {video.shares}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Video info */}
-                <div className="absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black to-transparent p-4 text-white">
-                  <div className="mb-1 text-sm font-bold">{video.category}</div>
-                  <div className="mb-2 text-xs">
-                    {video.description}
-                    <span className="ml-1 text-gray-300">more</span>
-                  </div>
-                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Video Info Display - Bottom */}
-        <div className="w-full px-4 text-center text-gray-800">
-          <div className="text-sm opacity-75">
-            Video {currentVideoIndex + 1} of {videos.length} •{" "}
-            {currentVideo.category}
+        {/* All Content Below Video - Uses remaining 30% of viewport */}
+        <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-4">
+          {/* Video Title and Info */}
+          <div className="text-center">
+            <div className="text-2xl font-bold leading-tight text-gray-800">
+              {currentVideo.title} {currentVideo.subtitle}
+            </div>
+            <div className="mt-2 text-base text-gray-600">
+              @{currentVideo.username} • {currentVideo.category}
+            </div>
           </div>
-          <div className="mt-1 text-lg font-semibold">
-            @{currentVideo.username}
+
+          {/* Navigation Controls */}
+          <div className="flex items-center justify-between">
+            {/* Previous Button */}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="default"
+                  className="rounded-full border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+                  onClick={goToPreviousVideo}
+                  disabled={currentVideoIndex === 0}
+                  aria-label="Previous video"
+                >
+                  <ChevronUp className="mr-2 h-5 w-5" />
+                  <span className="text-sm">Previous</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Previous Video</p>
+              </TooltipContent>
+            </Tooltip>
+
+            {/* Video Progress Indicators */}
+            <div
+              className="flex gap-3"
+              role="tablist"
+              aria-label="Video navigation"
+            >
+              {videos.map((video, index) => (
+                <Tooltip key={index}>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => setCurrentVideoIndex(index)}
+                      className={`h-3 w-10 rounded-full transition-all duration-200 ${
+                        index === currentVideoIndex
+                          ? "bg-gray-800"
+                          : "bg-gray-300 hover:bg-gray-500"
+                      }`}
+                      role="tab"
+                      aria-selected={index === currentVideoIndex}
+                      aria-label={`Go to video ${index + 1}: ${video.title}`}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>
+                      Video {index + 1}: {video.title}
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              ))}
+            </div>
+
+            {/* Next Button */}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="default"
+                  className="rounded-full border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+                  onClick={goToNextVideo}
+                  disabled={currentVideoIndex === videos.length - 1}
+                  aria-label="Next video"
+                >
+                  <span className="text-sm">Next</span>
+                  <ChevronDown className="ml-2 h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Next Video</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+
+          {/* Video Controls and Profile */}
+          <div className="flex items-center justify-between">
+            {/* Mute/Unmute button */}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="default"
+                  onClick={toggleMute}
+                  className="rounded-full px-4 py-2"
+                  aria-label={isMuted ? "Unmute video" : "Mute video"}
+                >
+                  {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                  <span className="ml-2 text-sm">
+                    {isMuted ? "Unmute" : "Mute"}
+                  </span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{isMuted ? "Unmute" : "Mute"}</p>
+              </TooltipContent>
+            </Tooltip>
+
+            {/* Profile */}
+            <div className="flex items-center gap-3">
+              <Avatar className="h-12 w-12 border-2 border-gray-300">
+                <AvatarImage
+                  src={currentVideo.userImage || "/placeholder.svg"}
+                />
+                <AvatarFallback>
+                  <User />
+                </AvatarFallback>
+              </Avatar>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="default"
+                    className="px-4 py-2 text-sm text-red-500 hover:bg-red-50 hover:text-red-600"
+                  >
+                    Follow
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Follow @{currentVideo.username}</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </div>
+
+          {/* Interaction Buttons */}
+          <div className="flex items-center justify-center gap-10">
+            {/* Like */}
+            <div className="flex flex-col items-center">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-14 w-14 rounded-full text-gray-700 hover:bg-red-50 hover:text-red-500"
+                    onClick={() => toggleLike(currentVideo.id)}
+                    aria-label={
+                      likedVideos.includes(currentVideo.id)
+                        ? "Unlike video"
+                        : "Like video"
+                    }
+                  >
+                    <Heart
+                      className={`h-7 w-7 ${likedVideos.includes(currentVideo.id) ? "fill-red-500 text-red-500" : "fill-transparent"}`}
+                    />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    {likedVideos.includes(currentVideo.id) ? "Unlike" : "Like"}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+              <span className="mt-1 text-sm font-semibold text-gray-700">
+                {currentVideo.likes}
+              </span>
+            </div>
+
+            {/* Comments */}
+            <div className="flex flex-col items-center">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-14 w-14 rounded-full text-gray-700 hover:bg-blue-50 hover:text-blue-500"
+                    aria-label="View comments"
+                  >
+                    <MessageCircle className="h-7 w-7" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Comments</p>
+                </TooltipContent>
+              </Tooltip>
+              <span className="mt-1 text-sm font-semibold text-gray-700">
+                {currentVideo.comments}
+              </span>
+            </div>
+
+            {/* Bookmark */}
+            <div className="flex flex-col items-center">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-14 w-14 rounded-full text-gray-700 hover:bg-yellow-50 hover:text-yellow-500"
+                    onClick={() => toggleBookmark(currentVideo.id)}
+                    aria-label={
+                      bookmarkedVideos.includes(currentVideo.id)
+                        ? "Remove bookmark"
+                        : "Bookmark video"
+                    }
+                  >
+                    <Bookmark
+                      className={`h-7 w-7 ${bookmarkedVideos.includes(currentVideo.id) ? "fill-yellow-500 text-yellow-500" : "fill-transparent"}`}
+                    />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    {bookmarkedVideos.includes(currentVideo.id)
+                      ? "Remove Bookmark"
+                      : "Bookmark"}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+              <span className="mt-1 text-sm font-semibold text-gray-700">
+                {currentVideo.bookmarks}
+              </span>
+            </div>
+
+            {/* Share */}
+            <div className="flex flex-col items-center">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-14 w-14 rounded-full text-gray-700 hover:bg-green-50 hover:text-green-500"
+                    aria-label="Share video"
+                  >
+                    <Share2 className="h-7 w-7" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Share</p>
+                </TooltipContent>
+              </Tooltip>
+              <span className="mt-1 text-sm font-semibold text-gray-700">
+                {currentVideo.shares}
+              </span>
+            </div>
+          </div>
+
+          {/* Video Description */}
+          <div className="text-center text-gray-700">
+            <div className="text-sm leading-relaxed">
+              {currentVideo.description}
+              <span className="ml-1 cursor-pointer text-blue-500 hover:underline">
+                more
+              </span>
+            </div>
+            <div className="mt-2 text-sm text-gray-500">
+              Video {currentVideoIndex + 1} of {videos.length}
+            </div>
           </div>
         </div>
       </div>
