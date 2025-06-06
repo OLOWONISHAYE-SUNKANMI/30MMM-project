@@ -11,6 +11,16 @@ interface DonationPageClientProps {
   isPremium: boolean;
 }
 
+type DonationData = {
+  message: string;
+  data: {
+    amount: number;
+    tip?: number;
+    fees?: number;
+    total: number;
+  };
+};
+
 const DonationPageClient: React.FC<DonationPageClientProps> = ({
   userName,
   userEmail,
@@ -43,7 +53,7 @@ const DonationPageClient: React.FC<DonationPageClientProps> = ({
     setWidgetLoading(true);
   };
 
-  const handleDonationCompleted = (donationData: any) => {
+  const handleDonationCompleted = (donationData: DonationData) => {
     console.log("Donation completed with data:", donationData);
 
     // You can handle the donation completion here:
@@ -53,7 +63,7 @@ const DonationPageClient: React.FC<DonationPageClientProps> = ({
     // - Send analytics events
 
     // Example: Show success alert
-    alert(`Success! Donated ${donationData.total}`);
+    alert(`Success! Donated ${donationData.data.total}`);
 
     // Add logic to change state to showcase 'thank you' on screen for 10secs (TBD -> push to the Dashboard!!!)
     router.push("/thank-you");
