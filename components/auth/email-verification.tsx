@@ -1,5 +1,13 @@
 "use client";
 
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
@@ -18,14 +26,6 @@ import {
 } from "@/components/ui/input-otp";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
 
 const FormSchema = z.object({
   pin: z.string().min(6, {
@@ -76,21 +76,21 @@ export default function EmailVerification({ email }: { email?: string }) {
   }
 
   return (
-    <Card className="z-10 flex flex-col justify-start max-md:justify-between space-y-10 shadow-none lg:pt-20 border-none outline-none h-full">
+    <Card className="z-10 flex h-full flex-col justify-start space-y-10 border-none shadow-none outline-none max-md:justify-between lg:pt-20">
       <Image
-        className="block z-10 mx-auto -mt-16 md:mt-16"
+        className="z-10 mx-auto -mt-16 block md:mt-16"
         src="/logo.png"
         alt="Logo"
         width={120}
         height={120}
       />
-      <h1 className="md:mb-6 font-semibold text-4xl text-center">
+      <h1 className="text-center text-4xl font-semibold md:mb-6">
         Verify Email Address
       </h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="items-start place-content-center gap-y-10 space-y-10 grid w-full text-center"
+          className="grid w-full place-content-center items-start gap-y-10 space-y-10 text-center"
         >
           <CardContent>
             <FormField
@@ -129,46 +129,47 @@ export default function EmailVerification({ email }: { email?: string }) {
               )}
             />
           </CardContent>
-        </form>
-        <CardFooter>
-          <div
-            className={cn(
-              "flex w-full flex-col items-center justify-between gap-2",
-            )}
-          >
-            <Button
-              type="submit"
-              className="block w-fit"
-              disabled={loading}
-            >
-              {loading ? (
-                <Loader2
-                  size={16}
-                  className="animate-spin"
-                />
-              ) : (
-                "Verify Email"
+
+          <CardFooter>
+            <div
+              className={cn(
+                "flex w-full flex-col items-center justify-between gap-2",
               )}
-            </Button>
-            <div className="block justify-center items-center gap-2 mt-5 w-full font-light text-sm text-center">
-              <span className="gap-2 tracking-tight">
-                Didn&apos;t receive the code?{" "}
-              </span>
+            >
               <Button
-                variant="link"
-                onClick={() => {
-                  authClient.emailOtp.sendVerificationOtp({
-                    email: email as string,
-                    type: "email-verification",
-                  });
-                }}
-                className="font-semibold text-primary-red tracking-tighter"
+                type="submit"
+                className="block w-fit"
+                disabled={loading}
               >
-                Request New Code
+                {loading ? (
+                  <Loader2
+                    size={16}
+                    className="animate-spin"
+                  />
+                ) : (
+                  "Verify Email"
+                )}
               </Button>
+              <div className="mt-5 block w-full items-center justify-center gap-2 text-center text-sm font-light">
+                <span className="gap-2 tracking-tight">
+                  Didn&apos;t receive the code?{" "}
+                </span>
+                <Button
+                  variant="link"
+                  onClick={() => {
+                    authClient.emailOtp.sendVerificationOtp({
+                      email: email as string,
+                      type: "email-verification",
+                    });
+                  }}
+                  className="font-semibold tracking-tighter text-primary-red"
+                >
+                  Request New Code
+                </Button>
+              </div>
             </div>
-          </div>
-        </CardFooter>
+          </CardFooter>
+        </form>
       </Form>
     </Card>
   );
