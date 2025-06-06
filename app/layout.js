@@ -1,6 +1,6 @@
 import "@/app/globals.css";
 import { Alexandria } from "next/font/google";
-import { Script } from "next/script";
+import Script from "next/script";
 import Footer from "@/components/common/Footer/Footer";
 import NavBar from "@/components/common/NavBar";
 import { Toaster } from "@/components/ui/sonner";
