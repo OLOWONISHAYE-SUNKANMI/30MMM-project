@@ -1,5 +1,6 @@
 import "@/app/globals.css";
 import { Alexandria } from "next/font/google";
+import { Script } from "next/script";
 import Footer from "@/components/common/Footer/Footer";
 import NavBar from "@/components/common/NavBar";
 import { Toaster } from "@/components/ui/sonner";
@@ -19,15 +20,17 @@ export default function RootLayout({ children }) {
       lang="en"
       suppressHydrationWarning
     >
-      <head>
-        <script async="async" src="https://www.pledge.to/assets/widget.js"></script>
-      </head>
       <body className={`${alexandria.className} antialiased`}>
         <NavBar />
         <main className="mt-20">{children}</main>
         <Toaster />
         <Footer />
       </body>
+      <Script
+        strategy="afterInteractive"
+        id="plg-widget"
+        src="https://www.pledge.to/assets/widget.js"
+      />
     </html>
   );
 }
