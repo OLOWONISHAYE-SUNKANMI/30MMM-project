@@ -148,14 +148,29 @@ export default function Profile() {
                 htmlFor="maritalStatus"
                 className="mx-8 block"
               >
-                <input
-                  type="text"
+                <select
                   name="maritalStatus"
                   onChange={handleChange}
                   value={formData.maritalStatus}
                   className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
-                  placeholder="Marital Status"
-                />
+                >
+                  {/* Placeholder option - acts like your original placeholder */}
+                  <option
+                    value=""
+                    disabled
+                  >
+                    Select Marital Status
+                  </option>
+
+                  {/* Your selectable options */}
+                  <option value="single">Single</option>
+                  <option value="dating">Dating</option>
+                  <option value="engaged">Engaged</option>
+                  <option value="married">Married</option>
+                  <option value="separated">Separated</option>
+                  <option value="divorced">Divorced</option>
+                  <option value="widowed">Widowed</option>
+                </select>
               </label>
               <div className="block px-8">
                 <button
