@@ -2,9 +2,20 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import ErrorMessage from "@/components/common/Forms/error-message";
+import * as validators from "./form-validators";
 
 export default function Profile() {
   const [firstTabActive, setFirstTabActive] = useState(true);
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    birthdate: "",
+    maritalStatus: "",
+    email: "",
+    telephone: "",
+    address: "",
+  });
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -20,20 +31,75 @@ export default function Profile() {
     zipcode: "",
   });
 
-  // Every field uses this function to update the form data.
+  const validateForm = () => {
+    const newErrors = {
+      firstName: validators.validateFirstName(formData.firstName),
+      lastName: validators.validateLastName(formData.lastName),
+      birthdate: validators.validateBirthdate(formData.birthdate),
+      maritalStatus: validators.validateMaritalStatus(formData.maritalStatus),
+      email: validators.validateEmail(formData.email),
+      telephone: validators.validateTelephone(formData.telephone),
+      address: validators.validateAddress(formData.address),
+    };
+
+    setErrors(newErrors);
+
+    // Return true if no errors exist
+    return Object.values(newErrors).every((error) => error === "");
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // The name and value of the targeted field is deconstructed from the event object.
-    // We plug in the previous state of the form data, then overwrite only the targeted field and value.
 
+    // Update form data as before
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+
+    // Validate the field and update errors
+    let errorMessage = "";
+
+    switch (name) {
+      case "firstName":
+        errorMessage = validators.validateFirstName(value);
+        break;
+      case "lastName":
+        errorMessage = validators.validateLastName(value);
+        break;
+      case "birthdate":
+        errorMessage = validators.validateBirthdate(value);
+        break;
+      case "maritalStatus":
+        errorMessage = validators.validateMaritalStatus(value);
+        break;
+      case "email":
+        errorMessage = validators.validateEmail(value);
+        break;
+      case "telephone":
+        errorMessage = validators.validateTelephone(value);
+        break;
+      case "address":
+        errorMessage = validators.validateAddress(value);
+        break;
+    }
+
+    // Update the error state for this specific field
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: errorMessage,
     }));
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate the entire form
+    if (!validateForm()) {
+      alert("Please correct the errors before submitting");
+      return;
+    }
+
     console.log(`Submitting: ${JSON.stringify(formData)}`);
 
     try {
@@ -52,11 +118,35 @@ export default function Profile() {
       const data = await response.json();
       console.log("Profile saved:", data);
 
-      // Redirect to payment page
       window.location.href = "/payment";
     } catch (error) {
       console.error("Error saving profile:", error);
       alert("Error saving profile. Please try again.");
+    }
+  };
+
+  const validateFirstTab = () => {
+    const firstTabErrors = {
+      firstName: validators.validateFirstName(formData.firstName),
+      lastName: validators.validateLastName(formData.lastName),
+      birthdate: validators.validateBirthdate(formData.birthdate),
+      maritalStatus: validators.validateMaritalStatus(formData.maritalStatus),
+    };
+
+    // Update errors for first tab fields
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      ...firstTabErrors,
+    }));
+
+    return Object.values(firstTabErrors).every((error) => error === "");
+  };
+
+  const handleNextTab = () => {
+    if (validateFirstTab()) {
+      setFirstTabActive(false);
+    } else {
+      alert("Please complete all fields on this tab before continuing");
     }
   };
 
@@ -114,10 +204,14 @@ export default function Profile() {
                   name="firstName"
                   onChange={handleChange}
                   value={formData.firstName}
-                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
+                  className={`mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0 ${
+                    errors.firstName ? "bg-red-50/75 ring-2 ring-red-500" : ""
+                  }`}
                   placeholder="First Name"
                 />
+                <ErrorMessage error={errors.firstName} />
               </label>
+
               <label
                 htmlFor="lastName"
                 className="mx-8 block"
@@ -127,10 +221,14 @@ export default function Profile() {
                   name="lastName"
                   onChange={handleChange}
                   value={formData.lastName}
-                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
+                  className={`mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0 ${
+                    errors.lastName ? "bg-red-50/75 ring-2 ring-red-500" : ""
+                  }`}
                   placeholder="Last Name"
                 />
+                <ErrorMessage error={errors.lastName} />
               </label>
+
               <label
                 htmlFor="birthdate"
                 className="mx-8 block"
@@ -140,10 +238,14 @@ export default function Profile() {
                   name="birthdate"
                   onChange={handleChange}
                   value={formData.birthdate}
-                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
+                  className={`mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0 ${
+                    errors.birthdate ? "bg-red-50/75 ring-2 ring-red-500" : ""
+                  }`}
                   placeholder="Birthdate"
                 />
+                <ErrorMessage error={errors.birthdate} />
               </label>
+
               <label
                 htmlFor="maritalStatus"
                 className="mx-8 block"
@@ -152,17 +254,18 @@ export default function Profile() {
                   name="maritalStatus"
                   onChange={handleChange}
                   value={formData.maritalStatus}
-                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
+                  className={`mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0 ${
+                    errors.maritalStatus
+                      ? "bg-red-50/75 ring-2 ring-red-500"
+                      : ""
+                  }`}
                 >
-                  {/* Placeholder option - acts like your original placeholder */}
                   <option
                     value=""
                     disabled
                   >
                     Select Marital Status
                   </option>
-
-                  {/* Your selectable options */}
                   <option value="single">Single</option>
                   <option value="dating">Dating</option>
                   <option value="engaged">Engaged</option>
@@ -171,10 +274,13 @@ export default function Profile() {
                   <option value="divorced">Divorced</option>
                   <option value="widowed">Widowed</option>
                 </select>
+                <ErrorMessage error={errors.maritalStatus} />
               </label>
+
               <div className="block px-8">
                 <button
-                  onClick={() => setFirstTabActive(false)}
+                  type="button"
+                  onClick={handleNextTab}
                   className="relative my-6 flow-root w-full place-self-center rounded-2xl bg-primary-red py-2 hover:bg-primary-red/90"
                 >
                   <span className="text-center text-lg font-medium tracking-wider text-white">
@@ -197,6 +303,7 @@ export default function Profile() {
                   className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                   placeholder="Email"
                 />
+                <ErrorMessage error={errors.email} />
               </label>
               <label
                 htmlFor="telephone"
@@ -210,6 +317,7 @@ export default function Profile() {
                   className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                   placeholder="Phone Number"
                 />
+                <ErrorMessage error={errors.telephone} />
               </label>
               <label
                 htmlFor="address"
@@ -223,6 +331,7 @@ export default function Profile() {
                   className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                   placeholder="Address"
                 />
+                <ErrorMessage error={errors.address} />
               </label>
               <div className="block px-8">
                 <button
