@@ -49,7 +49,7 @@ const DonationPageClient: React.FC<DonationPageClientProps> = ({
     setDiscountPercentage(percentage);
     setDiscountApplied(percentage > 0);
 
-    // When discount changes, we should how loading state again
+    // When discount changes, the loading widget should display again
     setWidgetLoading(true);
   };
 
