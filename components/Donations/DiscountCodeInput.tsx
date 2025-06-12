@@ -144,18 +144,6 @@ const DiscountCodeInput: React.FC<DiscountCodeInputProps> = ({
           {errorMessage && (
             <p className="mt-2 text-sm text-red-600">{errorMessage}</p>
           )}
-
-          <div className="mt-3 text-xs text-gray-500">
-            <p className="font-medium">Available codes:</p>
-            <ul className="mt-1 space-y-1">
-              {Object.entries(DISCOUNT_CODES).map(([code, details]) => (
-                <li key={code}>
-                  <span className="font-mono">{code}</span> -{" "}
-                  {details.description}
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       )}
     </div>
