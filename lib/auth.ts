@@ -13,6 +13,11 @@ import {
 
 export const auth = betterAuth({
   // baseURL: baseUrl,
+  session: {
+    expiresIn: 60 * 60 * 24 * 4, // 4 days
+    updateAge: 60 * 60 * 24, // 1 day (every 1 day the session expiration is updated)
+    freshAge: 60 * 60 * 12, // 12 hours (if the session is used within 12 hours, it will be considered fresh)
+  },
   user: {
     additionalFields: {
       premium: {
