@@ -26,11 +26,11 @@ export default function RootLayout({ children }) {
         <Toaster />
         <Footer />
       </body>
-      <Script
+      {/* <Script
         strategy="afterInteractive"
         id="plg-widget"
         src="https://www.pledge.to/assets/widget.js"
-      />
+      /> */}
       <Script
         strategy="afterInteractive"
         id="plg-widget"
