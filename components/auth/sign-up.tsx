@@ -259,7 +259,7 @@ export default function SignUp({ callbackUrl }: { callbackUrl?: string }) {
       <div className="mb-5 inline-flex w-full items-center justify-center gap-2 text-center text-xs font-light">
         <span className="gap-2 tracking-tight">Already have an account?</span>
         <Link
-          href="/Login"
+          href="/LogIn"
           className="tracking-tighter text-primary-red"
         >
           Log in

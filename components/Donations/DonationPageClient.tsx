@@ -29,7 +29,7 @@ const DonationPageClient: React.FC<DonationPageClientProps> = ({
   const router = useRouter();
 
   // State for widget ID and discount
-  const [widgetId, setWidgetId] = useState("6001a7e96432fade057cd8984f0b4c2a"); // Default widget ID
+  const [widgetId, setWidgetId] = useState("5923b2d99a674da1d3067e12804ab823"); // Default widget ID
   const [discountPercentage, setDiscountPercentage] = useState<number | null>(
     null,
   );
