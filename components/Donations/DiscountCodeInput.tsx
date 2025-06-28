@@ -6,31 +6,6 @@ interface DiscountCodeInputProps {
   onApplyDiscount: (newWidgetId: string, percentage: number) => void;
 }
 
-// Define available discount codes and their corresponding widget IDs
-// TODO: revise the widget IDs to match test widget IDs
-const DISCOUNT_CODES = {
-  FREE100: {
-    percentage: 100,
-    widgetId: "6001a7e96432fade057cd8984f0b4c2a-free",
-    description: "100% off (Free)",
-  },
-  SAVE75: {
-    percentage: 75,
-    widgetId: "6001a7e96432fade057cd8984f0b4c2a-75off",
-    description: "75% off",
-  },
-  HALF50: {
-    percentage: 50,
-    widgetId: "6001a7e96432fade057cd8984f0b4c2a-50off",
-    description: "50% off",
-  },
-  QUARTER25: {
-    percentage: 25,
-    widgetId: "6001a7e96432fade057cd8984f0b4c2a-25off",
-    description: "25% off",
-  },
-} as const;
-
 const DiscountCodeInput: React.FC<DiscountCodeInputProps> = ({
   onApplyDiscount,
 }) => {
@@ -39,10 +14,36 @@ const DiscountCodeInput: React.FC<DiscountCodeInputProps> = ({
   const [errorMessage, setErrorMessage] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState<{
     code: string;
-    percentage: number;
+    percentage: string;
+    message: string;
   } | null>(null);
 
-  const handleApplyDiscount = () => {
+  const validateDiscountCode = async (code: string) => {
+    try {
+      const response = await fetch("/api/validate-discount", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          discountCode: code,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to validate discount code");
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error validating discount code:", error);
+      throw error;
+    }
+  };
+
+  const handleApplyDiscount = async () => {
     const trimmedCode = discountCode.trim().toUpperCase();
 
     // Clear previous error
@@ -53,30 +54,39 @@ const DiscountCodeInput: React.FC<DiscountCodeInputProps> = ({
       return;
     }
 
-    // Check if the code exists in our discount codes
-    const discount = DISCOUNT_CODES[trimmedCode as keyof typeof DISCOUNT_CODES];
-
-    if (!discount) {
-      setErrorMessage("Invalid discount code. Please try again.");
-      return;
-    }
-
     setIsApplying(true);
 
-    // Simulate a brief loading state
-    setTimeout(() => {
-      // Apply the discount
-      onApplyDiscount(discount.widgetId, discount.percentage);
+    try {
+      const result = await validateDiscountCode(trimmedCode);
 
-      // Update local state
-      setAppliedDiscount({
-        code: trimmedCode,
-        percentage: discount.percentage,
-      });
+      if (result.valid) {
+        // Extract percentage number from discount_type (assuming it's like "10%" or "10")
+        const percentageMatch = result.discountPercentage
+          .toString()
+          .match(/\d+/);
+        const percentage = percentageMatch ? parseInt(percentageMatch[0]) : 0;
 
+        // Apply the discount using the widget ID and percentage from the API
+        onApplyDiscount(result.widgetId, percentage);
+
+        // Update local state
+        setAppliedDiscount({
+          code: trimmedCode,
+          percentage: result.discountPercentage,
+          message: result.message,
+        });
+
+        setDiscountCode("");
+      } else {
+        setErrorMessage(
+          result.message || "Invalid discount code. Please try again.",
+        );
+      }
+    } catch (error) {
+      setErrorMessage("Failed to validate discount code. Please try again.");
+    } finally {
       setIsApplying(false);
-      setDiscountCode("");
-    }, 500);
+    }
   };
 
   const handleClearDiscount = () => {
@@ -108,7 +118,7 @@ const DiscountCodeInput: React.FC<DiscountCodeInputProps> = ({
                 Discount Applied: {appliedDiscount.code}
               </p>
               <p className="text-sm text-green-600">
-                {appliedDiscount.percentage}% off your purchase
+                {appliedDiscount.message}
               </p>
             </div>
             <button
