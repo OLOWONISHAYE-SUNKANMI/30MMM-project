@@ -50,7 +50,7 @@ export default function NavBar() {
       "/churches",
     ],
     hideButtons: [
-      "/LogIn",
+      "/login",
       "/signup",
       "/pricing",
       "/dashboard",
@@ -163,7 +163,7 @@ export default function NavBar() {
 
     return (
       <>
-        <NavLink href="/LogIn">
+        <NavLink href="/login">
           <Button
             variant="outline"
             className="w-full border-primary-red text-primary-red hover:bg-primary-red hover:text-white"
