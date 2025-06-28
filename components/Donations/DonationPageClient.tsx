@@ -101,10 +101,10 @@ const DonationPageClient: React.FC<DonationPageClientProps> = ({
       {/* Personalized welcome message */}
       <div className="mb-8 text-center">
         <h1 className="mb-2 text-3xl font-bold">Hello, {userName}</h1>
-        <p className="text-lg text-gray-600">
+        <p className="text-xl text-gray-600">
           Please use this email:{" "}
-          <span className="font-medium">{userEmail}</span> when you make your
-          payment with Pledge below.
+          <span className="font-bold text-primary-red">{userEmail}</span> when
+          you make your payment with Pledge below.
         </p>
       </div>
 

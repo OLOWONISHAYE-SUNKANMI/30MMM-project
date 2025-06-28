@@ -27,6 +27,7 @@ const PledgeWidget: React.FC<PledgeWidgetProps> = ({
 
   // Call onLoaded when component is mounted and widget div is rendered
   useEffect(() => {
+    console.log("widgetid", widgetId);
     if (mounted && widgetId) {
       // Small delay to ensure the widget div is in the DOM
       const timer = setTimeout(() => {
