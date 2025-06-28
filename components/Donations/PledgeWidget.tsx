@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 // Define prop types for better type safety (optional but recommended)
 interface PledgeWidgetProps {
@@ -16,6 +17,7 @@ const PledgeWidget: React.FC<PledgeWidgetProps> = ({
   maxWidth = "max-w-3xl",
   onLoaded = () => {},
 }) => {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
 
   // Only set mounted to true after the component has been hydrated
@@ -38,6 +40,11 @@ const PledgeWidget: React.FC<PledgeWidgetProps> = ({
   // Don't render the widget div until we're sure we're on the client
   if (!mounted) {
     return null;
+  }
+
+  if (widgetId && widgetId.trim() === "FREE") {
+    router.push("/dashboard");
+    return;
   }
 
   // Edge case: Check if widgetId is valid
