@@ -1,10 +1,10 @@
+import { useState } from "react";
 import { useDashboardContext } from "@/contexts/dashboard/dashboard-provider";
 import { FaChevronDown } from "react-icons/fa";
 import DonateHero from "@/components/Dashboard/DonateHero";
 import intToRoman from "@/lib/intToRoman";
 import CardSection from "./CardSection";
 import PledgeWidget from "./PledgeWidget";
-import { useState } from "react";
 
 export default function MainBody() {
   const { userInfo, userProgress } = useDashboardContext();
@@ -15,11 +15,10 @@ export default function MainBody() {
   const handleDonateClick = () => {
     setShowPledgeWidget(true);
   };
-  
+
   return (
-    
-    <div className="relative mx-auto mb-8 mt-24 flex min-h-screen w-full max-w-[1200px] flex-col items-start gap-y-5 space-y-4 pt-12 max-lg:mx-2">
-      <div className="flex flex-wrap items-center justify-start w-full gap-2 md:gap-y-5">
+    <div className="relative mx-auto mb-8 flex min-h-screen w-full max-w-[1200px] flex-col items-start gap-y-5 space-y-4 pt-12 max-lg:mx-2">
+      <div className="flex w-full flex-wrap items-center justify-start gap-2 md:gap-y-5">
         <h1 className="text-3xl font-bold leading-relaxed md:text-4xl">
           Hello, {userInfo.fullName}
         </h1>
@@ -33,20 +32,21 @@ export default function MainBody() {
           </span>
         </h2>
       </div>
-      <PledgeWidget widgetId="841c0da0251d58fc11cad80237f79397" />
+      {/* <PledgeWidget widgetId="841c0da0251d58fc11cad80237f79397" /> */}
       <DonateHero />
-      
-      {/* Conditional rendering with improved handling of DonateHero */}
+      {/* Conditional rendering with improved handling of DonateHero
       {showPledgeWidget ? (
-        <div className="flex justify-center w-full">
-          <div className="plg-donate w-full max-w-[800px]" data-widget-id="S1NzAwq1gKUewVE3"></div>
+        <div className="flex w-full justify-center">
+          <div
+            className="plg-donate w-full max-w-[800px]"
+            data-widget-id="S1NzAwq1gKUewVE3"
+          ></div>
         </div>
       ) : (
         <DonateHero onClick={handleDonateClick} />
-      )}
-      
+      )} */}
       {/* The sizes by lines are 22 14 12 and the buttons are 16 */}
-      <div className="w-full mr-auto">
+      <div className="mr-auto w-full">
         <h4 className="text-3xl font-semibold leading-7 tracking-wider">
           CLEAN {cohortText}
         </h4>
