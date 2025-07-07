@@ -1,7 +1,5 @@
 "use client";
 
-// components/donation/DonationPage.tsx
-// Step 3: Discount Code System Implementation
 import React, { useEffect, useState } from "react";
 
 // Mock router for demo - in real Next.js, you'd use: import { useRouter } from "next/navigation"
@@ -12,11 +10,10 @@ const useMockRouter = () => ({
   },
 });
 
-// Define the structure of a discount code for type safety
 interface DiscountCode {
   code: string;
   percentage: number;
-  widgetId: string; // Each discount level gets a different Pledge widget ID
+  widgetId?: string;
 }
 
 interface DonationPageProps {
@@ -25,6 +22,8 @@ interface DonationPageProps {
   isPremium: boolean;
 }
 
+const BASE_DONATION = 10000; // $100.00 in cents
+
 const DonationPage: React.FC<DonationPageProps> = ({
   userName,
   userEmail,
@@ -32,91 +31,143 @@ const DonationPage: React.FC<DonationPageProps> = ({
 }) => {
   const router = useMockRouter();
 
-  // State to track if we're in the process of redirecting
   const [isRedirecting, setIsRedirecting] = useState(false);
-
-  // Discount code state management - multiple related pieces of state
-  const [discountCode, setDiscountCode] = useState(""); // What user is typing
+  const [discountCode, setDiscountCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState<DiscountCode | null>(
     null,
-  ); // Successfully applied discount
-  const [isValidating, setIsValidating] = useState(false); // Loading state during validation
-  const [validationError, setValidationError] = useState<string | null>(null); // Error message to show user
-
-  // Default Pledge widget ID - gets replaced when discount is applied
-  const [currentWidgetId, setCurrentWidgetId] = useState(
-    "6001a7e96432fade057cd8984f0b4c2a",
   );
+  const [isValidating, setIsValidating] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
-  // API function to validate discount codes (would connect to your backend)
+  // Validate discount codes using your API route
   const validateDiscountCode = async (
     code: string,
   ): Promise<DiscountCode | null> => {
-    // Simulate API call delay for realistic UX
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch("/api/validate-discount", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          discountCode: code,
+        }),
+      });
 
-    // Mock validation logic - in real app, this hits your API endpoint
-    const mockDiscounts: Record<string, DiscountCode> = {
-      SAVE10: { code: "SAVE10", percentage: 10, widgetId: "widget-10-percent" },
-      SAVE20: { code: "SAVE20", percentage: 20, widgetId: "widget-20-percent" },
-      SAVE50: { code: "SAVE50", percentage: 50, widgetId: "widget-50-percent" },
-    };
+      const data = await response.json();
 
-    return mockDiscounts[code.toUpperCase()] || null;
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to validate discount code");
+      }
+
+      if (data.valid) {
+        return {
+          code: code.toUpperCase(),
+          percentage: data.discountPercentage,
+          widgetId: data.widgetId,
+        };
+      } else {
+        // Return null for invalid codes - the error message will be handled separately
+        return null;
+      }
+    } catch (error) {
+      console.error("Error validating discount code:", error);
+      throw error;
+    }
   };
 
-  // Handle discount code form submission
   const handleApplyDiscount = async () => {
-    // Validation: don't process empty codes
     if (!discountCode.trim()) return;
-
-    // Start loading state and clear any previous errors
     setIsValidating(true);
     setValidationError(null);
 
     try {
       const discount = await validateDiscountCode(discountCode.trim());
-
       if (discount) {
-        // Success: apply the discount and update widget
         setAppliedDiscount(discount);
-        setCurrentWidgetId(discount.widgetId);
-        setDiscountCode(""); // Clear the input for better UX
+        setDiscountCode("");
       } else {
-        // Error: show user-friendly message
+        // Try to get more specific error message from API
+        const response = await fetch("/api/validate-discount", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            discountCode: discountCode.trim(),
+          }),
+        });
+
+        const data = await response.json();
         setValidationError(
-          "Invalid discount code. Please check and try again.",
+          data.message || "Invalid discount code. Please check and try again.",
         );
       }
     } catch (error) {
-      // Handle network errors gracefully
-      console.error("Error validating discount:", error);
       setValidationError("Unable to validate discount code. Please try again.");
     } finally {
-      // Always stop loading state, regardless of success or failure
       setIsValidating(false);
     }
   };
 
-  // Handle Enter key press in discount input (better UX)
   const handleDiscountKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       handleApplyDiscount();
     }
   };
 
-  // useEffect hook - runs after component mounts and when dependencies change
+  const removeDiscount = () => {
+    setAppliedDiscount(null);
+    setValidationError(null);
+  };
+
   useEffect(() => {
     if (isPremium) {
       setIsRedirecting(true);
-      // Simulate slight delay for better UX (shows loading state briefly)
       setTimeout(() => {
         router.push("/dashboard");
       }, 1000);
     }
-  }, [isPremium, router]); // Dependencies array - effect runs when these values change
+  }, [isPremium, router]);
 
-  // Early return pattern - if user is premium, show loading state instead of payment UI
+  // Calculate final donation amount after discount
+  const getFinalAmount = () => {
+    if (!appliedDiscount) return BASE_DONATION;
+    return Math.round(BASE_DONATION * (1 - appliedDiscount.percentage / 100));
+  };
+
+  // Stripe Checkout handler
+  const handleDonate = async () => {
+    setIsProcessingPayment(true);
+    setValidationError(null);
+
+    try {
+      // Call your backend API to create a Stripe Checkout session
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: getFinalAmount(), // in cents
+          email: userEmail,
+          discountCode: appliedDiscount?.code || null,
+          widgetId: appliedDiscount?.widgetId || null,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create Stripe session");
+      }
+
+      const { sessionUrl } = await response.json();
+      // Redirect to Stripe Checkout
+      window.location.href = sessionUrl;
+    } catch (error) {
+      setValidationError("Could not start payment. Please try again.");
+      setIsProcessingPayment(false);
+    }
+  };
+
   if (isPremium && isRedirecting) {
     return (
       <div className="mx-auto max-w-4xl p-6">
@@ -134,10 +185,10 @@ const DonationPage: React.FC<DonationPageProps> = ({
       </div>
     );
   }
-  // Main payment flow UI - only shown to non-premium users
+
   return (
     <div className="mx-auto max-w-4xl p-6">
-      {/* Header Section */}
+      {/* Header */}
       <div className="mb-8 text-center">
         <h1 className="mb-2 text-3xl font-bold">Hello, {userName}!</h1>
         <p className="text-lg text-gray-600">
@@ -146,24 +197,20 @@ const DonationPage: React.FC<DonationPageProps> = ({
           payment.
         </p>
       </div>
-
-      {/* Step progress indicator */}
+      {/* Step progress indicator
       <div className="mb-6 rounded-lg border border-green-200 bg-green-50 p-4">
         <h3 className="font-semibold text-green-800">Step 3 Complete ✓</h3>
         <p className="text-green-700">
           Discount code system with validation and error handling
         </p>
         <p className="mt-1 text-sm text-green-600">
-          Try codes: SAVE10, SAVE20, SAVE50, or enter an invalid code to see
-          error handling
+          Using real discount codes from your database with expiration and usage
+          limit validation
         </p>
-      </div>
-
-      {/* Discount Code Input Section */}
+      </div> */}
+      {/* Discount Code Input */}
       <div className="mb-6 rounded-lg border border-gray-200 p-6">
         <h3 className="mb-4 text-lg font-semibold">Have a discount code?</h3>
-
-        {/* Input and button container */}
         <div className="mb-4 flex gap-3">
           <input
             type="text"
@@ -177,68 +224,83 @@ const DonationPage: React.FC<DonationPageProps> = ({
           <button
             onClick={handleApplyDiscount}
             disabled={!discountCode.trim() || isValidating}
-            className="rounded-md bg-blue-600 px-6 py-2 text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+            className="rounded-md bg-primary-red px-6 py-2 text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-gray-400"
           >
             {isValidating ? "Validating..." : "Apply"}
           </button>
         </div>
-
-        {/* Error message display */}
         {validationError && (
           <div className="rounded-md border border-red-200 bg-red-50 p-3">
             <p className="text-sm text-red-700">{validationError}</p>
           </div>
         )}
-
-        {/* Success message for applied discount */}
         {appliedDiscount && (
           <div className="rounded-md border border-green-200 bg-green-50 p-3">
-            <div className="flex items-center">
-              <svg
-                className="mr-2 h-5 w-5 text-green-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <svg
+                  className="mr-2 h-5 w-5 text-green-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <p className="font-medium text-green-700">
+                  Great! Your {appliedDiscount.percentage}% discount (
+                  {appliedDiscount.code}) has been applied.
+                </p>
+              </div>
+              <button
+                onClick={removeDiscount}
+                className="text-sm text-red-600 underline hover:text-red-800"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                ></path>
-              </svg>
-              <p className="font-medium text-green-700">
-                Great! Your {appliedDiscount.percentage}% discount (
-                {appliedDiscount.code}) has been applied.
-              </p>
+                Remove
+              </button>
             </div>
           </div>
         )}
       </div>
-
-      {/* Widget placeholder showing current configuration */}
+      {/* Stripe Payment Section */}
       <div className="space-y-6">
         <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
-          <h3 className="mb-3 font-semibold text-gray-700">
-            Payment Widget Configuration
-          </h3>
-          {/* TODO: remove this p tag when functional */}
-          <p className="mb-2 text-gray-600">
-            Current Widget ID:{" "}
-            <code className="rounded bg-gray-200 px-2 py-1 text-sm">
-              {currentWidgetId}
-            </code>
-          </p>
-          {appliedDiscount && (
-            <p className="font-medium text-green-700">
-              Discount Applied: {appliedDiscount.percentage}% off
-            </p>
-          )}
-          <div className="mt-4 rounded border bg-white p-4">
-            <p className="text-sm text-gray-600">
-              Next: Add actual Pledge.to widget integration
-            </p>
+          <h3 className="mb-3 font-semibold text-gray-700">Donation Summary</h3>
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span className="text-gray-600">Original Amount:</span>
+              <span className="font-medium">
+                ${(BASE_DONATION / 100).toFixed(2)}
+              </span>
+            </div>
+            {appliedDiscount && (
+              <div className="flex justify-between">
+                <span className="text-green-700">
+                  Discount ({appliedDiscount.percentage}% off):
+                </span>
+                <span className="font-medium text-green-700">
+                  -${((BASE_DONATION - getFinalAmount()) / 100).toFixed(2)}
+                </span>
+              </div>
+            )}
+            <div className="flex justify-between border-t pt-2">
+              <span className="font-semibold text-gray-800">Final Amount:</span>
+              <span className="text-lg font-bold text-black">
+                ${(getFinalAmount() / 100).toFixed(2)}
+              </span>
+            </div>
           </div>
+          <button
+            onClick={handleDonate}
+            disabled={isProcessingPayment}
+            className="mt-4 w-full rounded-md bg-primary-red px-8 py-3 text-lg font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+          >
+            {isProcessingPayment ? "Processing..." : "Donate with Stripe"}
+          </button>
         </div>
       </div>
     </div>
