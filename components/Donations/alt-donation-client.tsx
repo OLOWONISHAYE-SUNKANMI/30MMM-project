@@ -68,7 +68,6 @@ const DonationPage: React.FC<DonationPageProps> = ({
           widgetId: data.widgetId,
         };
       } else {
-        // Return null for invalid codes - the error message will be handled separately
         return null;
       }
     } catch (error) {
@@ -156,14 +155,25 @@ const DonationPage: React.FC<DonationPageProps> = ({
       });
 
       if (!response.ok) {
-        throw new Error("Failed to create Stripe session");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to create Stripe session");
       }
 
       const { sessionUrl } = await response.json();
+
+      if (!sessionUrl) {
+        throw new Error("No session URL returned from server");
+      }
+
       // Redirect to Stripe Checkout
       window.location.href = sessionUrl;
     } catch (error) {
-      setValidationError("Could not start payment. Please try again.");
+      console.error("Payment initiation error:", error);
+      setValidationError(
+        error instanceof Error
+          ? error.message
+          : "Could not start payment. Please try again.",
+      );
       setIsProcessingPayment(false);
     }
   };
@@ -197,17 +207,7 @@ const DonationPage: React.FC<DonationPageProps> = ({
           payment.
         </p>
       </div>
-      {/* Step progress indicator
-      <div className="mb-6 rounded-lg border border-green-200 bg-green-50 p-4">
-        <h3 className="font-semibold text-green-800">Step 3 Complete ✓</h3>
-        <p className="text-green-700">
-          Discount code system with validation and error handling
-        </p>
-        <p className="mt-1 text-sm text-green-600">
-          Using real discount codes from your database with expiration and usage
-          limit validation
-        </p>
-      </div> */}
+
       {/* Discount Code Input */}
       <div className="mb-6 rounded-lg border border-gray-200 p-6">
         <h3 className="mb-4 text-lg font-semibold">Have a discount code?</h3>
@@ -266,6 +266,7 @@ const DonationPage: React.FC<DonationPageProps> = ({
           </div>
         )}
       </div>
+
       {/* Stripe Payment Section */}
       <div className="space-y-6">
         <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">

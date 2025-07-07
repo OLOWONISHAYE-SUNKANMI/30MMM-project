@@ -1,13 +1,44 @@
-// pages/api/create-checkout-session.ts
-import type { NextApiRequest, NextApiResponse } from "next";
+// app/api/create-checkout-session/route.ts
+
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2024-04-10" });
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2024-04-10",
+});
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "POST") return res.status(405).end();
+export async function POST(request) {
+  const { amount, email, discountCode, widgetId } = await request.json();
 
-  const { amount, email, discountCode } = req.body;
+  // Validate required fields
+  if (!amount || !email) {
+    return Response.json(
+      {
+        error: "Missing required fields: amount and email are required",
+      },
+      { status: 400 },
+    );
+  }
+
+  // Validate amount is a positive integer
+  if (typeof amount !== "number" || amount <= 0 || !Number.isInteger(amount)) {
+    return Response.json(
+      {
+        error: "Amount must be a positive integer in cents",
+      },
+      { status: 400 },
+    );
+  }
+
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return Response.json(
+      {
+        error: "Invalid email format",
+      },
+      { status: 400 },
+    );
+  }
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -17,21 +48,62 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         {
           price_data: {
             currency: "usd",
-            product_data: { name: "Donation" },
+            product_data: {
+              name: "Donation",
+              description: discountCode
+                ? `Donation with discount code: ${discountCode}`
+                : "Donation",
+            },
             unit_amount: amount, // in cents
           },
           quantity: 1,
         },
       ],
       mode: "payment",
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/donate`,
+      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment?canceled=true`,
       metadata: {
         discountCode: discountCode || "",
+        widgetId: widgetId || "",
+        originalAmount: amount.toString(),
       },
+      // Optional: Set automatic tax calculation if you have it configured
+      // automatic_tax: { enabled: true },
+
+      // Optional: Add custom fields if needed
+      // custom_fields: [
+      //   {
+      //     key: "donation_purpose",
+      //     label: { type: "custom", custom: "Purpose of donation" },
+      //     type: "text",
+      //     optional: true,
+      //   },
+      // ],
     });
-    res.status(200).json({ sessionUrl: session.url });
-  } catch (err) {
-    res.status(500).json({ error: "Stripe session creation failed" });
+
+    if (!session.url) {
+      throw new Error("Failed to create session URL");
+    }
+
+    return Response.json({ sessionUrl: session.url });
+  } catch (error) {
+    console.error("Stripe session creation error:", error);
+
+    // Handle different types of Stripe errors
+    if (error instanceof Stripe.errors.StripeError) {
+      return Response.json(
+        {
+          error: `Stripe error: ${error.message}`,
+        },
+        { status: 400 },
+      );
+    }
+
+    return Response.json(
+      {
+        error: "Failed to create checkout session. Please try again.",
+      },
+      { status: 500 },
+    );
   }
 }
