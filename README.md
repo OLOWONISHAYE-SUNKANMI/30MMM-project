@@ -2,7 +2,8 @@
 
 ## Overview
 
-A nextjs frontend for the CLEAN program. This will connect to the .NET backend previously developed.
+A nextjs frontend for the CLEAN program. This will connect to the .NET backend
+previously developed.
 
 ## Tech Stack
 
@@ -15,7 +16,9 @@ A nextjs frontend for the CLEAN program. This will connect to the .NET backend p
 
 Other potential tech:
 
-- [Cloudinary](https://cloudinary.com/pricing) seems like a good CDN for video because it automatically provides the right type of streaming quality to the user.
+- [Cloudinary](https://cloudinary.com/pricing) seems like a good CDN for video
+  because it automatically provides the right type of streaming quality to the
+  user.
 - [uploadthing](https://uploadthing.com/)
 - [bunny cdn](https://bunny.net/cdn/)
 
@@ -129,3 +132,10 @@ async function run() {
 }
 run().catch(console.dir);
 ```
+
+## Stripe Prompt
+
+I created a page with a widget for making a donation based on different discount
+codes. This was originally implemented with a widget from a company called
+Pledge; I'd like this to be implemented with Stripe now. Can you revise this
+component to work with a Stripe Account?

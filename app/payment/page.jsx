@@ -1,7 +1,7 @@
 import React from "react";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import DonationPageClient from "@/components/Donations/DonationPageClient"; //TBD
+import DonationPageClient from "@/components/Donations/alt-donation-client"; //TBD
 import { auth } from "@/lib/auth";
 
 export default async function DonatePage() {
