@@ -2,15 +2,14 @@
   "singleQuote": false,
   "tabWidth": 2,
   "bracketSpacing": true,
+  "quoteProps": "consistent",
+  "proseWrap": "always",
   "bracketSameLine": false,
   "arrowParens": "always",
   "singleAttributePerLine": true,
   "printWidth": 80,
   "semi": true,
-  "plugins": [
-    "@ianvs/prettier-plugin-sort-imports",
-    "prettier-plugin-tailwindcss"
-  ],
+  "plugins": ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
   "tailwindFunctions": ["cn"],
   "tailwindConfig": "./tailwind.config.js",
   "importOrder": [
@@ -20,5 +19,5 @@
     "^(@/app|@/components|@/hooks|@/lib)(/.*)$",
     "^[.]"
   ],
-  "importOrderParserPlugins": ["javascript", "jsx"]
+  "importOrderParserPlugins": ["javascript", "jsx", "typescript", "tsx"]
 }

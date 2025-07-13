@@ -3,8 +3,10 @@
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
   "editor.detectIndentation": true,
+  "editor.inlineSuggest.showToolbar": "onHover",
+  "editor.inlineSuggest.edits.allowCodeShifting": "horizontal",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "never"
   },
 
   "prettier.tabWidth": 2,
@@ -16,6 +18,19 @@
   "prettier.arrowParens": "always",
   "prettier.bracketSpacing": true,
   "prettier.bracketSameLine": false,
+  "typescript.suggest.objectLiteralMethodSnippets.enabled": true,
+  "prettier.htmlWhitespaceSensitivity": "strict",
+  "prettier.enable": true,
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.codeLens": true,
+  "tailwindCSS.lint.recommendedVariantOrder": "warning",
+  "tailwindCSS.codeActions": true,
+  "tailwindCSS.showPixelEquivalents": true,
+  "tailwindCSS.suggestions": true,
+  "tailwindCSS.colorDecorators": true,
+  "tailwindCSS.experimental.classRegex": [
+    ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
 
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -24,5 +39,9 @@
   "[tailwindcss]": {
     "tailwindCSS.hovers": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "postman.settings.dotenv-detection-notification-visibility": false
 }

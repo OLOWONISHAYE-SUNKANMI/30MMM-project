@@ -5,18 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function CleanForIndividuals() {
   return (
-    <div className="min-h-screen px-10 mt-16 bg-gray-50">
+    <div className="mt-16 min-h-screen bg-gray-50 px-10">
       <section className="py-12 md:py-16">
-        <div className="container px-4 mx-auto">
-          <h1 className="mb-4 text-3xl font-bold text-center text-gray-800 md:text-4xl md:mb-6">
+        <div className="container mx-auto px-4">
+          <h1 className="mb-4 text-center text-3xl font-bold text-gray-800 md:mb-6 md:text-4xl">
             Discover Freedom, Purpose, and Integrity with CLEAN
           </h1>
-          <p className="mb-8 text-lg text-center text-gray-600 md:text-xl md:mb-12">
+          <p className="mb-8 text-center text-lg text-gray-600 md:mb-12 md:text-xl">
             Break free from sexual struggles and step into the life God designed
             for you.
           </p>
 
-          <h2 className="mb-6 text-2xl font-semibold text-center text-gray-800 md:text-3xl">
+          <h2 className="mb-6 text-center text-2xl font-semibold text-gray-800 md:text-3xl">
             The Two Faces of CLEAN: Your Path to Transformation
           </h2>
 
@@ -73,8 +73,11 @@ export default function CleanForIndividuals() {
                   "Supportive Community: Join a network of men who understand your struggles and are committed to growth.",
                   "Flexible Options: Choose a plan that fits your needs—whether you're just starting out or ready to lead others.",
                 ].map((item, index) => (
-                  <li key={index} className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 text-green-500 shrink-0" />
+                  <li
+                    key={index}
+                    className="flex items-start"
+                  >
+                    <CheckCircle className="mr-2 h-5 w-5 shrink-0 text-green-500" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -82,7 +85,7 @@ export default function CleanForIndividuals() {
             </CardContent>
           </Card>
 
-          <h2 className="mt-12 mb-6 text-2xl font-semibold text-center text-gray-800 md:text-3xl">
+          <h2 className="mb-6 mt-12 text-center text-2xl font-semibold text-gray-800 md:text-3xl">
             Your CLEAN Journey Starts Here
           </h2>
 
@@ -112,7 +115,10 @@ export default function CleanForIndividuals() {
                 ],
               },
             ].map((plan, index) => (
-              <Card key={index} className="flex flex-col">
+              <Card
+                key={index}
+                className="flex flex-col"
+              >
                 <CardHeader>
                   <CardTitle className="text-xl font-semibold text-gray-800">
                     {plan.title}
@@ -124,8 +130,11 @@ export default function CleanForIndividuals() {
                 <CardContent className="flex-grow">
                   <ul className="space-y-2 text-gray-600">
                     {plan.features.map((feature, fIndex) => (
-                      <li key={fIndex} className="flex items-start">
-                        <CheckCircle2 className="w-5 h-5 mr-2 text-primary-red shrink-0" />
+                      <li
+                        key={fIndex}
+                        className="flex items-start"
+                      >
+                        <CheckCircle2 className="mr-2 h-5 w-5 shrink-0 text-primary-red" />
                         <span className="text-sm">{feature}</span>
                       </li>
                     ))}
@@ -144,7 +153,7 @@ export default function CleanForIndividuals() {
               asChild
               className="bg-primary-red hover:bg-red-800"
             >
-              <Link href="/payment">Start Your Journey Now</Link>
+              <Link href="/SignUp">Start Your Journey Now</Link>
             </Button>
           </div>
         </div>

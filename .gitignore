@@ -27,7 +27,9 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+# this one does not catch all: .env*.local
+# this one will catch all env files
+.env*
 
 # vercel
 .vercel
@@ -39,4 +41,7 @@ next-env.d.ts
 # clerk configuration (can include secrets)
 /.clerk/
 
+# prisma still recommends not tracking the generated client
+generated
 certificates
+

@@ -146,7 +146,7 @@ export default function NavBar() {
   const renderButtons = () => {
     if (routes.landing.includes(pathname)) {
       return (
-        <NavLink href="/pricing">
+        <NavLink href="/individuals">
           <Button
             variant="outline"
             className="w-full border-primary-red text-primary-red hover:bg-primary-red hover:text-white"

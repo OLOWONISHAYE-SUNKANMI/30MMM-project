@@ -1,0 +1,151 @@
+// If you want to be able to use BetterAuth/ authClient to access any custom fields added to the User model
+// They need to be added to the user object in auth.ts first so that BetterAuth can pick them up.
+// Then you can run npx @better-auth/cli generate to generate the schema for the custom fields or add them manually. 
+// *** If you make changes to this file, run `npx prisma validate` and `npx prisma format` to ensure the schema is valid and formatted correctly. ***
+// *** Then make sure to run `npx prisma generate` to update your Prisma client so you can use it to write code. ***
+
+generator client {
+  provider      = "prisma-client"
+  output        = "../generated/client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String           @id @default(cuid()) @map("_id")
+  name             String
+  email            String           @unique
+  emailVerified    Boolean          @default(false)
+  image            String?
+  role             String           @default("user")
+  banned           Boolean          @default(false)
+  banReason        String?
+  banExpires       Int? /// Unix timestamp for ban expiration
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  sessions         Session[]
+  accounts         Account[]
+  userProfile      UserProfile?
+  profile          Profile?
+  premium          Boolean          @default(false)
+  paymentDetails   PaymentDetails[] // Changed to an array
+  profileCompleted Boolean         @default(false) // New field added here
+
+  @@map("user")
+}
+
+type PaymentDetails {
+  paymentMethod String // 'pledge' or any other payment method
+  paymentType   PaymentType // 'Sign-Up Fee', 'Donation'
+  amountPaid    Float? // Use Float for monetary values
+  paidAt        DateTime? 
+  pledgeEmail   String?
+}
+
+enum PaymentType {
+  signup_fee
+  donation
+}
+
+model DiscountCode {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  code               String   @unique
+  discount_type      String
+  minimum_payment    Float
+  widget_id          String
+  usage_limit        Int
+  expiration_date    DateTime
+  current_usage_count Int
+
+  @@map("discount_codes")
+}
+
+model Session {
+  id             String   @id @default(cuid()) @map("_id")
+  userId         String
+  token          String
+  expiresAt      DateTime
+  ipAddress      String?
+  userAgent      String?
+  impersonatedBy String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid()) @map("_id")
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  idToken String?
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id @default(cuid()) @map("_id")
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+type Profile {
+  firstName         String?
+  lastName          String?
+  birthDate         DateTime?
+  maritalStatus     String?
+  childrenCount     Int?
+  churchAffiliation String?
+  email             String?
+  phoneNumber       String?
+  address           String?
+  city              String?
+  state             String?
+  zipcode           String?
+}
+
+model UserProfile {
+  id                String    @id @default(cuid()) @map("_id")
+  userId            String    @unique
+  firstName         String?
+  lastName          String?
+  birthDate         DateTime?
+  maritalStatus     String?
+  childrenCount     Int?
+  churchAffiliation String?
+  email             String?
+  phoneNumber       String?
+  address           String?
+  city              String?
+  state             String?
+  zipcode           String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("user_profile")
+}
