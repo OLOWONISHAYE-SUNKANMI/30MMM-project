@@ -165,6 +165,7 @@ export default function Profile() {
           alt="Logo"
           width={120}
           height={120}
+          priority
         />
 
         <h1 className="text-center text-4xl font-semibold md:mb-6">
