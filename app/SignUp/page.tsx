@@ -77,8 +77,7 @@ export default function SignUpPage({
   const CALLBACK_URL = "/profile";
   const { step, email } = use(searchParams);
   const wasAccountCreated = step === "verify";
-  const [oneTapInitialized, setOneTapInitialized] = useState(false);
-  const [showGoogleButton, setShowGoogleButton] = useState(false);
+  const [showGoogleButton, setShowGoogleButton] = useState(true); // Always show Google button
 
   // Handle Google Sign-In button click
   const handleGoogleSignIn = () => {
@@ -93,62 +92,7 @@ export default function SignUpPage({
     }
   };
 
-  useEffect(() => {
-    const oneTap = async () => {
-      if (!process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID) {
-        console.error(
-          "Google Client ID is missing. Please check your environment variables.",
-        );
-        toast.error("Authentication configuration error");
-        return;
-      }
-
-      if (oneTapInitialized) return; // Prevent multiple initializations
-
-      try {
-        await authClient.oneTap({
-          callbackURL: CALLBACK_URL,
-          fetchOptions: {
-            onError: ({ error }) => {
-              console.error("One Tap Error:", error);
-              // Show fallback button when One Tap fails
-              setShowGoogleButton(true);
-
-              // Don't show toast for common cancellation errors
-              if (
-                error.message &&
-                !error.message.includes("popup_closed_by_user")
-              ) {
-                toast.error(error.message || "Authentication failed");
-              }
-            },
-            onSuccess: () => {
-              toast.success("Successfully signed in");
-            },
-          },
-        });
-        setOneTapInitialized(true);
-      } catch (error) {
-        console.error("One Tap initialization failed:", error);
-        // Show fallback button when One Tap initialization fails
-        setShowGoogleButton(true);
-
-        // Only show error toast if it's not a user cancellation
-        if (
-          error instanceof Error &&
-          !error.message.includes("popup_closed_by_user")
-        ) {
-          toast.error("Failed to initialize Google Sign-In");
-        }
-      }
-    };
-
-    // Add a small delay to ensure DOM is ready
-    const timer = setTimeout(oneTap, 100);
-    return () => clearTimeout(timer);
-  }, [oneTapInitialized]);
-
-  // Initialize Google Sign-In button when needed
+  // Initialize Google Sign-In button
   useEffect(() => {
     if (showGoogleButton && window.google?.accounts?.id) {
       const buttonContainer = document.getElementById("google-signin-button");
@@ -209,7 +153,7 @@ export default function SignUpPage({
           <div>
             <SignUp callbackUrl={CALLBACK_URL || "/profile"} />
 
-            {/* Google Sign-In Fallback Button */}
+            {/* Google Sign-In Button */}
             {showGoogleButton && (
               <div className="mt-4 flex justify-center">
                 <div className="w-full max-w-sm">
