@@ -153,7 +153,7 @@ export default function CleanForIndividuals() {
               asChild
               className="bg-primary-red hover:bg-red-800"
             >
-              <Link href="/SignUp">Start Your Journey Now</Link>
+              <Link href="/signup">Start Your Journey Now</Link>
             </Button>
           </div>
         </div>
