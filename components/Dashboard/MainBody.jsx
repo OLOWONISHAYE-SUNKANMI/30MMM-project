@@ -34,17 +34,6 @@ export default function MainBody() {
       </div>
       {/* <PledgeWidget widgetId="841c0da0251d58fc11cad80237f79397" /> */}
       <DonateHero />
-      {/* Conditional rendering with improved handling of DonateHero
-      {showPledgeWidget ? (
-        <div className="flex w-full justify-center">
-          <div
-            className="plg-donate w-full max-w-[800px]"
-            data-widget-id="S1NzAwq1gKUewVE3"
-          ></div>
-        </div>
-      ) : (
-        <DonateHero onClick={handleDonateClick} />
-      )} */}
       {/* The sizes by lines are 22 14 12 and the buttons are 16 */}
       <div className="mr-auto w-full">
         <h4 className="text-3xl font-semibold leading-7 tracking-wider">
