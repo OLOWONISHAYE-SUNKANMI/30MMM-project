@@ -20,6 +20,24 @@ export default function RootLayout({ children }) {
       lang="en"
       suppressHydrationWarning
     >
+      <head>
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-KQBNXMFH0L"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+        >
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-KQBNXMFH0L');
+          `}
+        </Script>
+      </head>
       <body className={`${alexandria.className} antialiased`}>
         <NavBar />
         <main className="mt-20">{children}</main>
