@@ -5,13 +5,18 @@
 // *** Then make sure to run `npx prisma generate` to update your Prisma client so you can use it to write code. ***
 
 generator client {
-  provider      = "prisma-client"
-  output        = "../generated/client"
+  provider = "prisma-client"
+  output   = "../generated/client"
 }
 
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  user
+  admin
 }
 
 model User {
@@ -20,7 +25,7 @@ model User {
   email            String           @unique
   emailVerified    Boolean          @default(false)
   image            String?
-  role             String           @default("user")
+  role             UserRole         @default(user)
   banned           Boolean          @default(false)
   banReason        String?
   banExpires       Int? /// Unix timestamp for ban expiration
@@ -32,7 +37,7 @@ model User {
   profile          Profile?
   premium          Boolean          @default(false)
   paymentDetails   PaymentDetails[] // Changed to an array
-  profileCompleted Boolean         @default(false) // New field added here
+  profileCompleted Boolean          @default(false) // New field added here
 
   @@map("user")
 }
@@ -41,7 +46,7 @@ type PaymentDetails {
   paymentMethod String // 'pledge' or any other payment method
   paymentType   PaymentType // 'Sign-Up Fee', 'Donation'
   amountPaid    Float? // Use Float for monetary values
-  paidAt        DateTime? 
+  paidAt        DateTime?
   pledgeEmail   String?
 }
 
@@ -51,13 +56,13 @@ enum PaymentType {
 }
 
 model DiscountCode {
-  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-  code               String   @unique
-  discount_type      String
-  minimum_payment    Float
-  widget_id          String
-  usage_limit        Int
-  expiration_date    DateTime
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  code                String   @unique
+  discount_type       String
+  minimum_payment     Float
+  widget_id           String
+  usage_limit         Int
+  expiration_date     DateTime
   current_usage_count Int
 
   @@map("discount_codes")
