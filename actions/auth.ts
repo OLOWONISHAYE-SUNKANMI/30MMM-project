@@ -9,9 +9,11 @@ async function getRedirectPath() {
     const user = await getUser();
     // If user already exists in our database and has completed profile setup
     if (user && user.profileCompleted) {
+      console.log("User is signed in and profile is complete");
       return "/dashboard";
     }
     // For new users or users who haven't completed their profile
+    console.log("User is signed in and profile is not complete");
     return "/profile";
   } catch (error) {
     // Default to profile page if we can't determine user status
