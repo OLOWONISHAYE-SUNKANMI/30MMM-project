@@ -1,14 +1,20 @@
 "use client";
 
 import React from "react";
+import { signUpAction } from "@/actions/auth";
 import Image from "next/image";
 import { toast } from "sonner";
 
 export default function GoogleBtn({ isSignUp = true }) {
-  const handleGoogleAuth = () => {
-    // Implement your Google auth logic here
-    console.log(`${isSignUp ? "Google Sign Up" : "Google Log In"} clicked`);
-    toast(`${isSignUp ? "Google Sign Up" : "Google Log In"} clicked`);
+  const handleGoogleAuth = async () => {
+    try {
+      await signUpAction("google");
+      toast.success(
+        `${isSignUp ? "Google Sign Up" : "Google Log In"} successful`,
+      );
+    } catch (error) {
+      toast.error(`Error: ${error.message}`);
+    }
   };
 
   const loading = false;
