@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import { signUpWithCredentialsAction } from "@/actions/auth";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,24 +18,32 @@ export default function Form({ isSignUp = true }) {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     // Form validation
-    if (password !== passwordConfirmation) {
-      alert("Passwords do not match");
+    if (isSignUp && password !== passwordConfirmation) {
+      setError("Passwords do not match");
       return;
     }
 
     try {
       setLoading(true);
-      // TODO: Implement the actual sign-up logic here
-      alert("Form submitted successfully!");
+
+      if (isSignUp) {
+        // For login, use the signUpWithCredentialsAction from auth.ts
+        toast("Signing in...");
+        await signUpWithCredentialsAction(email, password);
+      }
     } catch (error) {
-      alert("Failed to submit form: " + error.message);
+      setError(error.message || "An error occurred during authentication");
+      console.error("Authentication error:", error);
     } finally {
       setLoading(false);
+      toast("Sign in was successful");
     }
   };
 
@@ -115,6 +125,11 @@ export default function Form({ isSignUp = true }) {
                 </div>
               </>
             )}
+
+            {error && (
+              <div className="text-sm font-medium text-red-500">{error}</div>
+            )}
+
             <Button
               type="submit"
               className="w-full"
