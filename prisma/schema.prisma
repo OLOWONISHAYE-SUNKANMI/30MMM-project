@@ -35,6 +35,7 @@ model User {
   accounts         Account[]
   userProfile      UserProfile?
   profile          Profile?
+  password         String?
   premium          Boolean          @default(false)
   paymentDetails   PaymentDetails[] // Changed to an array
   profileCompleted Boolean          @default(false) // New field added here

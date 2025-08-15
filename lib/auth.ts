@@ -1,6 +1,10 @@
+import { PrismaClient } from "@/generated/client";
+import { compare } from "bcrypt"; // You'll need to install this package
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
+
+const prisma = new PrismaClient();
 
 const authConfig = {
   providers: [
@@ -15,12 +19,85 @@ const authConfig = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("the credentials:", credentials);
-        const user = { id: "1", name: "User", email: "user@example.com" };
-        return user;
+        try {
+          if (!credentials?.email || !credentials?.password) {
+            return null;
+          }
+
+          // Find user in the database
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email as string },
+          });
+
+          // If no user found or password doesn't match
+          if (!user || !(await compare(credentials.password, user.password))) {
+            return null;
+          }
+
+          // Return the user object without sensitive data
+          return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+          };
+        } catch (error) {
+          console.error("Auth error:", error);
+          return null;
+        }
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user, account }) {
+      // Initial sign in
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+
+      // For Google provider, we need to create/update the user in our database
+      if (account && account.provider === "google") {
+        try {
+          // Check if user exists in our database
+          let dbUser = await prisma.user.findUnique({
+            where: { email: token.email as string },
+          });
+
+          // If not, create the user
+          if (!dbUser) {
+            dbUser = await prisma.user.create({
+              data: {
+                email: token.email as string,
+                name: token.name as string,
+                // Set appropriate defaults for a Google-authenticated user
+                role: "user",
+              },
+            });
+          }
+
+          // Update token with database user data
+          token.id = dbUser.id;
+          token.role = dbUser.role;
+        } catch (error) {
+          console.error("Error syncing Google user with database:", error);
+        }
+      }
+
+      return token;
+    },
+    async session({ session, token }) {
+      if (token && session.user) {
+        session.user.id = token.id as string;
+        session.user.role = token.role as string;
+      }
+      return session;
+    },
+  },
+  pages: {
+    signIn: "/login",
+    error: "/login", // Error code passed in query string as ?error=
+  },
 };
 
 export default NextAuth(authConfig);

@@ -1,27 +1,29 @@
 "use server";
 
 import { signIn, signOut } from "@/lib/auth";
-import { getUser } from "@/lib/session"; // Assuming this function exists to get user data
+import { getUser } from "@/lib/session";
 
 // Helper function to determine redirect path
 async function getRedirectPath() {
   try {
     const user = await getUser();
-    // If user already exists in our database and has completed profile setup
-    if (user && user.profileCompleted) {
-      console.log("User is signed in and profile is complete");
+
+    // If user doesn't exist or couldn't be fetched from the database
+    if (!user) {
+      return "/signup";
+    }
+
+    // Check if user has completed their profile
+    // This assumes userProfile contains a field indicating profile completion
+    if (user.userProfile) {
       return "/dashboard";
     }
-    // For new users or users who haven't completed their profile
-    console.log("User is signed in and profile is not complete");
+
+    // User exists but hasn't completed profile
     return "/profile";
   } catch (error) {
-    // Default to profile page if we can't determine user status
-    console.error(
-      "Unable to tell if user was signed up previously or not; redirecting to profile",
-      error,
-    );
-    return "/profile";
+    console.error("Error determining redirect path:", error);
+    return "/signup";
   }
 }
 
