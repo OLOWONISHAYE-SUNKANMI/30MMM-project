@@ -2,32 +2,59 @@ import Link from "next/link";
 
 export default function RootPage() {
   return (
-    <main className="grid grid-cols-4 gap-4 w-[80vw] h-[80vh] mx-auto mt-[20vh]">
-      <Link href="/LogIn" className="text-center">
+    <main className="mx-auto mt-[20vh] grid h-[80vh] w-[80vw] grid-cols-4 gap-4">
+      <Link
+        href="/LogIn"
+        className="text-center"
+      >
         Log In
       </Link>
-      <Link href="/SignUp" className="text-center">
+      <Link
+        href="/SignUp"
+        className="text-center"
+      >
         Sign Up
       </Link>
-      <Link href="/Settings" className="text-center">
+      <Link
+        href="/Settings"
+        className="text-center"
+      >
         Settings
       </Link>
-      <Link href="/Dashboard" className="text-center">
+      <Link
+        href="/dashboard"
+        className="text-center"
+      >
         Dashboard
       </Link>
-      <Link href="/Foundation" className="text-center">
+      <Link
+        href="/foundation"
+        className="text-center"
+      >
         Foundation
       </Link>
-      <Link href="/Contact" className="text-center">
+      <Link
+        href="/contact"
+        className="text-center"
+      >
         Contact
       </Link>
-      <Link href="/Help" className="text-center">
+      <Link
+        href="/help"
+        className="text-center"
+      >
         Help & Support
       </Link>
-      <Link href="/Terms" className="text-center">
+      <Link
+        href="/terms"
+        className="text-center"
+      >
         Terms of Service
       </Link>
-      <Link href="/Landing" className="text-center">
+      <Link
+        href="/landing"
+        className="text-center"
+      >
         Landing Page
       </Link>
 

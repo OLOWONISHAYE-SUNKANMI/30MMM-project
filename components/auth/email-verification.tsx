@@ -64,7 +64,7 @@ export default function EmailVerification({ email }: { email?: string }) {
         onSuccess: (ctx) => {
           toast.success("Success! Moving to the next step.");
           setLoading(false);
-          if (ctx.data.user.premium as boolean) router.push("/Dashboard");
+          if (ctx.data.user.premium as boolean) router.push("/dashboard");
           router.push("/profile");
         },
         onError: (ctx) => {

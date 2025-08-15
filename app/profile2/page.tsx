@@ -1,9 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { updateProfile } from "@/actions/update-profile";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { toast } from "sonner";
 
 export default function Profile() {
@@ -55,7 +55,7 @@ export default function Profile() {
       toast.success("Profile updated successfully!");
       // Redirect to payment page
       router.push(
-        Boolean(data.updatedUser.premium) ? "/Dashboard" : "/payment",
+        Boolean(data.updatedUser.premium) ? "/dashboard" : "/payment",
       );
     } else {
       console.error("Failed to update profile");
@@ -86,28 +86,28 @@ export default function Profile() {
   };
 
   return (
-    <div className="inset-auto flex md:flex-row flex-col w-screen min-w-[400px] min-h-screen">
-      <div className="top-2 left-2 z-20 before:static fixed bg-white/80 max-md:shadow-md py-1 rounded-md" />
+    <div className="inset-auto flex min-h-screen w-screen min-w-[400px] flex-col md:flex-row">
+      <div className="fixed left-2 top-2 z-20 rounded-md bg-white/80 py-1 before:static max-md:shadow-md" />
 
       {/* Image Container - Matched to reference styling */}
-      <div className="-z-50 sm:self-stretch md:order-2 bg-jesus-hero bg-white md:bg-clip-border md:bg-origin-border bg-cover md:bg-cover bg-no-repeat bg-center max-md:bg-top md:bg-top-4 max-md:w-full md:w-3/4 max-md:h-fit min-h-72 aspect-[773/499] md:overflow-x-clip max-xs:scale-x-125" />
+      <div className="-z-50 aspect-[773/499] min-h-72 bg-white bg-jesus-hero bg-cover bg-center bg-no-repeat max-md:h-fit max-md:w-full max-md:bg-top max-xs:scale-x-125 sm:self-stretch md:order-2 md:w-3/4 md:overflow-x-clip md:bg-cover md:bg-clip-border md:bg-top-4 md:bg-origin-border" />
 
       {/* Form Container - Updated to match reference */}
-      <div className="z-10 flex flex-col max-md:justify-between md:justify-between md:items-center gap-1 md:gap-3 md:pt-7 w-full md:w-1/2 md:h-full">
+      <div className="z-10 flex w-full flex-col gap-1 max-md:justify-between md:h-full md:w-1/2 md:items-center md:justify-between md:gap-3 md:pt-7">
         <Image
-          className="block z-10 mx-auto -mt-16 md:mt-16"
+          className="z-10 mx-auto -mt-16 block md:mt-16"
           src="/logo.png"
           alt="Logo"
           width={120}
           height={120}
         />
 
-        <h1 className="md:mb-6 font-semibold text-4xl text-center">
+        <h1 className="text-center text-4xl font-semibold md:mb-6">
           Create Your Profile
         </h1>
 
         {/* Tab Selector */}
-        <div className="inline-flex flex-row justify-between items-stetch gap-x-3 bg-gray-bg mx-10 my-mx-52 rounded-3xl min-h-max md:overflow-y-hidden text-center md: my">
+        <div className="items-stetch my-mx-52 md: my mx-10 inline-flex min-h-max flex-row justify-between gap-x-3 rounded-3xl bg-gray-bg text-center md:overflow-y-hidden">
           <button
             onClick={() => setFirstTabActive(true)}
             className={`h-full w-full text-nowrap rounded-3xl py-2 pe-2 ps-4 text-base font-light hover:bg-almost-black hover:font-medium hover:text-white active:bg-almost-black active:font-medium active:text-white ${
@@ -127,67 +127,67 @@ export default function Profile() {
         </div>
 
         {/* Form */}
-        <form className="flex-auto space-y-4 px-4 pt-4 w-full h-full">
+        <form className="h-full w-full flex-auto space-y-4 px-4 pt-4">
           {firstTabActive ? (
             <>
               <label
                 htmlFor="firstName"
-                className="block mx-8"
+                className="mx-8 block"
               >
                 <input
                   type="text"
                   name="firstName"
                   onChange={handleChange}
                   value={formData.firstName}
-                  className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
+                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                   placeholder="First Name"
                 />
               </label>
               <label
                 htmlFor="lastName"
-                className="block mx-8"
+                className="mx-8 block"
               >
                 <input
                   type="text"
                   name="lastName"
                   onChange={handleChange}
                   value={formData.lastName}
-                  className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
+                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                   placeholder="Last Name"
                 />
               </label>
               <label
                 htmlFor="birthdate"
-                className="block mx-8"
+                className="mx-8 block"
               >
                 <input
                   type="date"
                   name="birthdate"
                   onChange={handleChange}
                   value={formData.birthDate}
-                  className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
+                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                   placeholder="Birthdate"
                 />
               </label>
               <label
                 htmlFor="maritalStatus"
-                className="block mx-8"
+                className="mx-8 block"
               >
                 <input
                   type="text"
                   name="maritalStatus"
                   onChange={handleChange}
                   value={formData.maritalStatus}
-                  className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
+                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                   placeholder="Marital Status"
                 />
               </label>
               <div className="block px-8">
                 <button
                   onClick={() => setFirstTabActive(false)}
-                  className="flow-root relative place-self-center bg-primary-red hover:bg-primary-red/90 my-6 py-2 rounded-2xl w-full"
+                  className="relative my-6 flow-root w-full place-self-center rounded-2xl bg-primary-red py-2 hover:bg-primary-red/90"
                 >
-                  <span className="font-medium text-white text-lg text-center tracking-wider">
+                  <span className="text-center text-lg font-medium tracking-wider text-white">
                     NEXT
                   </span>
                 </button>
@@ -197,40 +197,40 @@ export default function Profile() {
             <>
               <label
                 htmlFor="email"
-                className="block mx-8"
+                className="mx-8 block"
               >
                 <input
                   type="email"
                   name="email"
                   onChange={handleChange}
                   value={formData.email}
-                  className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
+                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                   placeholder="Email"
                 />
               </label>
               <label
                 htmlFor="telephone"
-                className="block mx-8"
+                className="mx-8 block"
               >
                 <input
                   type="tel"
                   name="telephone"
                   onChange={handleChange}
                   value={formData.phoneNumber}
-                  className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
+                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                   placeholder="Phone Number"
                 />
               </label>
               <label
                 htmlFor="address"
-                className="block mx-8"
+                className="mx-8 block"
               >
                 <input
                   type="text"
                   name="address"
                   onChange={handleChange}
                   value={formData.address}
-                  className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
+                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                   placeholder="Address"
                 />
               </label>
@@ -238,9 +238,9 @@ export default function Profile() {
                 <button
                   type="submit"
                   onClick={onSubmit}
-                  className="flow-root relative place-self-center bg-primary-red hover:bg-primary-red/90 my-6 py-2 rounded-2xl w-full"
+                  className="relative my-6 flow-root w-full place-self-center rounded-2xl bg-primary-red py-2 hover:bg-primary-red/90"
                 >
-                  <span className="font-medium text-white text-lg text-center tracking-wider">
+                  <span className="text-center text-lg font-medium tracking-wider text-white">
                     Create Profile and Move to Payment
                   </span>
                 </button>

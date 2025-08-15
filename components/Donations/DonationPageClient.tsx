@@ -39,7 +39,7 @@ const DonationPageClient: React.FC<DonationPageClientProps> = ({
   // Redirect premium users to dasboard
   useEffect(() => {
     if (isPremium) {
-      router.push("/Dashboard");
+      router.push("/dashboard");
     }
   }, [isPremium, router]);
 
@@ -71,7 +71,7 @@ const DonationPageClient: React.FC<DonationPageClientProps> = ({
     // Update user's premium
 
     // Example: Redirect to dashboard (pending, may not exist)
-    router.push("/Dashboard");
+    router.push("/dashboard");
   };
 
   // Handler for when widget is loaded
