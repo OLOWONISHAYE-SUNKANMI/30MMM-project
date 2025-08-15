@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-export default function FormHeader() {
+export default function FormHeader({ isSignUp = true }) {
   return (
     <div>
       <Image
@@ -11,7 +11,9 @@ export default function FormHeader() {
         width={120}
         height={120}
       />
-      <h1 className="text-center text-4xl font-semibold md:mb-6">Sign Up</h1>
+      <h1 className="text-center text-4xl font-semibold md:mb-6">
+        {isSignUp ? "Sign Up" : "Log In"}
+      </h1>
     </div>
   );
 }

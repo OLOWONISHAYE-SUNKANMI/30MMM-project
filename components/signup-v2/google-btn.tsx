@@ -2,12 +2,13 @@
 
 import React from "react";
 import Image from "next/image";
+import { toast } from "sonner";
 
-export default function GoogleBtn() {
-  const handleGoogleSignUp = () => {
+export default function GoogleBtn({ isSignUp = true }) {
+  const handleGoogleAuth = () => {
     // Implement your Google auth logic here
-    console.log("Google Sign Up clicked");
-    // For example: authClient.signUp.google()
+    console.log(`${isSignUp ? "Google Sign Up" : "Google Log In"} clicked`);
+    toast(`${isSignUp ? "Google Sign Up" : "Google Log In"} clicked`);
   };
 
   const loading = false;
@@ -15,8 +16,8 @@ export default function GoogleBtn() {
   return (
     <button
       type="button"
-      className="mx-auto my-4 flex w-5/6 columns-1 items-center justify-center gap-7 justify-self-center rounded-2xl py-2 shadow-md outline outline-1 outline-primary-red"
-      onClick={handleGoogleSignUp}
+      className="mx-auto my-4 flex w-5/6 columns-1 items-center justify-center gap-7 justify-self-center rounded-2xl py-2 shadow-md outline outline-1 outline-primary-red hover:bg-primary-red hover:text-white"
+      onClick={handleGoogleAuth}
       disabled={loading}
     >
       <Image
@@ -26,9 +27,7 @@ export default function GoogleBtn() {
         height={20}
         alt="Google Logo"
       />
-      <div className="text-lg font-semibold text-primary-red">
-        Sign Up with Google
-      </div>
+      {isSignUp ? "Sign Up with Google" : "Log In with Google"}
     </button>
   );
 }
