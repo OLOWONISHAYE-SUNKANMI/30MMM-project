@@ -1,14 +1,15 @@
 // app/api/profile/route.js
 import prisma from "@/db"; // Use your existing prisma import
+import { getServerSession } from "next-auth"; // Import as named export
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/auth"; // Import your auth instance
+import { authConfig } from "@/lib/auth"; // Import your auth instance
 
 export async function POST(request: NextRequest) {
   try {
-    // TODO: review this auth method, it may not be the best way to check if a user is logged in
-    // also, may need to check how to mock a user session existing
-    const session = await auth.api.getSession(request);
-    if (!session) {
+    // Call getServerSession with the authConfig
+    const session = await getServerSession(authConfig);
+
+    if (!session || !session.user) {
       return NextResponse.json(
         { error: "You must be logged in to update your profile" },
         { status: 401 },
@@ -16,7 +17,15 @@ export async function POST(request: NextRequest) {
     }
 
     // Get the user ID from the session
+    // Add type assertion or check if id exists
     const userId = session.user.id;
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "User ID not found in session" },
+        { status: 400 },
+      );
+    }
 
     // Parse the request body
     const profileData = await request.json();
@@ -66,7 +75,6 @@ export async function POST(request: NextRequest) {
         profileCompleted: true,
       },
     });
-    
 
     return NextResponse.json({
       success: true,
