@@ -1,13 +1,14 @@
 // app/api/profile/route.js
 import prisma from "@/db"; // Use your existing prisma import
-import { getServerSession } from "next-auth"; // Import as named export
 import { NextRequest, NextResponse } from "next/server";
-import { authConfig } from "@/lib/auth"; // Import your auth instance
+import { auth } from "@/lib/auth"; // Import as named export
+
+// Import your auth instance
 
 export async function POST(request: NextRequest) {
   try {
     // Call getServerSession with the authConfig
-    const session = await getServerSession(authConfig);
+    const session = await auth();
 
     if (!session || !session.user) {
       return NextResponse.json(

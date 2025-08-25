@@ -6,12 +6,10 @@ import { auth } from "@/lib/auth";
 
 export default async function DonatePage() {
   // Get the user session from better-auth
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await auth();
 
   // If user isn't logged in, redirect to login page
-  if (!session) {
+  if (!session || !session.user) {
     redirect("/login");
   }
 

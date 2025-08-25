@@ -54,3 +54,19 @@ export const validateAddress = (address) => {
   if (address.trim().length < 5) return "Please enter a complete address";
   return "";
 };
+
+export const validateCity = (city) => {
+  if (!city.trim()) return "City is required";
+  return "";
+};
+
+export const validateState = (state) => {
+  if (!state.trim()) return "State is required";
+  return "";
+};
+
+export const validateZipcode = (zipcode) => {
+  if (!zipcode.trim()) return "Zipcode is required";
+  if (!/^\d{5}(-\d{4})?$/.test(zipcode)) return "Please enter a valid zipcode";
+  return "";
+};

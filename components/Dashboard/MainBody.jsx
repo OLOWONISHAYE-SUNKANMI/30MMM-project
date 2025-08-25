@@ -2,9 +2,7 @@ import { useState } from "react";
 import { useDashboardContext } from "@/contexts/dashboard/dashboard-provider";
 import { FaChevronDown } from "react-icons/fa";
 import DonateHero from "@/components/Dashboard/DonateHero";
-import intToRoman from "@/lib/intToRoman";
 import CardSection from "./CardSection";
-import PledgeWidget from "./PledgeWidget";
 
 export default function MainBody() {
   const { userInfo, userProgress } = useDashboardContext();

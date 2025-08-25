@@ -201,11 +201,6 @@ const DonationPage: React.FC<DonationPageProps> = ({
       {/* Header */}
       <div className="mb-8 text-center">
         <h1 className="mb-2 text-3xl font-bold">Hello, {userName}!</h1>
-        <p className="text-lg text-gray-600">
-          Please use this email:{" "}
-          <span className="font-medium">{userEmail}</span> when making your
-          payment.
-        </p>
       </div>
 
       {/* Discount Code Input */}

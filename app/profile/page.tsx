@@ -15,6 +15,9 @@ export default function Profile() {
     email: "",
     telephone: "",
     address: "",
+    city: "",
+    state: "",
+    zipcode: "",
   });
   const [formData, setFormData] = useState({
     firstName: "",
@@ -40,6 +43,9 @@ export default function Profile() {
       email: validators.validateEmail(formData.email),
       telephone: validators.validateTelephone(formData.telephone),
       address: validators.validateAddress(formData.address),
+      city: validators.validateCity(formData.city),
+      state: validators.validateState(formData.state),
+      zipcode: validators.validateZipcode(formData.zipcode),
     };
 
     setErrors(newErrors);
@@ -81,6 +87,15 @@ export default function Profile() {
         break;
       case "address":
         errorMessage = validators.validateAddress(value);
+        break;
+      case "city":
+        errorMessage = validators.validateCity(value);
+        break;
+      case "state":
+        errorMessage = validators.validateState(value);
+        break;
+      case "zipcode":
+        errorMessage = validators.validateZipcode(value);
         break;
     }
 
@@ -333,6 +348,48 @@ export default function Profile() {
                   placeholder="Address"
                 />
                 <ErrorMessage error={errors.address} />
+              </label>
+              <label
+                htmlFor="city"
+                className="mx-8 block"
+              >
+                <input
+                  type="text"
+                  name="city"
+                  onChange={handleChange}
+                  value={formData.city}
+                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
+                  placeholder="City"
+                />
+                <ErrorMessage error={errors.city} />
+              </label>
+              <label
+                htmlFor="state"
+                className="mx-8 block"
+              >
+                <input
+                  type="text"
+                  name="state"
+                  onChange={handleChange}
+                  value={formData.state}
+                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
+                  placeholder="State"
+                />
+                <ErrorMessage error={errors.state} />
+              </label>
+              <label
+                htmlFor="zipcode"
+                className="mx-8 block"
+              >
+                <input
+                  type="text"
+                  name="zipcode"
+                  onChange={handleChange}
+                  value={formData.zipcode}
+                  className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
+                  placeholder="Zipcode"
+                />
+                <ErrorMessage error={errors.zipcode} />
               </label>
               <div className="block px-8">
                 <button

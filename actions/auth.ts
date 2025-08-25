@@ -10,7 +10,7 @@ async function getRedirectPath() {
 
     // If user doesn't exist or couldn't be fetched from the database
     if (!user) {
-      return "/signup";
+      return "/profile";
     }
 
     // Check if user has completed their profile
