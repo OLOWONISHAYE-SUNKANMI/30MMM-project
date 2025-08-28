@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import DonateButton from "@/components/Donations/process-payment-btn";
 
 // Mock router for demo - in real Next.js, you'd use: import { useRouter } from "next/navigation"
 const useMockRouter = () => ({
@@ -290,13 +291,12 @@ const DonationPage: React.FC<DonationPageProps> = ({
               </span>
             </div>
           </div>
-          <button
+          <DonateButton
             onClick={handleDonate}
-            disabled={isProcessingPayment}
-            className="mt-4 w-full rounded-md bg-primary-red px-8 py-3 text-lg font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-gray-400"
-          >
-            {isProcessingPayment ? "Processing..." : "Donate with Stripe"}
-          </button>
+            isProcessing={isProcessingPayment}
+            amount={getFinalAmount()}
+            className="mt-4"
+          />
         </div>
       </div>
     </div>
