@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import ErrorMessage from "@/components/common/Forms/error-message";
+import CreateProfileBtn from "@/components/profile/create-profile-btn";
 import * as validators from "./form-validators";
 
 export default function Profile() {
@@ -392,15 +393,11 @@ export default function Profile() {
                 <ErrorMessage error={errors.zipcode} />
               </label>
               <div className="block px-8">
-                <button
-                  type="submit"
-                  onClick={onSubmit}
-                  className="relative my-6 flow-root w-full place-self-center rounded-2xl bg-primary-red py-2 hover:bg-primary-red/90"
-                >
-                  <span className="text-center text-lg font-medium tracking-wider text-white">
-                    Create Profile and Move to Payment
-                  </span>
-                </button>
+                <CreateProfileBtn
+                  formData={formData}
+                  validateForm={validateForm}
+                  errors={errors}
+                />
               </div>
             </>
           )}
