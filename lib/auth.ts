@@ -15,13 +15,13 @@ export const authConfig = {
     Credentials({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text" },
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         try {
           if (!credentials?.email || !credentials?.password) {
-            return null;
+            throw new Error("Missing credentials");
           }
 
           // Find user in the database
@@ -29,8 +29,12 @@ export const authConfig = {
             where: { email: credentials.email as string },
           });
 
-          // If no user found or password doesn't match
-          if (!user || !(await compare(credentials.password, user.password))) {
+          // If no user found
+          if (!user) {
+            return null;
+          }
+          //  if password doesn't match
+          if (!(await compare(credentials.password, user.password))) {
             return null;
           }
 
