@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function VideoBackground({ videoSources }) {
-  const [isVideoLoaded, _] = useState(false);
-  const [currentVideoIndex, __] = useState(0);
+  const [isVideoLoaded] = useState(false);
+  const [currentVideoIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef(null);
   const containerRef = useRef(null);

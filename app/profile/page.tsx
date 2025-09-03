@@ -107,40 +107,6 @@ export default function Profile() {
     }));
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    // Validate the entire form
-    if (!validateForm()) {
-      alert("Please correct the errors before submitting");
-      return;
-    }
-
-    console.log(`Submitting: ${JSON.stringify(formData)}`);
-
-    try {
-      const response = await fetch("/api/create-profile", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to save profile");
-      }
-
-      const data = await response.json();
-      console.log("Profile saved:", data);
-
-      window.location.href = "/payment";
-    } catch (error) {
-      console.error("Error saving profile:", error);
-      alert("Error saving profile. Please try again.");
-    }
-  };
-
   const validateFirstTab = () => {
     const firstTabErrors = {
       firstName: validators.validateFirstName(formData.firstName),

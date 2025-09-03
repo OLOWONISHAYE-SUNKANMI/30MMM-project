@@ -83,7 +83,9 @@ const DiscountCodeInput: React.FC<DiscountCodeInputProps> = ({
         );
       }
     } catch (error) {
-      setErrorMessage("Failed to validate discount code. Please try again.");
+      setErrorMessage(
+        `Failed to validate discount code: ${error}. Please try again.`,
+      );
     } finally {
       setIsApplying(false);
     }

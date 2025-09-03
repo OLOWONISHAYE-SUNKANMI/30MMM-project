@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -59,13 +58,6 @@ export default function Step6BackgroundInterests({
   };
 
   // Handle hobby selection changes
-  const [_, __] = useState({
-    sports: false,
-    reading: false,
-    music: false,
-    volunteering: false,
-    other: false,
-  });
 
   const handleHobbyChange = (hobby, checked) => {
     // Get current hobbies array from form state

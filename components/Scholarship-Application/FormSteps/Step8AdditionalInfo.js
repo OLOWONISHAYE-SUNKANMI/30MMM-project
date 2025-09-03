@@ -1,12 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function Step8AdditionalInfo({
-  register,
-  _watch,
-  _setValue,
-  _errors,
-}) {
+export default function Step8AdditionalInfo({ register }) {
   return (
     <>
       <h2 className="mb-4 text-2xl font-bold">Additional Information</h2>

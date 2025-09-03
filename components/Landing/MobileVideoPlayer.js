@@ -4,9 +4,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function VideoBackground({ videoSources }) {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [currentVideoIndex, _] = useState(0);
+  const [currentVideoIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [__, setVideoAspect] = useState(null);
+  const [, setVideoAspect] = useState(null)[1];
   const videoRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -69,7 +69,7 @@ export default function VideoBackground({ videoSources }) {
     updateVideoDimensions();
     window.addEventListener("resize", updateVideoDimensions);
     return () => window.removeEventListener("resize", updateVideoDimensions);
-  }, [isMobile]);
+  }, [isMobile, setVideoAspect]);
 
   useEffect(() => {
     const videoElement = videoRef.current;

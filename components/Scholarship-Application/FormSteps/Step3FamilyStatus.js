@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const Step3FamilyStatus = ({ register, watch, setValue, errors, _ }) => {
+const Step3FamilyStatus = ({ register, watch, setValue, errors }) => {
   // Watch relevant fields for conditional rendering
   const relationshipStatus = watch("relationshipStatus");
   const hasChildren = watch("hasChildren");

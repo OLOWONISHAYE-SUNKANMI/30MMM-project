@@ -3,9 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const VideoBackground = ({ videoSources }) => {
-  const [currentVideoIndex, _] = useState(0);
-  const [__, setIsVideoLoaded] = useState(false);
-  const [___, setVideoAspect] = useState(16 / 9);
+  const [currentVideoIndex] = useState(0);
+  const [, setIsVideoLoaded] = useState(false);
+  const [, setVideoAspect] = useState(16 / 9);
   const videoRef = useRef(null);
   const containerRef = useRef(null);
 

@@ -105,7 +105,9 @@ const DonationPage: React.FC<DonationPageProps> = ({
         );
       }
     } catch (error) {
-      setValidationError("Unable to validate discount code. Please try again.");
+      setValidationError(
+        `Unable to validate discount code: ${error}. Please try again.`,
+      );
     } finally {
       setIsValidating(false);
     }
