@@ -2,12 +2,7 @@
 
 import prisma from "@/db";
 import type { Profile, User } from "@/generated/client";
-import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-
-const session = await auth.api.getSession({
-  headers: await headers(),
-});
 
 export type ProfileData = Profile;
 
@@ -22,6 +17,8 @@ export async function updateProfile({
 }: {
   profileData: ProfileData;
 }): Promise<UpdateProfileResponse> {
+  const session = await auth();
+
   if (!session) {
     return {
       success: false,
@@ -29,7 +26,7 @@ export async function updateProfile({
     };
   }
 
-  const userId = session.user.id;
+  const userId = session.user?.id;
 
   // Create or update user profile in the database
   const updatedUser = await prisma.user.update({
