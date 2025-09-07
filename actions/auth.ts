@@ -57,7 +57,7 @@ export async function signUpWithCredentialsAction(
     const hashedPassword = await hash(password, 12);
 
     // Create the user
-    const newUser = await prisma.user.create({
+    await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
@@ -74,12 +74,33 @@ export async function signUpWithCredentialsAction(
       redirectTo,
     });
   } catch (error) {
-    console.error("Sign up error:", error);
-
     // Nextjs handles redirects internally with this error, its thrown after a successful authentication
     // This is expected behavior so we return nothing
     if (error?.message?.includes("NEXT_REDIRECT")) {
-      return;
+      console.log("Redirecting after successful sign up");
+    }
+    // if there is a real error, throw that
+    throw error;
+  }
+}
+
+// Sign in with credentials - AUTHENTICATE USER
+export async function signInWithCredentialsAction(
+  email: string,
+  password: string,
+  redirectPath: string = "/dashboard", // Default redirect to dashboard
+) {
+  try {
+    await signIn("credentials", {
+      email,
+      password,
+      redirectTo: redirectPath, // Use the provided redirect path or default to dashboard
+    });
+  } catch (error) {
+    // Nextjs handles redirects internally with this error, its thrown after a successful authentication
+    // This is expected behavior so we return nothing
+    if (error?.message?.includes("NEXT_REDIRECT")) {
+      console.log("Redirecting after successful login");
     }
     // if there is a real error, throw that
     throw error;
@@ -108,17 +129,3 @@ export async function signUpAction(
 export async function signOutAction() {
   await signOut({ redirectTo: "/" });
 }
-
-// In your form component, make sure you're calling the action correctly:
-const handleSubmit = async (formData: FormData) => {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const name = formData.get("name") as string; // Add this if you have a name field
-
-  try {
-    await signUpWithCredentialsAction(email, password, name);
-  } catch (error) {
-    // Handle error appropriately
-    console.error("Sign up failed:", error);
-  }
-};

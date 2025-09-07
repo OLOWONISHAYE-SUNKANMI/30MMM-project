@@ -1,7 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { signUpWithCredentialsAction } from "@/actions/auth";
+import {
+  signInWithCredentialsAction,
+  signUpWithCredentialsAction,
+} from "@/actions/auth";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -34,16 +37,22 @@ export default function Form({ isSignUp = true }) {
       setLoading(true);
 
       if (isSignUp) {
-        // For login, use the signUpWithCredentialsAction from auth.ts
-        toast("Signing in...");
-        await signUpWithCredentialsAction(email, password);
+        toast("Signing up...");
+        await signUpWithCredentialsAction(
+          email,
+          password,
+          firstName + " " + lastName,
+        );
+      } else {
+        toast("Logging in...");
+        await signInWithCredentialsAction(email, password);
       }
     } catch (error) {
       setError(error.message || "An error occurred during authentication");
       console.error("Authentication error:", error);
     } finally {
       setLoading(false);
-      toast("Sign in was successful");
+      toast(isSignUp ? "Account created successfully" : "Login successful");
     }
   };
 
