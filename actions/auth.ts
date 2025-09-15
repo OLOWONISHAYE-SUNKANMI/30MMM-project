@@ -70,7 +70,7 @@ export async function signUpWithCredentialsAction(
     const redirectTo = await getRedirectPath();
     await signIn("credentials", {
       email,
-      password, // Use original password, not hashed
+      password: hashedPassword, // Use original password, not hashed
       redirectTo,
     });
   } catch (error) {
@@ -128,4 +128,38 @@ export async function signUpAction(
 // Sign out function
 export async function signOutAction() {
   await signOut({ redirectTo: "/" });
+}
+
+// Add this new action to get current auth state
+export async function getCurrentAuthState() {
+  try {
+    const user = await getUser();
+
+    return {
+      isAuthenticated: !!user,
+      user: user || null,
+    };
+  } catch (error) {
+    console.error("Error getting auth state:", error);
+
+    // Handle specific cases where user is simply not authenticated
+    // vs actual database/connection errors
+    if (
+      error?.message?.includes("No session found") ||
+      error?.message?.includes("Not authenticated") ||
+      error?.code === "UNAUTHORIZED"
+    ) {
+      return {
+        isAuthenticated: false,
+        user: null,
+      };
+    }
+
+    // For database connection errors or other issues,
+    // still return unauthenticated state but log the error
+    return {
+      isAuthenticated: false,
+      user: null,
+    };
+  }
 }
