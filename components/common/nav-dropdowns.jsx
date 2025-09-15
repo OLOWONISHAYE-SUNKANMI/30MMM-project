@@ -27,7 +27,7 @@ export function AboutDropdown() {
                 href="/about"
                 title="About Us"
               >
-                Learn about our ministry and mission
+                Our ministry and mission
               </ListItem>
               <ListItem
                 href="/founders-bio"
@@ -78,10 +78,12 @@ export function ProgramsDropdown() {
                 Financial assistance opportunities
               </ListItem>
               <ListItem
-                href="/clean-program"
-                title="CLEAN Program"
+                href="https://www.the-carpenters-son.org/"
+                title="The Carpenter's Son"
+                target="_blank"
+                rel="noreferrer"
               >
-                Our signature transformative program
+                Our Apprenticeship program
               </ListItem>
             </ul>
           </NavigationMenuContent>
