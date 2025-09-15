@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "dev.https": "cross-env BETTER_AUTH_URL=https://localhost:3000 next dev --experimental-https --turbopack",
     "build": "prisma generate && next build",
     "start": "next start",
