@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getCurrentAuthState } from "@/actions/auth";
 import DesktopNavBar from "./desktop-nav-bar";
+import LoadingNavBar from "./loading-nav-bar";
 import MobileNavBar from "./mobile-nav-bar";
 
 export default function NavBar() {
@@ -56,12 +57,7 @@ export default function NavBar() {
 
   // Show loading state
   if (authState.loading) {
-    return (
-      <DesktopNavBar
-        isAuthenticated={false}
-        user={null}
-      />
-    );
+    return <LoadingNavBar />;
   }
 
   // Show error state briefly if needed (optional)

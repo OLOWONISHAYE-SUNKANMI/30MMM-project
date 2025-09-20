@@ -95,21 +95,21 @@ export default function NavLinks({ onLinkClick, isAuthenticated, isMobile }) {
                     onClick={onLinkClick}
                     className="text-sm"
                   >
-                    Overview
+                    Our Mission
                   </NavLink>
                   <NavLink
-                    href="/about/our-story"
+                    href="/founders-bio"
                     onClick={onLinkClick}
                     className="text-sm"
                   >
-                    Our Story
+                    Our Founder
                   </NavLink>
                   <NavLink
-                    href="/about/leadership"
+                    href="/contact"
                     onClick={onLinkClick}
                     className="text-sm"
                   >
-                    Leadership
+                    Get in Touch
                   </NavLink>
                 </div>
               </div>
@@ -121,25 +121,32 @@ export default function NavLinks({ onLinkClick, isAuthenticated, isMobile }) {
                 </div>
                 <div className="mobile-submenu space-y-1 pl-4">
                   <NavLink
-                    href="/programs"
+                    href="/individuals"
                     onClick={onLinkClick}
                     className="text-sm"
                   >
-                    Overview
+                    For Individuals
                   </NavLink>
                   <NavLink
-                    href="/programs/program1"
+                    href="/churches"
                     onClick={onLinkClick}
                     className="text-sm"
                   >
-                    Program 1
+                    For Churches
                   </NavLink>
                   <NavLink
-                    href="/programs/program2"
+                    href="/scholarship"
                     onClick={onLinkClick}
                     className="text-sm"
                   >
-                    Program 2
+                    Scholarship Assistance
+                  </NavLink>
+                  <NavLink
+                    href="https://www.the-carpenters-son.org/"
+                    onClick={onLinkClick}
+                    className="text-sm"
+                  >
+                    The Carpenter's Son Apprenticeship
                   </NavLink>
                   {/* Add other program links as needed */}
                 </div>
