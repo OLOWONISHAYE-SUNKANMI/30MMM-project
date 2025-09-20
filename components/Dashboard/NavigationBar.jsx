@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { getCurrentAuthState } from "@/actions/auth";
-import { useDashboardContext } from "@/contexts/dashboard/dashboard-provider";
 import NavLogo from "@/components/common/nav-bar-logo";
 import UserMenu from "@/components/common/user-menu";
 
@@ -12,10 +11,6 @@ export default function NavigationBar() {
     loading: true,
     error: null,
   });
-  // const { userInfo } = useDashboardContext();
-
-  // const { initials, avatarUrl, firstName } = userInfo;
-
   useEffect(() => {
     async function fetchAuth() {
       try {
@@ -39,6 +34,7 @@ export default function NavigationBar() {
     }
 
     fetchAuth();
+    console.log("Auth State from NavBar:", authState);
   }, []);
 
   return (
