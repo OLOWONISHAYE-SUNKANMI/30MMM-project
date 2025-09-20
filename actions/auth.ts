@@ -127,6 +127,7 @@ export async function signUpAction(
 
 // Sign out function
 export async function signOutAction() {
+  console.log("running signOutAction...");
   await signOut({ redirectTo: "/" });
 }
 

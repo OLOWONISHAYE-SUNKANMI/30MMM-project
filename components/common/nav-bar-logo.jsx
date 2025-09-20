@@ -19,6 +19,7 @@ export default function NavLogo() {
           className="h-fit w-auto max-w-[175px]"
           width={602}
           height={169}
+          priority
         />
       </div>
     </Link>

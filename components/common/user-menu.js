@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { signOutAction } from "@/actions/auth";
 import { ChevronDown, LogOut, Settings, User } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -32,6 +32,7 @@ export default function UserMenu({ user, mobile }) {
       // Replace with your actual logout logic
       // Example: await signOut();
       console.log("Logging out...");
+      await signOutAction();
       router.push("/");
       router.refresh();
     } catch (error) {

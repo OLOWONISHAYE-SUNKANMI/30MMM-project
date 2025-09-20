@@ -56,7 +56,12 @@ export default function NavBar() {
 
   // Show loading state
   if (authState.loading) {
-    return <div className="navbar-loading">Loading...</div>;
+    return (
+      <DesktopNavBar
+        isAuthenticated={false}
+        user={null}
+      />
+    );
   }
 
   // Show error state briefly if needed (optional)
