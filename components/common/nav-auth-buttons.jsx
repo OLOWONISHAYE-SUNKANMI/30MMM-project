@@ -1,6 +1,6 @@
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { NavLink } from "./nav-links";
+import NavLink from "./nav-link";
 
 export default function AuthButtons({ onButtonClick }) {
   const pathname = usePathname();
