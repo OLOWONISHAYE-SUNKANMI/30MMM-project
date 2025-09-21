@@ -36,17 +36,30 @@ export default function AuthButtons({ onButtonClick }) {
 
   if (landingRoutes.includes(pathname)) {
     return (
-      <NavLink
-        href="/individuals"
-        onClick={onButtonClick}
-      >
-        <Button
-          variant="outline"
-          className="w-full border-primary-red text-primary-red hover:bg-primary-red hover:text-white"
+      <>
+        <NavLink
+          href="/login"
+          onClick={onButtonClick}
         >
-          Start Your Journey
-        </Button>
-      </NavLink>
+          <Button
+            variant="outline"
+            className="w-full border-primary-red text-primary-red hover:bg-primary-red hover:text-white"
+          >
+            Log In
+          </Button>
+        </NavLink>
+        <NavLink
+          href="/individuals"
+          onClick={onButtonClick}
+        >
+          <Button
+            variant="outline"
+            className="w-full border-primary-red text-primary-red hover:bg-primary-red hover:text-white"
+          >
+            Start Your Journey
+          </Button>
+        </NavLink>
+      </>
     );
   }
 

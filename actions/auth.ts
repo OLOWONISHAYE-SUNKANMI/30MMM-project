@@ -19,7 +19,7 @@ async function getRedirectPath() {
 
     // Check if user has completed their profile
     // This assumes userProfile contains a field indicating profile completion
-    if (user.userProfile) {
+    if (user.profileCompleted) {
       return "/dashboard";
     }
 
@@ -33,6 +33,11 @@ async function getRedirectPath() {
 
 // Sign up with Google
 export async function signUpWithGoogleAction() {
+  const redirectTo = await getRedirectPath();
+  await signIn("google", { redirectTo });
+}
+
+export async function logInWithGoogleAction() {
   const redirectTo = await getRedirectPath();
   await signIn("google", { redirectTo });
 }
@@ -85,7 +90,7 @@ export async function signUpWithCredentialsAction(
 }
 
 // Sign in with credentials - AUTHENTICATE USER
-export async function signInWithCredentialsAction(
+export async function logInWithCredentialsAction(
   email: string,
   password: string,
   redirectPath: string = "/dashboard", // Default redirect to dashboard
@@ -120,6 +125,24 @@ export async function signUpAction(
     );
   } else if (provider === "google") {
     await signUpWithGoogleAction();
+  } else {
+    throw new Error("Invalid provider or missing credentials");
+  }
+}
+
+// Generic log in that accepts provider type
+export async function logInAction(
+  provider: "google" | "credentials",
+  credentials?: { email: string; password: string; redirectPath?: string },
+) {
+  if (provider === "credentials" && credentials) {
+    await logInWithCredentialsAction(
+      credentials.email,
+      credentials.password,
+      credentials.redirectPath,
+    );
+  } else if (provider === "google") {
+    await logInWithGoogleAction();
   } else {
     throw new Error("Invalid provider or missing credentials");
   }

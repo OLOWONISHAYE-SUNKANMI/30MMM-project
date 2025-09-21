@@ -1,14 +1,18 @@
 "use client";
 
 import React from "react";
-import { signUpAction } from "@/actions/auth";
+import { logInAction, signUpAction } from "@/actions/auth";
 import Image from "next/image";
 import { toast } from "sonner";
 
 export default function GoogleBtn({ isSignUp = true }) {
   const handleGoogleAuth = async () => {
     try {
-      await signUpAction("google");
+      if (isSignUp) {
+        await signUpAction("google");
+      } else {
+        await logInAction("google");
+      }
       toast.success(
         `${isSignUp ? "Google Sign Up" : "Google Log In"} successful`,
       );
