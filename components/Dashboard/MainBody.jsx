@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCurrentAuthState } from "@/actions/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import { FaChevronDown } from "react-icons/fa";
 import DonateHero from "@/components/Dashboard/DonateHero";
 import CardSection from "./CardSection";

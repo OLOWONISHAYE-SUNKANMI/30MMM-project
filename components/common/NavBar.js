@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getCurrentAuthState } from "@/actions/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import DesktopNavBar from "./desktop-nav-bar";
 import LoadingNavBar from "./loading-nav-bar";
 import MobileNavBar from "./mobile-nav-bar";
@@ -39,6 +40,7 @@ export default function NavBar() {
           loading: false,
           error: null,
         });
+        console.log("NavBar auth data:", authData);
       } catch (error) {
         console.error("Failed to fetch auth:", error);
 

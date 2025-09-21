@@ -1,4 +1,5 @@
-import Link from "next/link";
+"use client";
+
 import { usePathname } from "next/navigation";
 import { AboutDropdown, ProgramsDropdown } from "./nav-dropdowns";
 import NavLink from "./nav-link";

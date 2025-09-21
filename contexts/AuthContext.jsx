@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
           loading: false,
           error: null,
         });
+        console.log("AuthContext auth data:", authData);
       } catch (error) {
         console.error("Failed to fetch auth:", error);
         setAuthState({
