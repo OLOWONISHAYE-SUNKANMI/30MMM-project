@@ -7,44 +7,13 @@ import CardSection from "./CardSection";
 
 export default function MainBody() {
   const [isMobile, setIsMobile] = useState(false);
-  const [authState, setAuthState] = useState({
-    isAuthenticated: false,
-    user: null,
-    loading: true,
-    error: null,
-  });
-
-  useEffect(() => {
-    async function fetchAuth() {
-      try {
-        const authData = await getCurrentAuthState();
-        setAuthState({
-          ...authData,
-          loading: false,
-          error: null,
-        });
-      } catch (error) {
-        console.error("Failed to fetch auth:", error);
-
-        // Always default to unauthenticated state on any error
-        setAuthState({
-          isAuthenticated: false,
-          user: null,
-          loading: false,
-          error: error.message || "Authentication check failed",
-        });
-      }
-    }
-
-    fetchAuth();
-    console.log("Auth State from Body:", authState);
-  }, []);
+  const { authState } = useAuth();
 
   return (
     <div className="relative mx-auto mb-8 flex min-h-screen w-full max-w-[1200px] flex-col items-start gap-y-5 space-y-4 pt-12 max-lg:mx-2">
       <div className="flex w-full flex-wrap items-center justify-start gap-2 md:gap-y-5">
         <h1 className="text-3xl font-bold leading-relaxed md:text-4xl">
-          Hello, {authState.user?.fullName}
+          Hello, {authState.user?.name || "User"}!
         </h1>
         <FaChevronDown size={16} />
 
