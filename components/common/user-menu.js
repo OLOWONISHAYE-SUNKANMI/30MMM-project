@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { signOutAction } from "@/actions/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import { ChevronDown, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,22 +16,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function UserMenu({ user, mobile }) {
+export default function UserMenu({ mobile }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const { authState } = useAuth();
 
-  // Default placeholder if no user object is provided
-  const userInfo = user || {
-    name: "User",
-    email: "user@example.com",
-    image: null,
-  };
+  // At this point, we know user is authenticated (dashboard handles the checks)
+  const userInfo = authState.user;
+
+  // Add null check to prevent errors during initial render
+  if (!userInfo) {
+    return null;
+  }
 
   // Handle logout
   const handleLogout = async () => {
     try {
-      // Replace with your actual logout logic
-      // Example: await signOut();
       console.log("Logging out...");
       await signOutAction();
       router.push("/");

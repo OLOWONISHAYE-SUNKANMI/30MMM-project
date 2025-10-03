@@ -75,7 +75,7 @@ export async function signUpWithCredentialsAction(
     const redirectTo = await getRedirectPath();
     await signIn("credentials", {
       email,
-      password: hashedPassword, // Use original password, not hashed
+      password: password, // Use original password, not hashed
       redirectTo,
     });
   } catch (error) {
@@ -89,25 +89,53 @@ export async function signUpWithCredentialsAction(
   }
 }
 
-// Sign in with credentials - AUTHENTICATE USER
+// Log in with credentials
 export async function logInWithCredentialsAction(
   email: string,
   password: string,
-  redirectPath: string = "/dashboard", // Default redirect to dashboard
+  redirectPath: string = "/dashboard",
 ) {
   try {
-    await signIn("credentials", {
+    // Verify user exists before attempting sign in
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: { id: true, email: true, password: true },
+    });
+
+    if (!user) {
+      throw new Error("No user found with this email");
+    }
+
+    if (!user.password) {
+      throw new Error("This account uses social login. Please sign in with Google.");
+    }
+
+    const result = await signIn("credentials", {
       email,
       password,
-      redirectTo: redirectPath, // Use the provided redirect path or default to dashboard
+      redirect: false, // Don't redirect automatically
     });
-  } catch (error) {
-    // Nextjs handles redirects internally with this error, its thrown after a successful authentication
-    // This is expected behavior so we return nothing
-    if (error?.message?.includes("NEXT_REDIRECT")) {
-      console.log("Redirecting after successful login");
+
+    // If signIn didn't throw and we get here, manually redirect
+    if (result?.error) {
+      throw new Error(result.error);
     }
-    // if there is a real error, throw that
+
+    // Return success, let the client handle redirect
+    return { success: true, redirectTo: redirectPath };
+  } catch (error) {
+    console.error("Login error:", error);
+    
+    // Handle NextAuth redirect errors (these are actually success cases)
+    if (error?.message?.includes("NEXT_REDIRECT")) {
+      return { success: true, redirectTo: redirectPath };
+    }
+
+    // Handle specific error types
+    if (error?.type === "CredentialsSignin") {
+      throw new Error("Invalid email or password");
+    }
+
     throw error;
   }
 }

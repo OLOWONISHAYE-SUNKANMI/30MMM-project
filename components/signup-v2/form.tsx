@@ -42,6 +42,11 @@ export default function Form({ isSignUp = true }) {
         });
       } else {
         toast("Logging in...");
+        console.log(
+          "LOGIN ACTION - sending data to authAction: ",
+          email,
+          password,
+        );
         await logInAction("credentials", {
           email,
           password,
@@ -94,7 +99,7 @@ export default function Form({ isSignUp = true }) {
               <Input
                 id="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder="ThisIsAn@example.com"
                 className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                 required
                 onChange={(e) => setEmail(e.target.value)}
