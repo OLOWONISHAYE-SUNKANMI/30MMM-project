@@ -57,10 +57,13 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative pt-16 text-white bg-primary-red">
-        <div className="container relative px-8 pt-16 mx-auto">
-          <motion.div {...fadeIn} className="max-w-3xl mx-auto text-center">
-            <h1 className="mt-8 mb-6 text-5xl font-bold">About CLEAN</h1>
+      <section className="relative bg-primary-red pt-16 text-white">
+        <div className="container relative mx-auto px-8 pt-16">
+          <motion.div
+            {...fadeIn}
+            className="mx-auto max-w-3xl text-center"
+          >
+            <h1 className="mb-6 mt-8 text-5xl font-bold">About CLEAN</h1>
             <p className="text-xl leading-relaxed">
               CLEAN exists to help men find freedom, purpose, and brotherhood.
               We believe that every man has the potential to live a life of
@@ -68,7 +71,7 @@ export default function AboutPage() {
               lack of purpose hold men back from becoming who God created them
               to be.
             </p>
-            <p className="pb-16 mt-8 text-2xl font-semibold">
+            <p className="mt-8 pb-16 text-2xl font-semibold">
               CLEAN is here to change that.
             </p>
           </motion.div>
@@ -76,12 +79,15 @@ export default function AboutPage() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-16 bg-white">
-        <div className="container auto">
-          <motion.div {...fadeIn} className="max-w-3xl mx-auto">
-            <h2 className="mb-8 text-3xl font-bold text-center">Our Mission</h2>
+      <section className="bg-white py-16">
+        <div className="auto container">
+          <motion.div
+            {...fadeIn}
+            className="mx-auto max-w-3xl"
+          >
+            <h2 className="mb-8 text-center text-3xl font-bold">Our Mission</h2>
             <div className="space-y-8">
-              <div className="p-8 rounded-lg bg-gray-50">
+              <div className="rounded-lg bg-gray-50 p-8">
                 <h3 className="mb-8 text-xl font-semibold">External Freedom</h3>
                 <p className="text-gray-700">
                   To help men break free from the chains of sexual sin by
@@ -89,7 +95,7 @@ export default function AboutPage() {
                   out of any hole—no matter how deep it may seem.
                 </p>
               </div>
-              <div className="p-8 rounded-lg bg-gray-50">
+              <div className="rounded-lg bg-gray-50 p-8">
                 <h3 className="mb-8 text-xl font-semibold">Internal Purpose</h3>
                 <p className="text-gray-700">
                   To help men discover and step into their God-given purpose. We
@@ -107,13 +113,19 @@ export default function AboutPage() {
       </section>
 
       {/* Statistics Section */}
-      <section className="py-16 text-black bg-gradient-to-b from-gray-50 to-gray-100">
+      <section className="bg-gradient-to-b from-gray-50 to-gray-100 py-16 text-black">
         <div className="container mx-auto">
-          <motion.div {...fadeIn} className="w-full mx-auto">
-            <h2 className="mb-16 text-3xl font-bold text-center">Why CLEAN?</h2>
+          <motion.div
+            {...fadeIn}
+            className="mx-auto w-full"
+          >
+            <h2 className="mb-16 text-center text-3xl font-bold">Why CLEAN?</h2>
             <div className="grid gap-8 md:grid-cols-3">
               {statistics.map((item, index) => (
-                <div key={index} className="text-center">
+                <div
+                  key={index}
+                  className="text-center"
+                >
                   <div className="mb-4 text-4xl font-bold text-primary-red">
                     {item.stat}
                   </div>
@@ -121,7 +133,7 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
-            <p className="mt-12 text-lg text-center">
+            <p className="mt-12 text-center text-lg">
               CLEAN fills this gap by providing practical tools, biblical
               teaching, and a supportive community to help men find lasting
               freedom and purpose.
@@ -131,15 +143,21 @@ export default function AboutPage() {
       </section>
 
       {/* Core Principles Section */}
-      <section className="py-16 bg-white">
-        <div className="container px-4 mx-auto">
-          <motion.div {...fadeIn} className="max-w-4xl mx-auto">
-            <h2 className="mb-12 text-3xl font-bold text-center">
+      <section className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <motion.div
+            {...fadeIn}
+            className="mx-auto max-w-4xl"
+          >
+            <h2 className="mb-12 text-center text-3xl font-bold">
               Our Approach
             </h2>
             <div className="grid gap-8 md:grid-cols-2">
               {corePrinciples.map((principle, index) => (
-                <div key={index} className="p-6 rounded-lg bg-gray-50">
+                <div
+                  key={index}
+                  className="rounded-lg bg-gray-50 p-6"
+                >
                   <h3 className="mb-4 text-xl font-semibold">
                     {principle.title}
                   </h3>
@@ -152,9 +170,12 @@ export default function AboutPage() {
       </section>
 
       {/* Vision Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container px-4 mx-auto">
-          <motion.div {...fadeIn} className="max-w-3xl mx-auto text-center">
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <motion.div
+            {...fadeIn}
+            className="mx-auto max-w-3xl text-center"
+          >
             <h2 className="mb-8 text-3xl font-bold">Our Vision</h2>
             <p className="mb-8 text-xl leading-relaxed">
               We envision a world where men lead with integrity, families are
@@ -173,7 +194,7 @@ export default function AboutPage() {
               </p>
               <Link
                 href="/Pricing"
-                className="px-8 py-3 mt-10 text-white transition-colors rounded-md bg-primary-red hover:bg-red-700"
+                className="mt-10 rounded-md bg-primary-red px-8 py-3 text-white transition-colors hover:bg-red-700"
               >
                 Start Your Journey
               </Link>

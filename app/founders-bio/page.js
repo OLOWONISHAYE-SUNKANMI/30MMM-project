@@ -13,14 +13,14 @@ function FounderBio() {
   };
 
   const Timeline = ({ children }) => (
-    <div className="pl-6 ml-4 space-y-6 border-l-2 border-primary-red">
+    <div className="ml-4 space-y-6 border-l-2 border-primary-red pl-6">
       {children}
     </div>
   );
 
   const TimelineItem = ({ year, title, children }) => (
     <div className="relative">
-      <div className="absolute -left-[2.19rem] w-4 h-4 rounded-full bg-primary-red" />
+      <div className="absolute -left-[2.19rem] h-4 w-4 rounded-full bg-primary-red" />
       <div>
         <span className="text-sm text-gray-500">{year}</span>
         <h4 className="text-lg font-semibold">{title}</h4>
@@ -32,16 +32,16 @@ function FounderBio() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-20 text-white bg-gray-900">
+      <section className="relative bg-gray-900 py-20 text-white">
         <div className="absolute inset-0 bg-black/50" />
-        <div className="container relative px-4 mx-auto">
+        <div className="container relative mx-auto px-4">
           <motion.div
             {...fadeIn}
-            className="flex flex-col items-center max-w-4xl gap-8 mx-auto md:flex-row"
+            className="mx-auto flex max-w-4xl flex-col items-center gap-8 md:flex-row"
           >
             <div className="mt-16 md:w-1/3">
               {/* Replace with actual image path */}
-              <div className="w-64 overflow-hidden bg-gray-300 rounded-full h-90">
+              <div className="h-90 w-64 overflow-hidden rounded-full bg-gray-300">
                 <Image
                   src="/donovan.png"
                   alt="Dr. Donovan Anderson"
@@ -64,9 +64,12 @@ function FounderBio() {
       </section>
 
       {/* Introduction Section */}
-      <section className="py-16 bg-white">
-        <div className="container px-4 mx-auto">
-          <motion.div {...fadeIn} className="max-w-3xl mx-auto">
+      <section className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <motion.div
+            {...fadeIn}
+            className="mx-auto max-w-3xl"
+          >
             <p className="text-lg leading-relaxed text-gray-700">
               Dr. Donovan Anderson is a trailblazer in the fields of ministry,
               academia, and urban development. With a passion for guiding men
@@ -79,19 +82,28 @@ function FounderBio() {
       </section>
 
       {/* Academic Journey Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container px-4 mx-auto">
-          <motion.div {...fadeIn} className="max-w-3xl mx-auto">
-            <h2 className="mb-8 text-3xl font-bold text-center">
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <motion.div
+            {...fadeIn}
+            className="mx-auto max-w-3xl"
+          >
+            <h2 className="mb-8 text-center text-3xl font-bold">
               Academic Excellence
             </h2>
             <Timeline>
-              <TimelineItem year="2004" title="Bachelor of Arts in History">
+              <TimelineItem
+                year="2004"
+                title="Bachelor of Arts in History"
+              >
                 <p className="text-gray-600">
                   Howard University, magna cum laude
                 </p>
               </TimelineItem>
-              <TimelineItem year="2006" title="Master of Arts in History">
+              <TimelineItem
+                year="2006"
+                title="Master of Arts in History"
+              >
                 <p className="text-gray-600">
                   Howard University, magna cum laude
                 </p>
@@ -102,13 +114,16 @@ function FounderBio() {
               >
                 <p className="text-gray-600">UNC Chapel Hill</p>
               </TimelineItem>
-              <TimelineItem year="2024" title="Master of Arts in Theology">
+              <TimelineItem
+                year="2024"
+                title="Master of Arts in Theology"
+              >
                 <p className="text-gray-600">
                   Wesley Theological Seminary, with honors
                 </p>
                 <div className="mt-2">
                   <p className="font-semibold">Awards:</p>
-                  <ul className="ml-4 text-gray-600 list-disc">
+                  <ul className="ml-4 list-disc text-gray-600">
                     <li>Harry Hoosier Spirit Award</li>
                     <li>Margaret Pittman Award in Urban Ministry</li>
                   </ul>
@@ -120,13 +135,16 @@ function FounderBio() {
       </section>
 
       {/* Ministry Leadership Section */}
-      <section className="py-16 bg-white">
-        <div className="container px-4 mx-auto">
-          <motion.div {...fadeIn} className="max-w-3xl mx-auto">
-            <h2 className="mb-8 text-3xl font-bold text-center">
+      <section className="bg-white py-16">
+        <div className="mx-auto px-4 md:container">
+          <motion.div
+            {...fadeIn}
+            className="mx-auto max-w-5xl"
+          >
+            <h2 className="mb-8 text-center text-3xl font-bold">
               Leadership at Zion Church
             </h2>
-            <div className="p-8 rounded-lg bg-gray-50">
+            <div className="rounded-lg bg-gray-50 p-8">
               <h3 className="mb-4 text-xl font-semibold">
                 Lead Shepherd for the Men&apos;s Ministry
               </h3>
@@ -140,13 +158,13 @@ function FounderBio() {
                   Innovative Programs Developed:
                 </h4>
                 <div className="grid gap-4 md:grid-cols-2">
-                  <div className="p-4 bg-white rounded shadow">
+                  <div className="rounded bg-white p-4 shadow">
                     <h5 className="font-semibold text-primary-red">CLEAN</h5>
                     <p className="text-sm text-gray-600">
                       Tools to Achieve Sexual Integrity for the Christian Man
                     </p>
                   </div>
-                  <div className="p-4 bg-white rounded shadow">
+                  <div className="rounded bg-white p-4 shadow">
                     <h5 className="font-semibold text-primary-red">
                       Get FIT Bootcamp
                     </h5>
@@ -154,7 +172,7 @@ function FounderBio() {
                       Physical and spiritual wellness program
                     </p>
                   </div>
-                  <div className="p-4 bg-white rounded shadow">
+                  <div className="rounded bg-white p-4 shadow">
                     <h5 className="font-semibold text-primary-red">
                       Living Word Bible Study
                     </h5>
@@ -170,10 +188,13 @@ function FounderBio() {
       </section>
 
       {/* Experience Timeline */}
-      <section className="py-16 bg-gray-50">
-        <div className="container px-4 mx-auto">
-          <motion.div {...fadeIn} className="max-w-3xl mx-auto">
-            <h2 className="mb-8 text-3xl font-bold text-center">
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <motion.div
+            {...fadeIn}
+            className="mx-auto max-w-3xl"
+          >
+            <h2 className="mb-8 text-center text-3xl font-bold">
               Ministry Journey
             </h2>
             <Timeline>
@@ -186,7 +207,7 @@ function FounderBio() {
                 </p>
               </TimelineItem>
               <TimelineItem title="Training Programs">
-                <ul className="ml-4 text-gray-600 list-disc">
+                <ul className="ml-4 list-disc text-gray-600">
                   <li>Completed Deacon-in-Training Program at Zion Church</li>
                   <li>Completed Minister-in-Training Program at Zion Church</li>
                 </ul>
@@ -197,9 +218,12 @@ function FounderBio() {
       </section>
 
       {/* Vision Section */}
-      <section className="py-16 text-white bg-primary-red">
-        <div className="container px-4 mx-auto">
-          <motion.div {...fadeIn} className="max-w-3xl mx-auto text-center">
+      <section className="bg-primary-red py-8 text-white md:py-16">
+        <div className="mx-auto w-[80%] px-4 md:px-4">
+          <motion.div
+            {...fadeIn}
+            className="mx-auto w-full text-center"
+          >
             <h2 className="mb-8 text-3xl font-bold">A Vision for the Future</h2>
             <p className="mb-8 text-xl leading-relaxed">
               Dr. Anderson&apos;s vision is clear: to create a world where men
@@ -209,7 +233,7 @@ function FounderBio() {
               fathers God intended them to be.
             </p>
             <Link href="/Pricing">
-              <button className="px-8 py-3 mt-8 transition-colors bg-white rounded-md text-primary-red hover:bg-gray-100">
+              <button className="mt-8 rounded-md bg-white px-8 py-3 text-primary-red transition-colors hover:bg-gray-100">
                 Join the Movement
               </button>
             </Link>
