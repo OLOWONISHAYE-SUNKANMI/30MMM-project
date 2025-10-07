@@ -13,7 +13,9 @@ export default function Dashboard() {
       <div className="relative mx-16 flex min-h-screen flex-col items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600"></div>
-          <p className="text-gray-600">Loading dashboard...</p>
+          <p className="text-gray-600">
+            {authState.signingOut ? "Signing out..." : "Loading dashboard..."}
+          </p>
         </div>
       </div>
     );

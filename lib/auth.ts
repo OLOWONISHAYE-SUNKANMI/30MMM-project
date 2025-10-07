@@ -1,5 +1,5 @@
 import { PrismaClient } from "@/generated/client";
-import { compare } from "bcrypt"; // You'll need to install this package
+import { compare } from "bcrypt";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
@@ -44,6 +44,7 @@ export const authConfig = {
             name: user.name,
             email: user.email,
             role: user.role,
+            profileCompleted: user.profileCompleted,
           };
         } catch (error) {
           console.error("Auth error:", error);
@@ -53,38 +54,85 @@ export const authConfig = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
+    async signIn({ user, account, profile }) {
+      // For Google provider, verify user exists in database
+      if (account?.provider === "google") {
+        try {
+          // Check if user exists in our database
+          const dbUser = await prisma.user.findUnique({
+            where: { email: user.email as string },
+          });
+
+          // If user doesn't exist, deny sign in
+          if (!dbUser) {
+            console.log("Google sign-in denied: User not found in database");
+            return false; // This will prevent sign-in
+          }
+
+          // User exists, allow sign in
+          return true;
+        } catch (error) {
+          console.error("Error checking user in database:", error);
+          return false;
+        }
+      }
+
+      // For credentials provider, allow sign in (already verified in authorize)
+      return true;
+    },
+    async jwt({ token, user, account, trigger }) {
       // Initial sign in
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.profileCompleted = user.profileCompleted;
       }
 
-      // For Google provider, we need to create/update the user in our database
+      // For Google provider, fetch user data from database
       if (account && account.provider === "google") {
         try {
-          // Check if user exists in our database
-          let dbUser = await prisma.user.findUnique({
+          // Fetch user from database (we know they exist because signIn callback verified)
+          const dbUser = await prisma.user.findUnique({
             where: { email: token.email as string },
+            select: {
+              id: true,
+              email: true,
+              name: true,
+              role: true,
+              profileCompleted: true,
+            },
           });
 
-          // If not, create the user
-          if (!dbUser) {
-            dbUser = await prisma.user.create({
-              data: {
-                email: token.email as string,
-                name: token.name as string,
-                // Set appropriate defaults for a Google-authenticated user
-                role: "user",
-              },
-            });
+          if (dbUser) {
+            // Update token with database user data
+            token.id = dbUser.id;
+            token.role = dbUser.role;
+            token.profileCompleted = dbUser.profileCompleted;
           }
-
-          // Update token with database user data
-          token.id = dbUser.id;
-          token.role = dbUser.role;
         } catch (error) {
-          console.error("Error syncing Google user with database:", error);
+          console.error("Error fetching Google user from database:", error);
+        }
+      }
+
+      // On session update, refresh user data from database
+      if (trigger === "update") {
+        try {
+          const dbUser = await prisma.user.findUnique({
+            where: { email: token.email as string },
+            select: {
+              id: true,
+              role: true,
+              profileCompleted: true,
+            },
+          });
+
+          if (dbUser) {
+            token.id = dbUser.id;
+            token.role = dbUser.role;
+            token.profileCompleted = dbUser.profileCompleted;
+          }
+        } catch (error) {
+          console.error("Error updating token:", error);
         }
       }
 
@@ -94,13 +142,14 @@ export const authConfig = {
       if (token && session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as string;
+        session.user.profileCompleted = token.profileCompleted as boolean;
       }
       return session;
     },
   },
   pages: {
     signIn: "/login",
-    error: "/login", // Error code passed in query string as ?error=
+    error: "/login?error=authentication_failed", // Error code passed in query string
   },
 };
 

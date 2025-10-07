@@ -10,35 +10,39 @@ export function AuthProvider({ children }) {
     isAuthenticated: false,
     user: null,
     loading: true,
+    signingOut: false,
     error: null,
   });
 
-  useEffect(() => {
-    async function fetchAuth() {
-      try {
-        const authData = await getCurrentAuthState();
-        setAuthState({
-          ...authData,
-          loading: false,
-          error: null,
-        });
-        console.log("AuthContext auth data:", authData);
-      } catch (error) {
-        console.error("Failed to fetch auth:", error);
-        setAuthState({
-          isAuthenticated: false,
-          user: null,
-          loading: false,
-          error: error.message || "Authentication check failed",
-        });
-      }
+  // Function to refresh auth state from server
+  const refreshAuthState = async () => {
+    try {
+      setAuthState((prev) => ({ ...prev, loading: true }));
+      const authData = await getCurrentAuthState();
+      setAuthState({
+        ...authData,
+        loading: false,
+        signingOut: false,
+        error: null,
+      });
+    } catch (error) {
+      console.error("Failed to fetch auth:", error);
+      setAuthState({
+        isAuthenticated: false,
+        user: null,
+        loading: false,
+        signingOut: false,
+        error: error.message || "Authentication check failed",
+      });
     }
+  };
 
-    fetchAuth();
+  useEffect(() => {
+    refreshAuthState();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ authState, setAuthState }}>
+    <AuthContext.Provider value={{ authState, setAuthState, refreshAuthState }}>
       {children}
     </AuthContext.Provider>
   );

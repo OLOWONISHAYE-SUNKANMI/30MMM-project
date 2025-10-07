@@ -2,6 +2,7 @@
 
 import { PrismaClient } from "@/generated/client";
 import { hash } from "bcrypt";
+import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "@/lib/auth";
 import { getUser } from "@/lib/session";
 
@@ -38,8 +39,30 @@ export async function signUpWithGoogleAction() {
 }
 
 export async function logInWithGoogleAction() {
-  const redirectTo = await getRedirectPath();
-  await signIn("google", { redirectTo });
+  try {
+    // The signIn callback in auth.ts will verify user exists in database
+    // If they don't exist, they'll be redirected to the error page
+    await signIn("google", {
+      redirectTo: "/dashboard",
+    });
+  } catch (error) {
+    // Handle NextAuth redirect errors (these are expected for OAuth)
+    if (error?.message?.includes("NEXT_REDIRECT")) {
+      throw error; // Re-throw to allow redirect
+    }
+
+    // Suppress harmless browser extension errors during OAuth
+    if (
+      error?.message?.includes("message channel closed") ||
+      error?.message?.includes("asynchronous response")
+    ) {
+      console.log("Ignoring browser extension interference during OAuth");
+      return;
+    }
+
+    console.error("Google login error:", error);
+    throw error;
+  }
 }
 
 // Sign up with credentials - CREATE USER FIRST, THEN SIGN IN
@@ -107,7 +130,9 @@ export async function logInWithCredentialsAction(
     }
 
     if (!user.password) {
-      throw new Error("This account uses social login. Please sign in with Google.");
+      throw new Error(
+        "This account uses social login. Please sign in with Google.",
+      );
     }
 
     const result = await signIn("credentials", {
@@ -125,7 +150,7 @@ export async function logInWithCredentialsAction(
     return { success: true, redirectTo: redirectPath };
   } catch (error) {
     console.error("Login error:", error);
-    
+
     // Handle NextAuth redirect errors (these are actually success cases)
     if (error?.message?.includes("NEXT_REDIRECT")) {
       return { success: true, redirectTo: redirectPath };
@@ -163,23 +188,61 @@ export async function logInAction(
   provider: "google" | "credentials",
   credentials?: { email: string; password: string; redirectPath?: string },
 ) {
-  if (provider === "credentials" && credentials) {
-    await logInWithCredentialsAction(
-      credentials.email,
-      credentials.password,
-      credentials.redirectPath,
-    );
-  } else if (provider === "google") {
-    await logInWithGoogleAction();
-  } else {
-    throw new Error("Invalid provider or missing credentials");
+  console.log("using LogInAction was started");
+  try {
+    if (provider === "credentials" && credentials) {
+      return await logInWithCredentialsAction(
+        credentials.email,
+        credentials.password,
+        credentials.redirectPath,
+      );
+    } else if (provider === "google") {
+      console.log("Auth: using LogInAction with provider: ", provider);
+      return await logInWithGoogleAction();
+    } else {
+      throw new Error("Invalid provider or missing credentials");
+    }
+  } catch (error) {
+    // Suppress harmless browser extension errors
+    if (
+      error?.message?.includes("message channel closed") ||
+      error?.message?.includes("asynchronous response")
+    ) {
+      console.log("Ignoring browser extension interference");
+      return;
+    }
+
+    // Re-throw NextAuth redirect errors (these are expected)
+    if (error?.message?.includes("NEXT_REDIRECT")) {
+      throw error;
+    }
+
+    throw error;
   }
 }
 
 // Sign out function
 export async function signOutAction() {
-  console.log("running signOutAction...");
-  await signOut({ redirectTo: "/" });
+  try {
+    console.log("running signOutAction...");
+
+    // Sign out and redirect
+    await signOut({ redirectTo: "/" });
+
+    // Revalidate all paths to clear cached data
+    revalidatePath("/", "layout");
+
+    return { success: true };
+  } catch (error) {
+    console.error("Sign out error:", error);
+
+    // Handle NextAuth redirect errors (these are actually success cases)
+    if (error?.message?.includes("NEXT_REDIRECT")) {
+      return { success: true };
+    }
+
+    throw error;
+  }
 }
 
 // Add this new action to get current auth state
