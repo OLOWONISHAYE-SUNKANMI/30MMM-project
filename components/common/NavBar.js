@@ -2,13 +2,24 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { usePathname } from "next/navigation";
 import DesktopNavBar from "./desktop-nav-bar";
 import LoadingNavBar from "./loading-nav-bar";
 import MobileNavBar from "./mobile-nav-bar";
 
+// Pages where the internal navigation menu should be shown
+const INTERNAL_PAGES = [
+  "/dashboard",
+  "/dashboard/profile",
+  "/dashboard/settings",
+  "/dashboard/videos",
+];
+
 export default function NavBar() {
   const [isMobile, setIsMobile] = useState(false);
   const { authState } = useAuth();
+  const pathname = usePathname();
+  const showInternalMenu = INTERNAL_PAGES.includes(pathname);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -40,11 +51,13 @@ export default function NavBar() {
     <MobileNavBar
       isAuthenticated={authState.isAuthenticated}
       user={authState.user}
+      showInternalMenu={showInternalMenu}
     />
   ) : (
     <DesktopNavBar
       isAuthenticated={authState.isAuthenticated}
       user={authState.user}
+      showInternalMenu={showInternalMenu}
     />
   );
 }

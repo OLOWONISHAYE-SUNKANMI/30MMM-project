@@ -15,7 +15,11 @@ import NavLogo from "./nav-bar-logo";
 import NavLinks from "./nav-links";
 import UserMenu from "./user-menu";
 
-export default function MobileNavBar({ isAuthenticated, user }) {
+export default function MobileNavBar({
+  isAuthenticated,
+  user,
+  showInternalMenu,
+}) {
   const [open, setOpen] = useState(false);
   const closeSheet = () => setOpen(false);
 
@@ -60,6 +64,7 @@ export default function MobileNavBar({ isAuthenticated, user }) {
                       isAuthenticated={isAuthenticated}
                       onLinkClick={closeSheet}
                       isMobile={true}
+                      showInternalMenu={showInternalMenu}
                     />
                   </>
                 ) : (
@@ -69,6 +74,7 @@ export default function MobileNavBar({ isAuthenticated, user }) {
                       isAuthenticated={isAuthenticated}
                       onLinkClick={closeSheet}
                       isMobile={true}
+                      showInternalMenu={showInternalMenu}
                     />
                     <AuthButtons onButtonClick={closeSheet} />
                   </>
