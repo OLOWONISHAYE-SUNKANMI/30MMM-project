@@ -1,5 +1,6 @@
 import "@/app/globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { SessionProvider } from "next-auth/react";
 import { Alexandria } from "next/font/google";
 import Script from "next/script";
 import Footer from "@/components/common/Footer/Footer";
@@ -41,10 +42,12 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${alexandria.className} antialiased`}>
         <AuthProvider>
-          <NavBar />
-          <main className="mt-20">{children}</main>
-          <Toaster />
-          <Footer />
+          <SessionProvider>
+            <NavBar />
+            <main className="mt-20">{children}</main>
+            <Toaster />
+            <Footer />
+          </SessionProvider>
         </AuthProvider>
       </body>
       <Script

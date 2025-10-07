@@ -1,18 +1,130 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function Settings() {
+  const { data: session, status } = useSession();
   const [firstTabActive, setFirstTabActive] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    birthDate: "",
+    maritalStatus: "",
+    childrenCount: "",
+    churchAffiliation: "",
+    email: "",
+    phoneNumber: "",
+    address: "",
+    city: "",
+    state: "",
+    zipcode: "",
+  });
+
+  // Fetch user profile data
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (status === "authenticated" && session?.user?.id) {
+        try {
+          const response = await fetch(`/api/create-profile`);
+          if (response.ok) {
+            const data = await response.json();
+            if (data.profile) {
+              setFormData({
+                firstName: data.profile.firstName || "",
+                lastName: data.profile.lastName || "",
+                birthDate: data.profile.birthDate
+                  ? new Date(data.profile.birthDate).toISOString().split("T")[0]
+                  : "",
+                maritalStatus: data.profile.maritalStatus || "",
+                childrenCount: data.profile.childrenCount?.toString() || "",
+                churchAffiliation: data.profile.churchAffiliation || "",
+                email: data.profile.email || session.user.email || "",
+                phoneNumber: data.profile.phoneNumber || "",
+                address: data.profile.address || "",
+                city: data.profile.city || "",
+                state: data.profile.state || "",
+                zipcode: data.profile.zipcode || "",
+              });
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching profile:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchProfile();
+  }, [session, status]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch(`/api/create-profile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert("Profile updated successfully!");
+      } else {
+        alert("Failed to update profile");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("An error occurred while updating profile");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getInitials = () => {
+    if (formData.firstName && formData.lastName) {
+      return `${formData.firstName[0]}${formData.lastName[0]}`.toUpperCase();
+    }
+    return (
+      session?.user?.name
+        ?.split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase() || "AD"
+    );
+  };
+
+  if (status === "loading" || loading) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <>
       <div className="flex min-h-screen w-full flex-col items-center justify-start gap-3">
-        <h1 className="text-center text-4xl font-semibold">Account Settings</h1>
+        <h1 className="mt-20 text-center text-4xl font-semibold">
+          Edit Profile
+        </h1>
         <div className="grid size-20 items-center justify-center rounded-full bg-rose-600">
           <span className="text-4xl font-extrabold tracking-wider text-white">
-            AD
+            {getInitials()}
           </span>
         </div>
         <Link
@@ -36,71 +148,86 @@ export default function Settings() {
               Address
             </button>
           </div>
-          <form className="text-md my-3 grid h-min w-full flex-auto grid-cols-1 content-baseline items-center gap-y-2 font-normal md:grid-cols-2">
+          <form
+            onSubmit={handleSubmit}
+            className="text-md my-3 grid h-min w-full flex-auto grid-cols-1 content-baseline items-center gap-y-2 font-normal md:grid-cols-2"
+          >
             {!!firstTabActive && (
               <>
                 <label
-                  htmlFor="first-name"
+                  htmlFor="firstName"
                   className="block px-8"
                 >
                   <input
                     type="text"
-                    name="first-name"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
                     className="mt-1 w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="First Name"
                   />
                 </label>
                 <label
-                  htmlFor="last-name"
+                  htmlFor="lastName"
                   className="block px-8"
                 >
                   <input
                     type="text"
-                    name="last-name"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Last Name"
                   />
                 </label>
                 <label
-                  htmlFor="birthdate"
+                  htmlFor="birthDate"
                   className="block px-8"
                 >
                   <input
                     type="date"
-                    name="birthdate"
+                    name="birthDate"
+                    value={formData.birthDate}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="12-25-1979"
                   />
                 </label>
                 <label
-                  htmlFor="marital-status"
+                  htmlFor="maritalStatus"
                   className="block px-8"
                 >
                   <input
                     type="text"
-                    name="marital-status"
+                    name="maritalStatus"
+                    value={formData.maritalStatus}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Marital Status"
                   />
                 </label>
                 <label
-                  htmlFor="children-count"
+                  htmlFor="childrenCount"
                   className="block px-8"
                 >
                   <input
                     type="number"
-                    name="children-count"
+                    name="childrenCount"
+                    value={formData.childrenCount}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Number of Children"
                   />
                 </label>
                 <label
-                  htmlFor="church-affiliation"
+                  htmlFor="churchAffiliation"
                   className="block px-8"
                 >
                   <input
                     type="text"
-                    name="church-affiliation"
+                    name="churchAffiliation"
+                    value={formData.churchAffiliation}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Church Affiliation"
                   />
@@ -117,17 +244,21 @@ export default function Settings() {
                   <input
                     type="email"
                     name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Email"
                   />
                 </label>
                 <label
-                  htmlFor="telephone"
+                  htmlFor="phoneNumber"
                   className="block px-8"
                 >
                   <input
                     type="text"
-                    name="telephone"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Phone Number"
                   />
@@ -139,6 +270,8 @@ export default function Settings() {
                   <input
                     type="text"
                     name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Street Address"
                   />
@@ -150,6 +283,8 @@ export default function Settings() {
                   <input
                     type="text"
                     name="city"
+                    value={formData.city}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="City"
                   />
@@ -161,6 +296,8 @@ export default function Settings() {
                   <input
                     type="text"
                     name="state"
+                    value={formData.state}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="State"
                   />
@@ -172,6 +309,8 @@ export default function Settings() {
                   <input
                     type="text"
                     name="zipcode"
+                    value={formData.zipcode}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Zip Code"
                   />
@@ -180,11 +319,20 @@ export default function Settings() {
             )}
           </form>
           <div className="items-stetch my-2 inline-flex min-h-max w-full flex-row gap-x-3 rounded-3xl px-8 max-sm:order-2 max-sm:flex-col max-sm:gap-1.5">
-            <button className="peer-hover:saturate[0.1] peer w-full rounded-2xl border-2 border-primary-red py-2 text-primary-red transition-all hover:scale-[.98] hover:bg-primary-red hover:text-white">
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+              className="peer-hover:saturate[0.1] peer w-full rounded-2xl border-2 border-primary-red py-2 text-primary-red transition-all hover:scale-[.98] hover:bg-primary-red hover:text-white"
+            >
               Cancel
             </button>
-            <button className="peer w-full rounded-2xl bg-primary-red py-2 text-white transition-all hover:scale-[.98] hover:border-2 hover:border-primary-red hover:bg-white hover:text-primary-red peer-hover:saturate-[0.1]">
-              Save
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              disabled={loading}
+              className="peer w-full rounded-2xl bg-primary-red py-2 text-white transition-all hover:scale-[.98] hover:border-2 hover:border-primary-red hover:bg-white hover:text-primary-red disabled:opacity-50 peer-hover:saturate-[0.1]"
+            >
+              {loading ? "Saving..." : "Save"}
             </button>
           </div>
         </div>
