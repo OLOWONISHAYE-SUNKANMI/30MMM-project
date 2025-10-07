@@ -156,7 +156,7 @@ export default function UserMenu({ mobile }) {
 
         <DropdownMenuItem asChild>
           <Link
-            href="/profile"
+            href="/dashboard/profile"
             className="flex cursor-pointer items-center"
           >
             <User className="mr-2 h-4 w-4" />
@@ -166,7 +166,7 @@ export default function UserMenu({ mobile }) {
 
         <DropdownMenuItem asChild>
           <Link
-            href="/settings"
+            href="/dashboard/settings"
             className="flex cursor-pointer items-center"
           >
             <Settings className="mr-2 h-4 w-4" />
