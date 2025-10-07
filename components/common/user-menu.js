@@ -89,7 +89,7 @@ export default function UserMenu({ mobile }) {
         </div>
 
         <Link
-          href="/profile"
+          href="/dashboard/profile"
           className="flex items-center gap-2 rounded-md p-2 hover:bg-gray-100"
         >
           <User size={16} />
@@ -97,7 +97,7 @@ export default function UserMenu({ mobile }) {
         </Link>
 
         <Link
-          href="/settings"
+          href="/dashboard/settings"
           className="flex items-center gap-2 rounded-md p-2 hover:bg-gray-100"
         >
           <Settings size={16} />

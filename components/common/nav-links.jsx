@@ -18,43 +18,10 @@ export default function NavLinks({ onLinkClick, isAuthenticated, isMobile }) {
           >
             Dashboard
           </NavLink>
-          <NavLink
-            href="/devotional"
-            onClick={onLinkClick}
-          >
-            Devotionals
-          </NavLink>
-          <NavLink
-            href="/resources"
-            onClick={onLinkClick}
-          >
-            Resources
-          </NavLink>
           {!isMobile ? (
             <ProgramsDropdown />
           ) : (
-            <div className="mobile-section">
-              <div className="mobile-header py-2 text-lg font-semibold text-gray-800">
-                Programs
-              </div>
-              <div className="mobile-submenu space-y-1 pl-4">
-                <NavLink
-                  href="/programs/program1"
-                  onClick={onLinkClick}
-                  className="text-sm"
-                >
-                  Program 1
-                </NavLink>
-                <NavLink
-                  href="/programs/program2"
-                  onClick={onLinkClick}
-                  className="text-sm"
-                >
-                  Program 2
-                </NavLink>
-                {/* Add other program links as needed */}
-              </div>
-            </div>
+            <div className="mobile-section"></div>
           )}
           <NavLink
             href="/testimonials"
@@ -66,22 +33,28 @@ export default function NavLinks({ onLinkClick, isAuthenticated, isMobile }) {
       ) : (
         // Links for logged-out users
         <>
-          <NavLink
-            href="/donate"
-            onClick={onLinkClick}
-          >
-            Donate
-          </NavLink>
-          <NavLink
-            href="/testimonials"
-            onClick={onLinkClick}
-          >
-            Testimonials
-          </NavLink>
           {!isMobile ? (
             <>
               <AboutDropdown />
               <ProgramsDropdown />
+              <NavLink
+                href="/testimonials"
+                onClick={onLinkClick}
+              >
+                Testimonials
+              </NavLink>
+              <NavLink
+                href="/scholarship"
+                onClick={onLinkClick}
+              >
+                Scholarship Program
+              </NavLink>
+              <NavLink
+                href="/donate"
+                onClick={onLinkClick}
+              >
+                Donate
+              </NavLink>
             </>
           ) : (
             <>
@@ -152,6 +125,19 @@ export default function NavLinks({ onLinkClick, isAuthenticated, isMobile }) {
                   {/* Add other program links as needed */}
                 </div>
               </div>
+
+              <NavLink
+                href="/testimonials"
+                onClick={onLinkClick}
+              >
+                Testimonials
+              </NavLink>
+              <NavLink
+                href="/donate"
+                onClick={onLinkClick}
+              >
+                Donate
+              </NavLink>
             </>
           )}
         </>
