@@ -77,7 +77,38 @@ export const authConfig = {
         }
       }
 
-      // For credentials provider, allow sign in (already verified in authorize)
+      // For credentials provider, verify user exists and has password
+      if (account?.provider === "credentials") {
+        try {
+          // The authorize function already validated credentials
+          // Here we just do a final check that user exists
+          const dbUser = await prisma.user.findUnique({
+            where: { email: user.email as string },
+          });
+
+          if (!dbUser) {
+            console.log(
+              "Credentials sign-in denied: User not found in database",
+            );
+            return false;
+          }
+
+          if (!dbUser.password) {
+            console.log(
+              "Credentials sign-in denied: Account uses social login",
+            );
+            return false;
+          }
+
+          // User exists with password, allow sign in
+          return true;
+        } catch (error) {
+          console.error("Error checking credentials user in database:", error);
+          return false;
+        }
+      }
+
+      // For any other provider, allow sign in
       return true;
     },
     async jwt({ token, user, account, trigger }) {

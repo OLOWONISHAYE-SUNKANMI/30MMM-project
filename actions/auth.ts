@@ -116,51 +116,35 @@ export async function signUpWithCredentialsAction(
 export async function logInWithCredentialsAction(
   email: string,
   password: string,
-  redirectPath: string = "/dashboard",
 ) {
   try {
-    // Verify user exists before attempting sign in
-    const user = await prisma.user.findUnique({
-      where: { email },
-      select: { id: true, email: true, password: true },
-    });
-
-    if (!user) {
-      throw new Error("No user found with this email");
-    }
-
-    if (!user.password) {
-      throw new Error(
-        "This account uses social login. Please sign in with Google.",
-      );
-    }
-
-    const result = await signIn("credentials", {
+    // The signIn callback in auth.ts will verify user exists and validate credentials
+    // If they don't exist or credentials are invalid, they'll be redirected to the error page
+    await signIn("credentials", {
       email,
       password,
-      redirect: false, // Don't redirect automatically
+      redirectTo: "/dashboard",
     });
 
-    // If signIn didn't throw and we get here, manually redirect
-    if (result?.error) {
-      throw new Error(result.error);
-    }
-
-    // Return success, let the client handle redirect
-    return { success: true, redirectTo: redirectPath };
+    revalidatePath("/dashboard", "page");
   } catch (error) {
-    console.error("Login error:", error);
-
-    // Handle NextAuth redirect errors (these are actually success cases)
+    // Handle NextAuth redirect errors (these are expected for OAuth and credentials)
     if (error?.message?.includes("NEXT_REDIRECT")) {
-      return { success: true, redirectTo: redirectPath };
+      throw error; // Re-throw to allow redirect
     }
 
-    // Handle specific error types
-    if (error?.type === "CredentialsSignin") {
-      throw new Error("Invalid email or password");
+    // Suppress harmless browser extension errors during authentication
+    if (
+      error?.message?.includes("message channel closed") ||
+      error?.message?.includes("asynchronous response")
+    ) {
+      console.log(
+        "Ignoring browser extension interference during authentication",
+      );
+      return;
     }
 
+    console.error("Credentials login error:", error);
     throw error;
   }
 }
@@ -186,18 +170,15 @@ export async function signUpAction(
 // Generic log in that accepts provider type
 export async function logInAction(
   provider: "google" | "credentials",
-  credentials?: { email: string; password: string; redirectPath?: string },
+  credentials?: { email: string; password: string },
 ) {
-  console.log("using LogInAction was started");
   try {
     if (provider === "credentials" && credentials) {
       return await logInWithCredentialsAction(
         credentials.email,
         credentials.password,
-        credentials.redirectPath,
       );
     } else if (provider === "google") {
-      console.log("Auth: using LogInAction with provider: ", provider);
       return await logInWithGoogleAction();
     } else {
       throw new Error("Invalid provider or missing credentials");

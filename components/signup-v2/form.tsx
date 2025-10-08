@@ -42,11 +42,6 @@ export default function Form({ isSignUp = true }) {
         });
       } else {
         toast("Logging in...");
-        console.log(
-          "LOGIN ACTION - sending data to authAction: ",
-          email,
-          password,
-        );
         await logInAction("credentials", {
           email,
           password,
