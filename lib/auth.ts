@@ -55,24 +55,33 @@ export const authConfig = {
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
-      // For Google provider, verify user exists in database
+      // For Google provider, check if user exists and create if needed
       if (account?.provider === "google") {
         try {
           // Check if user exists in our database
-          const dbUser = await prisma.user.findUnique({
+          let dbUser = await prisma.user.findUnique({
             where: { email: user.email as string },
           });
 
-          // If user doesn't exist, deny sign in
+          // If user doesn't exist, create them (this is a sign-up)
           if (!dbUser) {
-            console.log("Google sign-in denied: User not found in database");
-            return false; // This will prevent sign-in
+            console.log("Creating new Google user in database");
+            dbUser = await prisma.user.create({
+              data: {
+                email: user.email as string,
+                name: user.name || user.email?.split("@")[0] || "User",
+                image: user.image,
+                role: "user",
+                profileCompleted: false,
+                // Note: No password for Google OAuth users
+              },
+            });
           }
 
-          // User exists, allow sign in
+          // User exists or was just created, allow sign in
           return true;
         } catch (error) {
-          console.error("Error checking user in database:", error);
+          console.error("Error handling Google user in database:", error);
           return false;
         }
       }

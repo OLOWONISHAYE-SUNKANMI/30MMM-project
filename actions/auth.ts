@@ -34,8 +34,34 @@ async function getRedirectPath() {
 
 // Sign up with Google
 export async function signUpWithGoogleAction() {
-  const redirectTo = await getRedirectPath();
-  await signIn("google", { redirectTo });
+  try {
+    // Sign in with Google (user creation happens in auth callbacks)
+    // After successful OAuth, user will be created and redirected to /profile
+    await signIn("google", {
+      redirectTo: "/profile", // Always redirect to profile for new Google users
+    });
+  } catch (error) {
+    // Nextjs handles redirects internally with this error, its thrown after a successful authentication
+    // This is expected behavior so we return nothing
+    if (error?.message?.includes("NEXT_REDIRECT")) {
+      console.log("Redirecting after successful Google sign up");
+      throw error; // Re-throw to allow redirect
+    }
+
+    // Suppress harmless browser extension errors during OAuth
+    if (
+      error?.message?.includes("message channel closed") ||
+      error?.message?.includes("asynchronous response")
+    ) {
+      console.log(
+        "Ignoring browser extension interference during OAuth sign up",
+      );
+      return;
+    }
+
+    console.error("Google sign up error:", error);
+    throw error;
+  }
 }
 
 export async function logInWithGoogleAction() {
@@ -217,6 +243,7 @@ export async function signOutAction() {
 
     // Handle NextAuth redirect errors (these are actually success cases)
     if (error?.message?.includes("NEXT_REDIRECT")) {
+      console.log("Redirecting after sign out");
       return { success: true };
     }
 
