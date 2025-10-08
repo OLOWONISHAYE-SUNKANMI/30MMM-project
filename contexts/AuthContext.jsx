@@ -2,10 +2,12 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { getCurrentAuthState } from "@/actions/auth";
+import { usePathname } from "next/navigation";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+  const pathname = usePathname();
   const [authState, setAuthState] = useState({
     isAuthenticated: false,
     user: null,
@@ -37,9 +39,17 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // Refresh auth state on mount
   useEffect(() => {
     refreshAuthState();
   }, []);
+
+  // Refresh auth state when pathname changes (e.g., after login redirect)
+  useEffect(() => {
+    if (pathname) {
+      refreshAuthState();
+    }
+  }, [pathname]);
 
   return (
     <AuthContext.Provider value={{ authState, setAuthState, refreshAuthState }}>

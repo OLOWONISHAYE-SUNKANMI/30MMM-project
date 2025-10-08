@@ -2,7 +2,6 @@
 
 import { useAuth } from "@/contexts/AuthContext";
 import MainBody from "@/components/Dashboard/MainBody";
-import NavigationBar from "@/components/Dashboard/NavigationBar";
 import PaymentVerification from "@/components/Dashboard/payment-verification";
 
 export default function Dashboard() {

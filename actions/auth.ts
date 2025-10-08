@@ -125,8 +125,6 @@ export async function logInWithCredentialsAction(
       password,
       redirectTo: "/dashboard",
     });
-
-    revalidatePath("/dashboard", "page");
   } catch (error) {
     // Handle NextAuth redirect errors (these are expected for OAuth and credentials)
     if (error?.message?.includes("NEXT_REDIRECT")) {
@@ -211,7 +209,7 @@ export async function signOutAction() {
     await signOut({ redirectTo: "/" });
 
     // Revalidate all paths to clear cached data
-    revalidatePath("/", "layout");
+    revalidatePath("/", "page");
 
     return { success: true };
   } catch (error) {
