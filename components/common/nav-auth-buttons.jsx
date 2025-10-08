@@ -49,14 +49,11 @@ export default function AuthButtons({ onButtonClick }) {
           </Button>
         </NavLink>
         <NavLink
-          href="/individuals"
+          href="/signup"
           onClick={onButtonClick}
         >
-          <Button
-            variant="outline"
-            className="w-full border-primary-red text-primary-red hover:bg-primary-red hover:text-white"
-          >
-            Start Your Journey
+          <Button className="w-full border border-primary-red bg-primary-red text-white hover:bg-red-800">
+            Sign Up
           </Button>
         </NavLink>
       </>
