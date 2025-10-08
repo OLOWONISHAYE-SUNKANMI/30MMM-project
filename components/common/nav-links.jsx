@@ -6,9 +6,13 @@ import { cn } from "@/lib/utils";
 
 // Regular navigation links for public pages
 const PUBLIC_NAV_LINKS = [
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/programs", label: "Programs" },
+  { href: "/about", label: "About" },
+  { href: "/founders-bio", label: "Founder's Bio" },
+  { href: "/individuals", label: "For Individuals" },
+  { href: "/churches", label: "For Churches" },
+  { href: "/scholarship", label: "Scholarship" },
   { href: "/testimonials", label: "Testimonials" },
+  { href: "/donate", label: "Donate" },
 ];
 
 // Internal navigation links for dashboard pages
@@ -28,7 +32,7 @@ export default function NavLinks({
   const pathname = usePathname();
 
   // Choose which links to display
-  const links = showInternalMenu ? INTERNAL_NAV_LINKS : PUBLIC_NAV_LINKS;
+  const links = isAuthenticated ? INTERNAL_NAV_LINKS : PUBLIC_NAV_LINKS;
 
   const linkClassName = (href) =>
     cn(
