@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "sonner";
 import { AboutSection } from "@/components/Landing/about-section";
 import { ChurchRoleSection } from "@/components/Landing/church-role-section";
 import { CTASection } from "@/components/Landing/cta-section";
@@ -22,6 +24,8 @@ const MetricsDashboard = dynamic(
 
 export default function LandingPage() {
   const [isMobile, setIsMobile] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -33,6 +37,17 @@ export default function LandingPage() {
 
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  useEffect(() => {
+    const message = searchParams.get("message");
+    if (message) {
+      toast.error(message);
+      // Clean up the URL by replacing the current URL without the message parameter
+      const url = new URL(window.location);
+      url.searchParams.delete("message");
+      router.replace(url.pathname + url.search);
+    }
+  }, [searchParams, router]);
 
   return (
     <>
