@@ -1,5 +1,5 @@
 import { getToken } from "next-auth/jwt";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function middleware(request) {
   // obtaining the path the user wants to visit
@@ -28,29 +28,56 @@ export async function middleware(request) {
     return NextResponse.next();
   }
 
-  // checks if the user has a token which comes from authentication
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
+  try {
+    // Check for Auth.js v5 session cookie (authjs.session-token)
+    // Also check legacy NextAuth v4 names for compatibility
+    const sessionToken =
+      request.cookies.get("authjs.session-token") ||
+      request.cookies.get("__Secure-authjs.session-token") ||
+      request.cookies.get("next-auth.session-token") ||
+      request.cookies.get("__Secure-next-auth.session-token");
 
-  // if the user is trying to visit a protected route and doesn't have a token, redirect them to the login page
-  if (!token) {
-    const callbackUrl = request.nextUrl.pathname + request.nextUrl.search;
-    const loginUrl = new URL("/login", request.url);
+    // If there's a session cookie, allow access
+    if (sessionToken) {
+      return NextResponse.next();
+    }
 
-    // return callback url
-    loginUrl.searchParams.set("callbackUrl", callbackUrl);
+    // If no session cookie, check JWT token as fallback with correct cookie name
+    const token = await getToken({
+      req: request,
+      secret: process.env.NEXTAUTH_SECRET,
+      // Specify the correct cookie name for Auth.js v5
+      cookieName:
+        process.env.NODE_ENV === "production"
+          ? "__Secure-authjs.session-token"
+          : "authjs.session-token",
+    });
 
-    // return a message to indicate the user needs to log in
-    loginUrl.searchParams.set(
-      "message",
-      "You must be logged in to access that page",
-    );
+    // if the user is trying to visit a protected route and doesn't have a token, redirect them to the login page
+    if (!token) {
+      const callbackUrl = request.nextUrl.pathname + request.nextUrl.search;
+      const loginUrl = new URL("/login", request.url);
 
-    console.log("Middleware redirecting to:", loginUrl.toString());
+      // return callback url
+      loginUrl.searchParams.set("callbackUrl", callbackUrl);
 
-    return NextResponse.redirect(loginUrl);
+      // return a message to indicate the user needs to log in
+      loginUrl.searchParams.set(
+        "message",
+        "You must be logged in to access that page",
+      );
+
+      return NextResponse.redirect(loginUrl);
+    }
+  } catch (error) {
+    // Log error in development only
+    if (process.env.NODE_ENV === "development") {
+      console.error("Middleware authentication error:", error.message);
+    }
+
+    // If there's an error getting the token, allow the request to proceed
+    // The page itself will handle authentication
+    return NextResponse.next();
   }
 
   return NextResponse.next();

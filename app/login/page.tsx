@@ -22,6 +22,7 @@ export default function Login() {
       router.replace(url.pathname + url.search);
     }
   }, [searchParams, router]);
+
   return (
     <div className="inset-auto flex min-h-screen w-screen min-w-[400px] flex-col md:flex-row">
       {/* Image Container - Matched to reference styling */}
