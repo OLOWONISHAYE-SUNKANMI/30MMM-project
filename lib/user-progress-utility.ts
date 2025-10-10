@@ -1,4 +1,4 @@
-import { PrismaClient, UserProgress } from "@prisma/client";
+import { PrismaClient, UserProgress } from "@/generated/client";
 
 const prisma = new PrismaClient();
 
