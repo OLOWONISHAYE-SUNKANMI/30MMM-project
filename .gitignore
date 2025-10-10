@@ -44,4 +44,4 @@ next-env.d.ts
 # prisma still recommends not tracking the generated client
 generated
 certificates
-
+/.github/
