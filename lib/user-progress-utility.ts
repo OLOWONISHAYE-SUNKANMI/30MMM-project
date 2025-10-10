@@ -1,6 +1,22 @@
-import { PrismaClient, UserProgress } from "@/generated/client";
+import { Devotional, PrismaClient, UserProgress } from "@/generated/client";
 
 const prisma = new PrismaClient();
+
+// Type for Scripture items - matches your component's expectations
+interface Scripture {
+  text: string;
+  book: string;
+  chapter: string;
+  verse: string;
+  translation: string;
+}
+
+// Type for the formatted devotional
+interface FormattedDevotional {
+  title: string;
+  scriptures: Scripture[];
+  content: string | null;
+}
 
 // Type for the formatted response
 export interface FormattedUserProgress {
@@ -8,11 +24,9 @@ export interface FormattedUserProgress {
   currentDay: number;
   currentDayTitle: string;
   currentWeekTitle: string;
-  currentDaySubTitle: string | null;
   cohortNumber: number;
   cohortRoman: string;
   startDate: Date;
-  lastAccessedAt: Date;
   daysCompleted: {
     week1: number;
     week2: number;
@@ -20,10 +34,8 @@ export interface FormattedUserProgress {
     week4: number;
     week5: number;
   };
-  completedDevotionalIds: number[];
   totalCompleted: number;
-  totalDevotionals: number;
-  overallProgress: number;
+  devotional: FormattedDevotional | null;
 }
 
 /**
@@ -156,41 +168,56 @@ export function calculateNextPosition(currentWeek: number, currentDay: number) {
  */
 export async function formatUserProgressResponse(
   userProgress: UserProgress,
+  currentDevotional: Devotional | null,
 ): Promise<FormattedUserProgress> {
-  const devotionalDetails = await getDevotionalDetails(
-    userProgress.currentWeek,
-    userProgress.currentDay,
+  // Calculate days completed per week
+  const daysCompleted = {
+    week1: userProgress.week1Completed || 0,
+    week2: userProgress.week2Completed || 0,
+    week3: userProgress.week3Completed || 0,
+    week4: userProgress.week4Completed || 0,
+    week5: userProgress.week5Completed || 0,
+  };
+
+  const totalCompleted = Object.values(daysCompleted).reduce(
+    (sum: number, days: number) => sum + days,
+    0,
   );
 
-  const totalCompleted = userProgress.completedDevotionalIds.length;
-  const overallProgress = Math.round((totalCompleted / 35) * 100);
+  // Format scriptures array - ensure it matches the Scripture interface
+  let formattedScriptures: Scripture[] = [];
+  if (currentDevotional?.Scriptures) {
+    if (Array.isArray(currentDevotional.Scriptures)) {
+      formattedScriptures = currentDevotional.Scriptures.map(
+        (scripture: Scripture) => ({
+          text: scripture.text || "",
+          book: scripture.book || "",
+          chapter: scripture.chapter || "",
+          verse: scripture.verse || "",
+          translation: scripture.translation || "NIV",
+        }),
+      );
+    }
+  }
 
   return {
-    // For MainBody component
     currentWeek: userProgress.currentWeek,
     currentDay: userProgress.currentDay,
-    currentDayTitle: devotionalDetails.dayTitle,
-    currentWeekTitle: devotionalDetails.weekTitle,
-    currentDaySubTitle: devotionalDetails.daySubTitle,
+    currentWeekTitle: `Week ${userProgress.currentWeek}`,
+    currentDayTitle:
+      currentDevotional?.dayTitle || `Day ${userProgress.currentDay}`,
     cohortNumber: userProgress.cohortNumber,
     cohortRoman: userProgress.cohortRoman,
     startDate: userProgress.startDate,
-    lastAccessedAt: userProgress.lastAccessedAt,
-
-    // For WeekCards component (matches existing structure)
-    daysCompleted: {
-      week1: userProgress.week1Completed,
-      week2: userProgress.week2Completed,
-      week3: userProgress.week3Completed,
-      week4: userProgress.week4Completed,
-      week5: userProgress.week5Completed,
-    },
-
-    // Additional metadata
-    completedDevotionalIds: userProgress.completedDevotionalIds,
+    daysCompleted,
     totalCompleted,
-    totalDevotionals: 35,
-    overallProgress,
+    devotional: currentDevotional
+      ? {
+          title: currentDevotional.dayTitle || "",
+          scriptures: formattedScriptures,
+          content: currentDevotional.content || null,
+        }
+      : null,
   };
 }
 
