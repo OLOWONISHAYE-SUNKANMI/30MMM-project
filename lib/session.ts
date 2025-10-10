@@ -26,6 +26,7 @@ export async function getUser() {
       },
       include: {
         userProfile: true,
+        userProgress: true,
       },
     });
 

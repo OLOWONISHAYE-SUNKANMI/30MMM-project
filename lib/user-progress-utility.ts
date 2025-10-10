@@ -264,3 +264,57 @@ export async function getDevotionalsForWeek(week: number) {
     return [];
   }
 }
+
+/**
+ * Calculate how many days have passed since the program start
+ */
+export function getDaysSinceStart(startDate: Date): number {
+  const now = new Date();
+  const diffTime = Math.abs(now.getTime() - startDate.getTime());
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+}
+
+/**
+ * Calculate maximum accessible week and day based on start date
+ * Users unlock 1 devotional per day from their start date
+ */
+export function getMaxAccessiblePosition(startDate: Date): {
+  week: number;
+  day: number;
+} {
+  const daysSinceStart = getDaysSinceStart(startDate);
+
+  // Users can access devotionals based on days elapsed (0-indexed becomes 1-indexed)
+  const accessibleDays = daysSinceStart + 1; // Day 0 = access devotional 1
+
+  // Cap at 35 devotionals (5 weeks × 7 days)
+  const cappedDays = Math.min(accessibleDays, 35);
+
+  // Calculate week and day from accessible days
+  const week = Math.ceil(cappedDays / 7);
+  const day = cappedDays - (week - 1) * 7;
+
+  return { week, day };
+}
+
+/**
+ * Check if a specific devotional is accessible based on start date
+ * Returns true if the user has "unlocked" this devotional by time
+ */
+export function isDevotionalAccessible(
+  startDate: Date,
+  requestedWeek: number,
+  requestedDay: number,
+): boolean {
+  const maxAccessible = getMaxAccessiblePosition(startDate);
+
+  // Calculate devotional IDs for comparison (1-35)
+  const requestedId = getDevotionalId(requestedWeek, requestedDay);
+  const maxAccessibleId = getDevotionalId(
+    maxAccessible.week,
+    maxAccessible.day,
+  );
+
+  return requestedId <= maxAccessibleId;
+}
