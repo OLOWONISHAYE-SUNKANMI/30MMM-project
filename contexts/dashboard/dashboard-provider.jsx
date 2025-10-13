@@ -50,21 +50,40 @@ export default function DashboardProvider({ children }) {
         cohortRoman: progress?.cohortRoman || "I",
       });
 
-      // Set progress info
+      // Set progress info with proper null safety and defaults
       if (progress) {
         setUserProgress({
-          currentWeek: progress.currentWeek.toString(),
-          currentDay: progress.currentDay.toString(),
-          currentDayTitle: progress.currentDayTitle,
-          currentWeekTitle: progress.currentWeekTitle,
-          startDate: new Date(progress.startDate),
+          currentWeek: (progress.currentWeek ?? 1).toString(),
+          currentDay: (progress.currentDay ?? 1).toString(),
+          currentDayTitle: progress.currentDayTitle || "Day 1",
+          currentWeekTitle: progress.currentWeekTitle || "Week 1",
+          startDate: progress.startDate
+            ? new Date(progress.startDate)
+            : new Date(),
           daysCompleted: {
-            totalDays: progress.totalCompleted,
-            week1: progress.daysCompleted.week1,
-            week2: progress.daysCompleted.week2,
-            week3: progress.daysCompleted.week3,
-            week4: progress.daysCompleted.week4,
-            week5: progress.daysCompleted.week5,
+            totalDays: progress.totalCompleted ?? 0,
+            week1: progress.daysCompleted?.week1 ?? 0,
+            week2: progress.daysCompleted?.week2 ?? 0,
+            week3: progress.daysCompleted?.week3 ?? 0,
+            week4: progress.daysCompleted?.week4 ?? 0,
+            week5: progress.daysCompleted?.week5 ?? 0,
+          },
+        });
+      } else {
+        // Set default progress if none exists
+        setUserProgress({
+          currentWeek: "1",
+          currentDay: "1",
+          currentDayTitle: "Day 1",
+          currentWeekTitle: "Week 1",
+          startDate: new Date(),
+          daysCompleted: {
+            totalDays: 0,
+            week1: 0,
+            week2: 0,
+            week3: 0,
+            week4: 0,
+            week5: 0,
           },
         });
       }

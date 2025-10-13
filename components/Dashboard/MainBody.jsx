@@ -56,32 +56,6 @@ export default function MainBody() {
         </h4>
       </div>
       <CardSection />
-      <div className="container relative flex size-full flex-col items-center justify-center rounded-lg border bg-white shadow-sm">
-        <Image
-          className="logo mb-3"
-          src="/logo.png"
-          alt="logo"
-          width={100}
-          height={100}
-        />
-        <h3 className="mb-2 text-center text-3xl font-bold text-gray-900">
-          Cohort {cohortDisplay}
-        </h3>
-        <p className="mb-4 text-center text-lg text-gray-700">
-          Week {weekDisplay}, Day {dayDisplay}
-        </p>
-        <p className="mb-6 text-center text-xl font-semibold text-gray-800">
-          {devotionalTitle}
-        </p>
-        <div className="text-center">
-          <Link
-            href={`/devotional/${weekDisplay}-${dayDisplay}`}
-            className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
-          >
-            Continue Today's Devotional
-          </Link>
-        </div>
-      </div>
     </div>
   );
 }
