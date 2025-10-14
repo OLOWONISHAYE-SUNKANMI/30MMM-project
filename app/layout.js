@@ -1,5 +1,6 @@
 import "@/app/globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
+import DashboardProvider from "@/contexts/dashboard/dashboard-provider";
 import { SessionProvider } from "next-auth/react";
 import { Alexandria } from "next/font/google";
 import Script from "next/script";
@@ -43,23 +44,15 @@ export default function RootLayout({ children }) {
       <body className={`${alexandria.className} antialiased`}>
         <AuthProvider>
           <SessionProvider>
-            <NavBar />
-            <main className="mt-20">{children}</main>
-            <Toaster />
-            <Footer />
+            <DashboardProvider>
+              <NavBar />
+              <main className="mt-20">{children}</main>
+              <Toaster />
+              <Footer />
+            </DashboardProvider>
           </SessionProvider>
         </AuthProvider>
       </body>
-      <Script
-        strategy="afterInteractive"
-        id="plg-widget"
-        src="https://www.pledge.to/assets/widget.js"
-      />
-      {/* <Script
-        strategy="afterInteractive"
-        id="plg-widget"
-        src="https://staging.pledge.to/assets/widget.js"
-      /> */}
     </html>
   );
 }
