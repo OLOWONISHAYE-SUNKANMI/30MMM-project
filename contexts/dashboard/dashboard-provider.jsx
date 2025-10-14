@@ -1,7 +1,10 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getCurrentUserWithProgress } from "@/actions/dashboard";
+import {
+  getCurrentUserWithProgress,
+  updateUserProgress,
+} from "@/actions/dashboard";
 import { initialWeekStaticInfo } from "@/contexts/dashboard/dashboard-data";
 
 const DashboardContext = createContext(undefined);
@@ -32,7 +35,6 @@ export default function DashboardProvider({ children }) {
       setLoading(true);
       setError(null);
 
-      // OPTIMIZED: Single call gets both user and progress
       const result = await getCurrentUserWithProgress();
 
       if (!result.success) {
@@ -53,13 +55,11 @@ export default function DashboardProvider({ children }) {
       // Set progress info with proper null safety and defaults
       if (progress) {
         setUserProgress({
-          currentWeek: (progress.currentWeek ?? 1).toString(),
-          currentDay: (progress.currentDay ?? 1).toString(),
+          currentWeek: progress.currentWeek.toString(),
+          currentDay: progress.currentDay.toString(),
           currentDayTitle: progress.currentDayTitle || "Day 1",
           currentWeekTitle: progress.currentWeekTitle || "Week 1",
-          startDate: progress.startDate
-            ? new Date(progress.startDate)
-            : new Date(),
+          startDate: new Date(progress.startDate), // Parse ISO string back to Date
           daysCompleted: {
             totalDays: progress.totalCompleted ?? 0,
             week1: progress.daysCompleted?.week1 ?? 0,
@@ -86,6 +86,7 @@ export default function DashboardProvider({ children }) {
             week5: 0,
           },
         });
+        console.log("DashboardProvider - using default progress");
       }
     } catch (err) {
       console.error("Error fetching user progress:", err);
@@ -98,25 +99,20 @@ export default function DashboardProvider({ children }) {
   // Method to update progress after completing a devotional
   const updateProgress = async (week, day) => {
     try {
-      const response = await fetch("/api/user-progress", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ week, day }),
-      });
+      // Calculate devotional ID from week and day
+      const devotionalId = (week - 1) * 7 + day;
 
-      if (!response.ok) {
-        throw new Error("Failed to update progress");
+      // Call the server action instead of API route
+      const result = await updateUserProgress(devotionalId);
+
+      if (!result.success) {
+        throw new Error(result.error || "Failed to update progress");
       }
 
-      const data = await response.json();
+      // Refresh progress data
+      await fetchUserProgress();
 
-      if (data.success) {
-        // Refresh progress data
-        await fetchUserProgress();
-        return data.nextDevotional;
-      }
+      return result.progress;
     } catch (err) {
       console.error("Error updating progress:", err);
       throw err;
