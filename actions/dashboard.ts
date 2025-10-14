@@ -78,10 +78,12 @@ export async function getCurrentUserWithProgress() {
             currentDayTitle: formattedProgress.currentDayTitle,
             cohortNumber: formattedProgress.cohortNumber,
             cohortRoman: formattedProgress.cohortRoman,
-            startDate: formattedProgress.startDate.toISOString(), // Convert Date to string
+            startDate: formattedProgress.startDate.toISOString(),
             daysCompleted: formattedProgress.daysCompleted,
             totalCompleted: formattedProgress.totalCompleted,
             devotional: formattedProgress.devotional,
+            currentDevotionalId:
+              formattedProgress.devotional?._id?.toString() || null, // Add optional chaining
           }
         : null,
     };

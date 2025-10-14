@@ -59,6 +59,7 @@ export default function DashboardProvider({ children }) {
           currentDay: progress.currentDay.toString(),
           currentDayTitle: progress.currentDayTitle || "Day 1",
           currentWeekTitle: progress.currentWeekTitle || "Week 1",
+          currentDevotionalID: progress.currentDevotionalId || null,
           startDate: new Date(progress.startDate), // Parse ISO string back to Date
           daysCompleted: {
             totalDays: progress.totalCompleted ?? 0,

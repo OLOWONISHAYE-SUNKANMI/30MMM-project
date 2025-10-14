@@ -32,6 +32,7 @@ export default function MainBody() {
   const weekDisplay = userProgress?.currentWeek || "1";
   const dayDisplay = userProgress?.currentDay || "1";
   const devotionalTitle = userProgress?.currentDayTitle || "Loading...";
+  const devotionalId = userProgress?.currentDevotionalID || "";
 
   return (
     <div className="relative mx-auto mb-8 flex min-h-screen w-full max-w-[1200px] flex-col items-start gap-y-5 space-y-4 pt-12 max-lg:mx-2">
@@ -43,9 +44,11 @@ export default function MainBody() {
 
         <h2 className="w-full text-base font-normal text-gray-400">
           Today is{" "}
-          <span className="font-semibold text-almost-black">
-            Week {weekDisplay} Day {dayDisplay}: {devotionalTitle}
-          </span>
+          <Link href={devotionalId ? `/devotional/${devotionalId}` : "#"}>
+            <span className="font-semibold text-almost-black">
+              Week {weekDisplay} Day {dayDisplay}: {devotionalTitle}
+            </span>
+          </Link>
         </h2>
       </div>
       <DonateHero />
