@@ -3,6 +3,7 @@
 import { useAuth } from "@/contexts/AuthContext";
 import MainBody from "@/components/Dashboard/MainBody";
 import PaymentVerification from "@/components/Dashboard/payment-verification";
+import SidePanel from "@/components/Foundation/SidePanel/SidePanel";
 
 export default function Dashboard() {
   const { authState } = useAuth();
@@ -39,6 +40,7 @@ export default function Dashboard() {
     <div className="relative mx-16 flex min-h-screen flex-col items-center justify-start">
       <PaymentVerification>
         <MainBody />
+        <SidePanel />
       </PaymentVerification>
     </div>
   );
