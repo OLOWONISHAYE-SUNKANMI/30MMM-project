@@ -1,12 +1,10 @@
 "use server";
 
-import { PrismaClient } from "@/generated/client";
+import prisma from "@/db";
 import { hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "@/lib/auth";
 import { getUser } from "@/lib/session";
-
-const prisma = new PrismaClient();
 
 // Helper function to determine redirect path
 async function getRedirectPath() {
