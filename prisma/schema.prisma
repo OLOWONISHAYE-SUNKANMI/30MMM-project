@@ -5,8 +5,9 @@
 // *** Then make sure to run `npx prisma generate` to update your Prisma client so you can use it to write code. ***
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/client"
+  provider      = "prisma-client"
+  output        = "../generated/client"
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "linux-musl"]
 }
 
 datasource db {
