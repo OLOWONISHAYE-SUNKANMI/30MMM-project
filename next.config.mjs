@@ -39,7 +39,7 @@ const nextConfig = {
     }
     return config;
   },
-  transpilePackages: ["@prisma/client"],
+  transpilePackages: ["db/client"],
 };
 
 export default nextConfig;
