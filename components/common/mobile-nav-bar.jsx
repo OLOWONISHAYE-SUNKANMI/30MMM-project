@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Menu } from "lucide-react";
+import SidePanel from "@/components/Foundation/SidePanel/SidePanel";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -66,6 +67,7 @@ export default function MobileNavBar({
                       isMobile={true}
                       showInternalMenu={showInternalMenu}
                     />
+                    {isAuthenticated && showInternalMenu && <SidePanel />}
                   </>
                 ) : (
                   // Logged out mobile menu

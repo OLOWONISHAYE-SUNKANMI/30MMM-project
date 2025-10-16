@@ -1,3 +1,4 @@
+import SidePanel from "@/components/Foundation/SidePanel/SidePanel";
 import AuthButtons from "./nav-auth-buttons";
 import NavLogo from "./nav-bar-logo";
 import NavLinks from "./nav-links";
@@ -27,6 +28,7 @@ export default function DesktopNavBar({
         {/* Right section: Auth buttons or User menu */}
         <div className="flex w-1/4 items-center justify-end gap-4">
           {isAuthenticated ? <UserMenu user={user} /> : <AuthButtons />}
+          {isAuthenticated && showInternalMenu && <SidePanel />}
         </div>
       </div>
     </nav>

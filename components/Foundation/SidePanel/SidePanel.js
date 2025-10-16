@@ -86,12 +86,12 @@ export default function SidePanel() {
   );
 
   return (
-    <div>
+    <div className="flex justify-end">
       <Button
         onClick={() => toggleDrawer(true)} // Toggle drawer open
-        className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#7D899D1A] text-[#717171] max-sm:h-8 max-sm:w-8 max-xs:h-6 max-xs:w-6"
+        className="h-12 w-12 justify-center rounded-xl bg-[#7D899D1A] text-[#717171] max-sm:h-8 max-sm:w-8 max-xs:h-6 max-xs:w-6"
       >
-        <GiHamburgerMenu />
+        <GiHamburgerMenu className="text-red-700" />
       </Button>
       <Drawer
         open={open}

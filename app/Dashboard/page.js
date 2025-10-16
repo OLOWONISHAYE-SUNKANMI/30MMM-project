@@ -3,7 +3,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import MainBody from "@/components/Dashboard/MainBody";
 import PaymentVerification from "@/components/Dashboard/payment-verification";
-import SidePanel from "@/components/Foundation/SidePanel/SidePanel";
 
 export default function Dashboard() {
   const { authState } = useAuth();
@@ -13,7 +12,7 @@ export default function Dashboard() {
     return (
       <div className="relative mx-16 flex min-h-screen flex-col items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600"></div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-red-700"></div>
           <p className="text-gray-600">
             {authState.signingOut ? "Signing out..." : "Loading dashboard..."}
           </p>
@@ -40,7 +39,6 @@ export default function Dashboard() {
     <div className="relative mx-16 flex min-h-screen flex-col items-center justify-start">
       <PaymentVerification>
         <MainBody />
-        <SidePanel />
       </PaymentVerification>
     </div>
   );
