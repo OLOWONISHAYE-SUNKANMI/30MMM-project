@@ -200,7 +200,7 @@ model Devotional {
   weekTitle          String
   dayTitle           String
   daySubTitle        String?
-  devotionText       String // Remove the ? to make it required since your data has it
+  devotionText       String? // Remove the ? to make it required since your data has it
   reflectionQuestion String? // Add this field that's in your MongoDB
   videoId            String? // Add this field that's in your MongoDB
   Scriptures         Scripture[] // Array of Scripture objects
