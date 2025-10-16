@@ -7,13 +7,28 @@ export async function getDevotionalById(id: string) {
     // Parse the id to extract week and day (assuming format like "1-1" for week 1, day 1)
     const [week, day] = id.split("-").map(Number);
 
-    // Use Prisma's findUnique with the unique constraint from your schema
+    // Use Prisma's findUnique with explicit field selection
     const devotional = await prisma.devotional.findUnique({
       where: {
         week_day: {
           week: week,
           day: day,
         },
+      },
+      select: {
+        id: true,
+        week: true,
+        day: true,
+        weekTitle: true,
+        dayTitle: true,
+        daySubTitle: true,
+        devotionText: true,
+        reflectionQuestion: true,
+        videoId: true,
+        Scriptures: true,
+        content: true,
+        createdAt: true,
+        updatedAt: true,
       },
     });
 
@@ -26,7 +41,7 @@ export async function getDevotionalById(id: string) {
 
     return {
       success: true,
-      devotional: JSON.parse(JSON.stringify(devotional)),
+      devotional: devotional,
     };
   } catch (error) {
     console.error("Error fetching devotional:", error);
@@ -39,14 +54,28 @@ export async function getDevotionalById(id: string) {
 
 export async function getAllDevotionals() {
   try {
-    // Use Prisma's findMany with orderBy for sorting
     const devotionals = await prisma.devotional.findMany({
       orderBy: [{ week: "asc" }, { day: "asc" }],
+      select: {
+        id: true,
+        week: true,
+        day: true,
+        weekTitle: true,
+        dayTitle: true,
+        daySubTitle: true,
+        devotionText: true,
+        reflectionQuestion: true,
+        videoId: true,
+        Scriptures: true,
+        content: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     return {
       success: true,
-      devotionals: JSON.parse(JSON.stringify(devotionals)),
+      devotionals: devotionals,
     };
   } catch (error) {
     console.error("Error fetching all devotionals:", error);
@@ -67,11 +96,26 @@ export async function getDevotionalsByWeek(week: number) {
       orderBy: {
         day: "asc",
       },
+      select: {
+        id: true,
+        week: true,
+        day: true,
+        weekTitle: true,
+        dayTitle: true,
+        daySubTitle: true,
+        devotionText: true,
+        reflectionQuestion: true,
+        videoId: true,
+        Scriptures: true,
+        content: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     return {
       success: true,
-      devotionals: JSON.parse(JSON.stringify(devotionals)),
+      devotionals: devotionals,
     };
   } catch (error) {
     console.error("Error fetching devotionals by week:", error);
@@ -92,11 +136,26 @@ export async function getCurrentWeekDevotionals(currentWeek: number) {
       orderBy: {
         day: "asc",
       },
+      select: {
+        id: true,
+        week: true,
+        day: true,
+        weekTitle: true,
+        dayTitle: true,
+        daySubTitle: true,
+        devotionText: true,
+        reflectionQuestion: true,
+        videoId: true,
+        Scriptures: true,
+        content: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     return {
       success: true,
-      devotionals: JSON.parse(JSON.stringify(devotionals)),
+      devotionals: devotionals,
     };
   } catch (error) {
     console.error("Error fetching current week devotionals:", error);

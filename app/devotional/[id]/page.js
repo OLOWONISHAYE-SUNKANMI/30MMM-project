@@ -32,7 +32,11 @@ export default function Devotional({ params }) {
     async function loadDevotional() {
       try {
         setLoading(true);
-        // Use unwrappedParams.id instead of params.id
+        console.log(
+          "Fetching devotional with ID:",
+          typeof unwrappedParams.id,
+          unwrappedParams.id,
+        );
         const result = await getDevotionalById(unwrappedParams.id);
 
         if (!result.success) {
@@ -141,11 +145,11 @@ export default function Devotional({ params }) {
             </div>
 
             <div className="justify-left mt-[1vh] flex w-full">
-              <ReadingTime devotionText={devotionalData.devotionText} />
+              <ReadingTime devotionText={devotionalData.devotionText || ""} />
             </div>
 
             <div className="justify-left mt-[3vh] flex w-full">
-              <MainLesson devotionText={devotionalData.devotionText} />
+              <MainLesson devotionText={devotionalData.devotionText || ""} />
             </div>
 
             <div className="flex w-full flex-col items-center">
@@ -154,7 +158,7 @@ export default function Devotional({ params }) {
                   reflectionQuestion={devotionalData.reflectionQuestion}
                 />
               </div>
-              <div className="mt-[6vh] flex w-full justify-center">
+              <div className="wfull mt-[6vh] flex justify-center">
                 <ReflectionResponse />
               </div>
             </div>

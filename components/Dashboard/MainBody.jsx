@@ -10,11 +10,6 @@ import CardSection from "./CardSection";
 export default function MainBody() {
   const { userInfo, userProgress, loading, error } = useDashboardContext();
 
-  console.log("User Info:", userInfo);
-  console.log("User Progress:", userProgress);
-  console.log("Loading:", loading);
-  console.log("Error:", error);
-
   if (loading) {
     return (
       <div className="container relative flex size-full animate-pulse flex-col items-center justify-center rounded-lg border bg-white shadow-sm">
