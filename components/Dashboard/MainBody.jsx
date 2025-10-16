@@ -45,8 +45,6 @@ export default function MainBody() {
   // Create the devotional ID in the format "week-day"
   const devotionalId = `${weekDisplay}-${dayDisplay}`;
 
-  console.log("devotionalId:", devotionalId);
-
   return (
     <div className="relative mx-auto mb-8 flex min-h-screen w-full max-w-[1200px] flex-col items-start gap-y-5 space-y-4 pt-12 max-lg:mx-2">
       <div className="flex w-full flex-wrap items-center justify-start gap-2 md:gap-y-5">

@@ -165,3 +165,87 @@ export async function getCurrentWeekDevotionals(currentWeek: number) {
     };
   }
 }
+
+// Get all week titles with their associated day titles
+export async function getWeekTitlesWithDays() {
+  try {
+    const devotionals = await prisma.devotional.findMany({
+      orderBy: [{ week: "asc" }, { day: "asc" }],
+      select: {
+        week: true,
+        weekTitle: true,
+        day: true,
+        dayTitle: true,
+      },
+    });
+
+    // Group by week and organize the data
+    const weekData = devotionals.reduce(
+      (acc, devotional) => {
+        const { week, weekTitle, day, dayTitle } = devotional;
+
+        if (!acc[week]) {
+          acc[week] = {
+            week,
+            weekTitle,
+            days: [],
+          };
+        }
+
+        acc[week].days.push({
+          day,
+          dayTitle,
+        });
+
+        return acc;
+      },
+      {} as Record<
+        number,
+        {
+          week: number;
+          weekTitle: string;
+          days: { day: number; dayTitle: string }[];
+        }
+      >,
+    );
+
+    // Convert to array and ensure proper ordering
+    const result = Object.values(weekData).sort((a, b) => a.week - b.week);
+
+    return {
+      success: true,
+      weekTitles: result,
+    };
+  } catch (error) {
+    console.error("Error fetching week titles with days:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+// Alternative function that returns just unique week titles
+export async function getUniqueWeekTitles() {
+  try {
+    const uniqueWeeks = await prisma.devotional.findMany({
+      distinct: ["week"],
+      orderBy: { week: "asc" },
+      select: {
+        week: true,
+        weekTitle: true,
+      },
+    });
+
+    return {
+      success: true,
+      weekTitles: uniqueWeeks,
+    };
+  } catch (error) {
+    console.error("Error fetching unique week titles:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
