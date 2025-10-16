@@ -2,9 +2,10 @@
 
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { getDevotionalById } from "@/actions/devotional";
 import { useDashboardContext } from "@/contexts/dashboard/dashboard-provider";
+import { useRouter } from "next/navigation";
 import Divider from "@/components/common/Divider";
 import CompleteLesson from "@/components/Foundation/CompleteLesson";
 import MainImage from "@/components/Foundation/MainImage";
@@ -17,17 +18,22 @@ import ScripturesSection from "@/components/Foundation/ScripturesSection";
 import SubTitle from "@/components/Foundation/SubTitle";
 import Title from "@/components/Foundation/Title";
 
-export default function Foundation({ params }) {
+export default function Devotional({ params }) {
+  // Unwrap the params Promise using React.use()
+  const unwrappedParams = use(params);
+
   const [devotionalData, setDevotionalData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { userProgress, updateProgress } = useDashboardContext();
+  const router = useRouter();
 
   useEffect(() => {
     async function loadDevotional() {
       try {
         setLoading(true);
-        const result = await getDevotionalById(params.id);
+        // Use unwrappedParams.id instead of params.id
+        const result = await getDevotionalById(unwrappedParams.id);
 
         if (!result.success) {
           throw new Error(result.error);
@@ -42,13 +48,16 @@ export default function Foundation({ params }) {
     }
 
     loadDevotional();
-  }, [params.id]);
+  }, [unwrappedParams.id]);
 
   const handleComplete = async () => {
     if (!devotionalData) return;
 
     try {
       await updateProgress(devotionalData.week, devotionalData.day);
+      router.push(
+        `/devotional/${userProgress.currentWeek}-${userProgress.currentDay}`,
+      );
       // Handle success
     } catch (error) {
       console.error("Error completing devotional:", error);
@@ -79,6 +88,28 @@ export default function Foundation({ params }) {
     <div className="mt-16 flex w-full flex-col justify-between px-2 py-2 md:px-4 md:py-4 lg:px-[1vw] lg:py-[1vh]">
       <div className="mt-8 flex flex-col items-center">
         <div className="lg:max-w-10xl flex flex-col md:max-w-7xl">
+          {/* Back Button */}
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="group mb-6 flex items-center gap-2 self-start rounded-lg px-4 py-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900"
+          >
+            <svg
+              className="h-5 w-5 transition-transform duration-200 group-hover:-translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            <span className="font-medium">Back to Dashboard</span>
+          </button>
+
           <div className="mb-8 flex flex-col items-start bg-white md:flex-col">
             <div className="mt-[3vh]">
               <Title

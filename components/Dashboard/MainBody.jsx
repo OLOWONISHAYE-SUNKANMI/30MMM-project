@@ -10,6 +10,11 @@ import CardSection from "./CardSection";
 export default function MainBody() {
   const { userInfo, userProgress, loading, error } = useDashboardContext();
 
+  console.log("User Info:", userInfo);
+  console.log("User Progress:", userProgress);
+  console.log("Loading:", loading);
+  console.log("Error:", error);
+
   if (loading) {
     return (
       <div className="container relative flex size-full animate-pulse flex-col items-center justify-center rounded-lg border bg-white shadow-sm">
@@ -27,12 +32,25 @@ export default function MainBody() {
     );
   }
 
+  // Don't render CardSection if data isn't ready
+  if (!userInfo || !userProgress) {
+    return (
+      <div className="container relative flex size-full flex-col items-center justify-center rounded-lg border bg-white shadow-sm">
+        <p>Loading user data...</p>
+      </div>
+    );
+  }
+
   // Default values if data is not yet loaded
   const cohortDisplay = userInfo?.cohortRoman || "N/A";
   const weekDisplay = userProgress?.currentWeek || "1";
   const dayDisplay = userProgress?.currentDay || "1";
   const devotionalTitle = userProgress?.currentDayTitle || "Loading...";
-  const devotionalId = userProgress?.currentDevotionalID || "";
+
+  // Create the devotional ID in the format "week-day"
+  const devotionalId = `${weekDisplay}-${dayDisplay}`;
+
+  console.log("devotionalId:", devotionalId);
 
   return (
     <div className="relative mx-auto mb-8 flex min-h-screen w-full max-w-[1200px] flex-col items-start gap-y-5 space-y-4 pt-12 max-lg:mx-2">
@@ -44,8 +62,8 @@ export default function MainBody() {
 
         <h2 className="w-full text-base font-normal text-gray-400">
           Today is{" "}
-          <Link href={devotionalId ? `/devotional/${devotionalId}` : "#"}>
-            <span className="font-semibold text-almost-black">
+          <Link href={`/devotional/${devotionalId}`}>
+            <span className="font-semibold text-almost-black hover:underline">
               Week {weekDisplay} Day {dayDisplay}: {devotionalTitle}
             </span>
           </Link>
@@ -58,7 +76,10 @@ export default function MainBody() {
           CLEAN {cohortDisplay}
         </h4>
       </div>
-      <CardSection />
+      <CardSection
+        userInfo={userInfo}
+        userProgress={userProgress}
+      />
     </div>
   );
 }
