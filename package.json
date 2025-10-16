@@ -43,6 +43,7 @@
     "bcrypt": "^6.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "db": "file:generated/client",
     "eslint-config-next": "^15.5.4",
     "input-otp": "^1.4.2",
     "jest": "^29.7.0",
