@@ -1,15 +1,17 @@
 "use client";
 
 import React from "react";
-import { useDashboardContext } from "@/contexts/dashboard/dashboard-provider";
 
-export default function WeekCard({ week, status, title, progress }) {
-  // Get user progress data from context
-  const { userProgress } = useDashboardContext();
-
+export default function WeekCard({
+  week,
+  status,
+  title,
+  progress,
+  userProgress,
+}) {
   // Determine how many days are completed for this week
-  const weekKey = `week${week}`;
-  const daysCompleted = userProgress.daysCompleted[weekKey] || 0;
+  const weekKey = `week${week}Completed`;
+  const daysCompleted = userProgress ? userProgress[weekKey] || 0 : 0;
 
   // Total days per week (assuming 7)
   const totalDaysPerWeek = 7;
@@ -20,6 +22,20 @@ export default function WeekCard({ week, status, title, progress }) {
     return index < daysCompleted;
   });
 
+  // Determine status color based on status
+  const getStatusColor = () => {
+    switch (status) {
+      case "Completed":
+        return "bg-lime-500/20 text-lime-500";
+      case "In Progress":
+        return "bg-blue-500/20 text-blue-500";
+      case "Upcoming":
+        return "bg-gray-500/20 text-gray-500";
+      default:
+        return "bg-gray-500/20 text-gray-500";
+    }
+  };
+
   return (
     <div className="h-[290px] w-[320px] flex-col items-center justify-center rounded-3xl bg-lesson-card bg-top bg-no-repeat shadow-lg">
       <div className="h-[158px] w-full" />
@@ -29,8 +45,10 @@ export default function WeekCard({ week, status, title, progress }) {
             <div className="text-[10px] font-medium uppercase leading-[14px] tracking-wide text-slate-500">
               Week {week}
             </div>
-            <div className="inline-flex h-[18px] w-[69px] items-center justify-center gap-2.5 rounded-2xl bg-lime-500/20 px-1.5 py-px">
-              <div className="text-[8px] font-medium uppercase leading-none text-lime-500">
+            <div
+              className={`inline-flex h-[18px] w-[69px] items-center justify-center gap-2.5 rounded-2xl px-1.5 py-px ${getStatusColor()}`}
+            >
+              <div className="text-[8px] font-medium uppercase leading-none">
                 {status}
               </div>
             </div>
