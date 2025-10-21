@@ -249,3 +249,40 @@ export async function getUniqueWeekTitles() {
     };
   }
 }
+
+// Add this new function to generate devotional navigation URL
+export async function getDevotionalUrl(
+  week: number,
+  day: number,
+): Promise<string> {
+  return `/devotional/${week}-${day}`;
+}
+
+// Add this function to validate if a devotional exists
+export async function validateDevotional(week: number, day: number) {
+  try {
+    const devotional = await prisma.devotional.findUnique({
+      where: {
+        week_day: {
+          week: week,
+          day: day,
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    return {
+      success: true,
+      exists: !!devotional,
+    };
+  } catch (error) {
+    console.error("Error validating devotional:", error);
+    return {
+      success: false,
+      exists: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}

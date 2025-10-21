@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { getWeekTitlesWithDays } from "@/actions/devotional";
+import { getDevotionalUrl, getWeekTitlesWithDays } from "@/actions/devotional";
 import { getUserProgress } from "@/actions/user-progress";
 import { comments, notes } from "@/sample-data/DiscussionData";
 import Box from "@mui/material/Box";
@@ -9,9 +9,10 @@ import Button from "@mui/material/Button";
 import Collapse from "@mui/material/Collapse";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
+import { useRouter } from "next/navigation";
 import { FaCheck, FaChevronDown, FaChevronRight } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { IoAdd, IoLockClosed } from "react-icons/io5";
+import { IoLockClosed } from "react-icons/io5";
 import DiscussionPlane from "./DiscussionPlane";
 import JoinConversationButton from "./JoinConversationButton";
 
@@ -20,6 +21,7 @@ export default function SidePanel() {
   const [weeks, setWeeks] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [expandedWeeks, setExpandedWeeks] = React.useState(new Set());
+  const router = useRouter();
 
   React.useEffect(() => {
     const loadDevotionalsWithProgress = async () => {
@@ -167,6 +169,12 @@ export default function SidePanel() {
     setOpen(newOpen);
   };
 
+  const handleDayClick = async (week, day) => {
+    const url = await getDevotionalUrl(week, day);
+    router.push(url);
+    setOpen(false); // Close the drawer after navigation
+  };
+
   const DrawerList = (
     <Box
       sx={{ width: 400 }}
@@ -253,53 +261,60 @@ export default function SidePanel() {
                   timeout="auto"
                 >
                   <div className="ml-4 space-y-1">
-                    {week.days.map((day) => (
-                      <div
-                        key={day.id}
-                        className={`flex items-center justify-between rounded-md p-2 text-sm transition-colors ${
-                          day.current
-                            ? "bg-red-25 border-l-2 border-red-600"
-                            : day.completed
-                              ? "bg-green-25 hover:bg-green-50"
-                              : day.locked
-                                ? "bg-gray-50 opacity-50"
-                                : "hover:bg-gray-25 bg-white"
-                        }`}
-                      >
-                        <div className="flex items-center gap-2">
-                          <div
-                            className={`flex h-6 w-6 items-center justify-center rounded-full ${
-                              day.completed
-                                ? "bg-green-400"
-                                : day.current
-                                  ? "bg-red-500"
-                                  : day.locked
-                                    ? "bg-gray-200"
-                                    : "bg-blue-200"
-                            }`}
-                          >
-                            {day.completed ? (
-                              <FaCheck className="text-xs text-white" />
-                            ) : day.locked ? (
-                              <IoLockClosed className="text-xs text-gray-400" />
-                            ) : (
-                              <span className="text-xs font-medium text-white">
-                                {day.day}
-                              </span>
-                            )}
+                    {week.days.map((day) => {
+                      const isClickable = day.completed || day.current;
+
+                      return (
+                        <div
+                          key={day.id}
+                          className={`flex items-center justify-between rounded-md p-2 text-sm transition-colors ${
+                            day.current
+                              ? "bg-red-25 border-l-2 border-red-600"
+                              : day.completed
+                                ? "bg-green-25 hover:bg-green-50"
+                                : day.locked
+                                  ? "bg-gray-50 opacity-50"
+                                  : "hover:bg-gray-25 bg-white"
+                          } ${isClickable ? "cursor-pointer" : ""}`}
+                          onClick={() =>
+                            isClickable && handleDayClick(week.id, day.day)
+                          }
+                        >
+                          <div className="flex items-center gap-2">
+                            <div
+                              className={`flex h-6 w-6 items-center justify-center rounded-full ${
+                                day.completed
+                                  ? "bg-green-400"
+                                  : day.current
+                                    ? "bg-red-500"
+                                    : day.locked
+                                      ? "bg-gray-200"
+                                      : "bg-blue-200"
+                              }`}
+                            >
+                              {day.completed ? (
+                                <FaCheck className="text-xs text-white" />
+                              ) : day.locked ? (
+                                <IoLockClosed className="text-xs text-gray-400" />
+                              ) : (
+                                <span className="text-xs font-medium text-white">
+                                  {day.day}
+                                </span>
+                              )}
+                            </div>
+                            <span
+                              className={`${
+                                day.current
+                                  ? "font-medium text-gray-900"
+                                  : "text-gray-600"
+                              } ${isClickable ? "hover:underline" : ""}`}
+                            >
+                              {day.title}
+                            </span>
                           </div>
-                          <span
-                            className={`${
-                              day.current
-                                ? "font-medium text-gray-900"
-                                : "text-gray-600"
-                            }`}
-                          >
-                            {day.title}
-                          </span>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </Collapse>
               </div>

@@ -32,11 +32,7 @@ export default function Devotional({ params }) {
     async function loadDevotional() {
       try {
         setLoading(true);
-        console.log(
-          "Fetching devotional with ID:",
-          typeof unwrappedParams.id,
-          unwrappedParams.id,
-        );
+
         const result = await getDevotionalById(unwrappedParams.id);
 
         if (!result.success) {
