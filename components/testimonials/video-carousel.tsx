@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
+import { YouTubeEmbed } from "@next/third-parties/google";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import YoutubeVideo from "@/components/testimonials/youtube-video";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 interface Video {
   id: string;
@@ -58,36 +58,26 @@ export default function VideoCarousel() {
   };
 
   const getOtherVideos = () => {
-    return videos.filter((video) => video.id !== activeVideo);
+    return [...videos, ...videos].filter((video) => video.id !== activeVideo);
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-4 md:py-8">
-      <h2 className="mb-4 text-xl font-bold md:mb-6 md:text-2xl">
+    <div className="mx-auto w-full py-4 xl:container md:px-4 md:py-8">
+      <h2 className="mb-4 text-center text-xl font-bold md:mb-6 md:text-2xl">
         Featured Videos
       </h2>
 
-      <div className="grid gap-4 md:gap-8">
+      <div className="row-auto grid grid-cols-1 place-items-center justify-center gap-y-4 md:gap-y-8">
         {/* Featured Video */}
-        <div className="mx-auto w-full max-w-full px-0 sm:px-4 md:px-6 lg:max-w-4xl">
-          <div
-            className="mobile:w-[80%] mx-auto w-full overflow-hidden rounded-lg bg-black xs:w-[90%] sm:w-[85%] md:w-full lg:w-[80%]"
-            style={{
-              height: "calc(56.25vw - 2rem)",
-              minHeight: "200px",
-              maxHeight: "500px",
-            }}
-          >
-            <YoutubeVideo
-              videoId={activeVideo}
-              dimensions={{ height: "100%", width: "100%" }}
-            />
+        <div className="w-full max-w-full px-0 sm:px-4 md:px-6 lg:max-w-3xl">
+          <div className="bg-black first:mx-auto first:h-auto max-xs:first:w-[calc(100dvw-20px)]">
+            <YouTubeEmbed videoid={activeVideo} />
           </div>
-          <div className="mt-2 md:mt-4">
-            <h3 className="w-[80%] text-base font-semibold md:text-xl">
+          <div className="mt-2 md:mt-4 lg:mx-3">
+            <h3 className="mx-auto w-[calc(80vw-4px)] text-sm font-medium md:text-justify md:text-xl md:font-semibold">
               {getActiveVideoData().title}
             </h3>
-            <p className="text-sm text-gray-600 md:text-base">
+            <p className="indent-3 text-xs text-gray-600 md:text-base">
               {getActiveVideoData().creator}
             </p>
           </div>
@@ -98,16 +88,19 @@ export default function VideoCarousel() {
           <h3 className="mb-2 text-base font-medium md:mb-4 md:text-lg">
             More Videos
           </h3>
-          <div className="relative">
+          <div className="relative max-w-[calc(100vw-10px)] overflow-y-clip">
             <div
               ref={carouselRef}
-              className="scrollbar-hide flex snap-x gap-2 overflow-x-auto pb-4 md:gap-4"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              style={{
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
+              className="inline-flex w-full max-w-[calc(100vw-20px)] snap-x gap-x-2 overflow-x-scroll pb-4 md:gap-4 xl:mb-[-12px] xl:max-w-3xl"
             >
-              {getOtherVideos().map((video) => (
+              {getOtherVideos().map((video, index) => (
                 <div
-                  key={video.id}
-                  className="w-[180px] flex-shrink-0 snap-start md:w-[220px]"
+                  key={video.id + index}
+                  className="w-[180px] shrink-0 grow-0 md:w-[220px]"
                 >
                   <div
                     className="aspect-video group relative cursor-pointer items-center overflow-hidden rounded-lg"
@@ -119,7 +112,7 @@ export default function VideoCarousel() {
                       className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                       width={320}
                       height={180}
-                      sizes="(max-width: 480px) 95vw, (max-width: 768px) 180px, 320px"
+                      sizes="(max-width: 480px) 75vw, (max-width: 768px) 180px, 320px"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
@@ -140,20 +133,20 @@ export default function VideoCarousel() {
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="absolute left-0 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/80 shadow-lg hover:bg-white md:flex"
+                  className="absolute left-0.5 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 shadow-lg hover:bg-white max-xs:size-7 md:left-0"
                   onClick={() => scroll("left")}
                 >
-                  <ChevronLeft className="h-4 w-4 md:h-5 md:w-5" />
+                  <ChevronLeft className="size-4 md:size-7" />
                   <span className="sr-only">Scroll left</span>
                 </Button>
 
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="absolute right-0 top-1/2 hidden -translate-y-1/2 translate-x-1/2 rounded-full bg-white/80 shadow-lg hover:bg-white md:flex"
+                  className="absolute right-0.5 top-1/2 -translate-y-1/2 translate-x-1/2 rounded-full bg-white/80 p-2 shadow-lg hover:bg-white max-xs:size-7 md:right-0"
                   onClick={() => scroll("right")}
                 >
-                  <ChevronRight className="h-4 w-4 md:h-5 md:w-5" />
+                  <ChevronRight className="size-4 md:size-5" />
                   <span className="sr-only">Scroll right</span>
                 </Button>
               </>
