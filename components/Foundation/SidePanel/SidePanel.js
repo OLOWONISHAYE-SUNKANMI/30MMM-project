@@ -104,16 +104,16 @@ export default function SidePanel() {
                 title: day.dayTitle,
                 completed: dayCompleted,
                 locked: dayLocked,
-                current:
-                  userProgress &&
-                  week === userProgress.currentWeek &&
-                  day.day === userProgress.currentDay,
+                current: userProgress
+                  ? week === userProgress.currentWeek &&
+                    day.day === userProgress.currentDay
+                  : week === 1 && day.day === 1, // Default first day as current for new users
               };
             }),
           };
         });
 
-        // console.log("Processed weeks with progress:", processedWeeks);
+        console.log("Processed weeks with progress:", processedWeeks);
         setWeeks(processedWeeks);
 
         // Auto-expand current week
@@ -262,7 +262,10 @@ export default function SidePanel() {
                 >
                   <div className="ml-4 space-y-1">
                     {week.days.map((day) => {
-                      const isClickable = day.completed || day.current;
+                      const isClickable =
+                        day.completed ||
+                        day.current ||
+                        (!day.locked && week.id === 1 && day.day === 1);
 
                       return (
                         <div
