@@ -28,19 +28,27 @@ export default function SidePanel() {
       try {
         // Load devotional structure
         const devotionalsResult = await getWeekTitlesWithDays();
-        // console.log("Fetched devotionals with days:", devotionalsResult);
 
         if (!devotionalsResult.success) {
           throw new Error(devotionalsResult.error);
         }
 
-        // Load user progress
-        const progressResult = await getUserProgress();
-        // console.log("Fetched user progress:", progressResult);
+        // Load user progress - THIS IS THE KEY CHANGE
+        // You need to get the userId first, then pass it to getUserProgress
+        const progressResult = await getUserProgress(); // Or getUserProgress(userId) if available
+
+        // Add debugging to see what's being returned
+        console.log("SidePanel - Progress result:", progressResult);
+        console.log(
+          "SidePanel - User progress data:",
+          progressResult.progress || progressResult.userProgress,
+        );
 
         const userProgress = progressResult.success
-          ? progressResult.progress
+          ? progressResult.progress || progressResult.userProgress // Handle different response formats
           : null;
+
+        console.log("SidePanel - Final userProgress:", userProgress);
 
         // Process the data to match the component's expected format
         const processedWeeks = devotionalsResult.weekTitles.map((weekData) => {
@@ -57,12 +65,12 @@ export default function SidePanel() {
             const weekCompletedDays = userProgress[completedWeekField] || 0;
 
             // Week is locked if it's more than 1 week ahead of current week
-            weekLocked = week > currentWeek + 1;
+            weekLocked = week > currentWeek;
 
             // Week is current if it matches user's current week
             weekCurrent = week === currentWeek;
 
-            // Week is completed if all days are completed (assuming 7 days per week)
+            // Week is completed if all days are completed (7 days per week)
             weekCompleted = weekCompletedDays === 7;
           } else {
             // Fallback logic when no user progress is available
@@ -79,23 +87,31 @@ export default function SidePanel() {
             days: days.map((day) => {
               let dayCompleted = false;
               let dayLocked = false;
+              let dayCurrent = false;
 
               if (userProgress) {
-                // Check if this specific devotional is completed
-                const devotionalId = (week - 1) * 7 + day.day; // Assuming 7 days per week
-                dayCompleted =
-                  userProgress.completedDevotionalIds.includes(devotionalId);
+                const completedWeekField = `week${week}Completed`;
+                const weekCompletedDays = userProgress[completedWeekField] || 0;
 
-                // Day is locked if week is locked or if it's more than current day in current week
-                if (weekLocked) {
+                // Day is completed if it's within the completed days count for this week
+                dayCompleted = day.day <= weekCompletedDays;
+
+                // Day is current if it's the next day to be completed in current week
+                dayCurrent =
+                  week === userProgress.currentWeek &&
+                  day.day === weekCompletedDays + 1;
+
+                // Day is locked based on week and progress
+                if (week > userProgress.currentWeek) {
                   dayLocked = true;
                 } else if (week === userProgress.currentWeek) {
-                  dayLocked = day.day > userProgress.currentDay;
-                } else if (week < userProgress.currentWeek) {
+                  dayLocked = day.day > weekCompletedDays + 1;
+                } else {
                   dayLocked = false; // Previous weeks are unlocked
                 }
               } else {
                 dayLocked = weekLocked || (week === 1 && day.day > 1);
+                dayCurrent = week === 1 && day.day === 1;
               }
 
               return {
@@ -104,10 +120,7 @@ export default function SidePanel() {
                 title: day.dayTitle,
                 completed: dayCompleted,
                 locked: dayLocked,
-                current: userProgress
-                  ? week === userProgress.currentWeek &&
-                    day.day === userProgress.currentDay
-                  : week === 1 && day.day === 1, // Default first day as current for new users
+                current: dayCurrent,
               };
             }),
           };
