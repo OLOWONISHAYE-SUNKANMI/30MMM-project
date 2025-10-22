@@ -103,7 +103,7 @@ export async function getCurrentUserWithProgress() {
             totalCompleted: formattedProgress.totalCompleted,
             devotional: formattedProgress.devotional,
             currentDevotionalId:
-              formattedProgress.devotional?._id?.toString() || null, // Add optional chaining
+              formattedProgress.devotional?.id?.toString() || null, // Add optional chaining
           }
         : null,
     };
@@ -113,7 +113,7 @@ export async function getCurrentUserWithProgress() {
   }
 }
 
-export async function updateUserProgress(devotionalId: number) {
+export async function updateUserProgress(devotionalId: string) {
   try {
     const user = await getServerUser();
 
@@ -131,7 +131,7 @@ export async function updateUserProgress(devotionalId: number) {
     }
 
     // Validate sequential access
-    const devotional = await prisma.devotional.findFirst({
+    const devotional = await prisma.devotional.findUnique({
       where: { id: devotionalId },
     });
 

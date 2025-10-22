@@ -13,6 +13,7 @@ interface Scripture {
 
 // Type for the formatted devotional
 interface FormattedDevotional {
+  id: string; // Add the id field
   title: string;
   scriptures: Scripture[];
   content: string | null;
@@ -213,6 +214,7 @@ export async function formatUserProgressResponse(
     totalCompleted,
     devotional: currentDevotional
       ? {
+          id: currentDevotional.id, // Add this line
           title: currentDevotional.dayTitle || "",
           scriptures: formattedScriptures,
           content: currentDevotional.content || null,
