@@ -2,7 +2,10 @@
 
 import { PrismaClient } from "@/generated/client";
 import { getUser as getServerUser } from "@/lib/session";
-import { formatUserProgressResponse } from "@/lib/user-progress-utility";
+import {
+  FormattedUserProgress,
+  formatUserProgressResponse,
+} from "@/lib/user-progress-utility";
 
 const prisma = new PrismaClient();
 
@@ -34,9 +37,26 @@ export async function getCurrentUserWithProgress() {
         },
       });
     }
+    let formattedProgress: FormattedUserProgress = {
+      currentWeek: 0,
+      currentDay: 0,
+      currentDayTitle: "",
+      currentWeekTitle: "",
+      cohortNumber: 0,
+      cohortRoman: "",
+      startDate: new Date(),
+      daysCompleted: {
+        week1: 0,
+        week2: 0,
+        week3: 0,
+        week4: 0,
+        week5: 0,
+      },
+      totalCompleted: 0,
+      devotional: null,
+    };
 
     // If user has progress, format it
-    let formattedProgress = null;
     if (userProgress) {
       // Fetch the current devotional from MongoDB
       const currentDevotional = await prisma.devotional.findFirst({
