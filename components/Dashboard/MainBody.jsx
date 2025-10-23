@@ -17,9 +17,6 @@ export default function MainBody() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log("MainBody - Session:", session);
-  console.log("MainBody - Session status:", status);
-
   useEffect(() => {
     const fetchUserData = async () => {
       if (status === "loading") {

@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import Collapse from "@mui/material/Collapse";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FaCheck, FaChevronDown, FaChevronRight } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -22,6 +23,7 @@ export default function SidePanel() {
   const [loading, setLoading] = React.useState(true);
   const [expandedWeeks, setExpandedWeeks] = React.useState(new Set());
   const router = useRouter();
+  const { data: session, status } = useSession();
 
   React.useEffect(() => {
     const loadDevotionalsWithProgress = async () => {
@@ -33,9 +35,15 @@ export default function SidePanel() {
           throw new Error(devotionalsResult.error);
         }
 
+        if (status === "unauthenticated" || !session?.user?.id) {
+          console.log("MainBody - No user session found");
+          setLoading(false);
+          return;
+        }
+
         // Load user progress - THIS IS THE KEY CHANGE
         // You need to get the userId first, then pass it to getUserProgress
-        const progressResult = await getUserProgress(); // Or getUserProgress(userId) if available
+        const progressResult = await getUserProgress(session.user.id); // Or getUserProgress(userId) if available
 
         // Add debugging to see what's being returned
         console.log("SidePanel - Progress result:", progressResult);
@@ -48,7 +56,7 @@ export default function SidePanel() {
           ? progressResult.progress || progressResult.userProgress // Handle different response formats
           : null;
 
-        console.log("SidePanel - Final userProgress:", userProgress);
+        // console.log("SidePanel - Final userProgress:", userProgress);
 
         // Process the data to match the component's expected format
         const processedWeeks = devotionalsResult.weekTitles.map((weekData) => {
