@@ -20,26 +20,27 @@ enum UserRole {
 }
 
 model User {
-  id               String           @id @default(cuid()) @map("_id")
-  name             String
-  email            String           @unique
-  emailVerified    Boolean          @default(false)
-  image            String?
-  role             UserRole         @default(user)
-  banned           Boolean          @default(false)
-  banReason        String?
-  banExpires       Int? /// Unix timestamp for ban expiration
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
-  sessions         Session[]
-  accounts         Account[]
-  userProfile      UserProfile?
-  profile          Profile?
-  password         String?
-  premium          Boolean          @default(false)
-  paymentDetails   PaymentDetails[] // Changed to an array
-  profileCompleted Boolean          @default(false) // New field added here
-  userProgress     UserProgress?
+  id                  String               @id @default(cuid()) @map("_id")
+  name                String
+  email               String               @unique
+  emailVerified       Boolean              @default(false)
+  image               String?
+  role                UserRole             @default(user)
+  banned              Boolean              @default(false)
+  banReason           String?
+  banExpires          Int? /// Unix timestamp for ban expiration
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  sessions            Session[]
+  accounts            Account[]
+  userProfile         UserProfile?
+  profile             Profile?
+  password            String?
+  premium             Boolean              @default(false)
+  paymentDetails      PaymentDetails[] // Changed to an array
+  profileCompleted    Boolean              @default(false) // New field added here
+  userProgress        UserProgress?
+  reflectionResponses ReflectionResponse[]
 
   @@map("user")
 }
@@ -210,4 +211,20 @@ model Devotional {
 
   @@unique([week, day], map: "week_day")
   @@map("devotional")
+}
+
+model ReflectionResponse {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String
+  devotionalId String   @db.ObjectId
+  week         Int
+  day          Int
+  response     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, devotionalId])
+  @@map("reflection_responses")
 }
