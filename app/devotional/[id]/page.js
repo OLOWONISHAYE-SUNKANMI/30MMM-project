@@ -4,7 +4,9 @@
 
 import React, { use, useEffect, useState } from "react";
 import { getDevotionalById } from "@/actions/devotional";
+import { completeDevotional } from "@/actions/user-progress";
 import { useDashboardContext } from "@/contexts/dashboard/dashboard-provider";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Divider from "@/components/common/Divider";
 import CompleteLesson from "@/components/Foundation/CompleteLesson";
@@ -22,16 +24,37 @@ export default function Devotional({ params }) {
   // Unwrap the params Promise using React.use()
   const unwrappedParams = use(params);
 
+  // Authentication and routing
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  // Data and state management
   const [devotionalData, setDevotionalData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { userProgress, updateProgress } = useDashboardContext();
-  const router = useRouter();
+  const [reflectionResponse, setReflectionResponse] = useState("");
+  const [isCompleting, setIsCompleting] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [completionError, setCompletionError] = useState(null);
 
+  // Dashboard context for progress management
+  const { userProgress, refreshProgress } = useDashboardContext();
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (status === "loading") return; // Still loading
+    if (!session) {
+      router.push("/login");
+      return;
+    }
+  }, [session, status, router]);
+
+  // Load devotional data
   useEffect(() => {
     async function loadDevotional() {
       try {
         setLoading(true);
+        setError(null);
 
         const result = await getDevotionalById(unwrappedParams.id);
 
@@ -40,31 +63,84 @@ export default function Devotional({ params }) {
         }
 
         setDevotionalData(result.devotional);
+
+        // Check if this devotional is already completed
+        if (userProgress && result.devotional) {
+          const devotionalNumber =
+            (result.devotional.week - 1) * 7 + result.devotional.day;
+          const isAlreadyCompleted =
+            userProgress.completedDevotionalIds?.includes(devotionalNumber) ||
+            false;
+          setIsCompleted(isAlreadyCompleted);
+        }
       } catch (err) {
+        console.error("Error loading devotional:", err);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     }
 
-    loadDevotional();
-  }, [unwrappedParams.id]);
+    if (unwrappedParams.id && session) {
+      loadDevotional();
+    }
+  }, [unwrappedParams.id, session, userProgress]);
 
-  const handleComplete = async () => {
-    if (!devotionalData) return;
+  // Handle reflection response changes
+  const handleReflectionChange = (value) => {
+    setReflectionResponse(value);
+  };
+
+  // Handle devotional completion
+  const handleCompleteLesson = async () => {
+    if (!devotionalData || !session?.user?.id) {
+      setCompletionError("Missing required data for completion");
+      return;
+    }
+
+    setIsCompleting(true);
+    setCompletionError(null);
 
     try {
-      await updateProgress(devotionalData.week, devotionalData.day);
-      router.push(
-        `/devotional/${userProgress.currentWeek}-${userProgress.currentDay}`,
+      // Call the completeDevotional server action
+      const result = await completeDevotional(
+        session.user.id,
+        devotionalData.id,
+        devotionalData.week,
+        devotionalData.day,
+        reflectionResponse.trim() || undefined,
       );
-      // Handle success
-    } catch (error) {
-      console.error("Error completing devotional:", error);
+
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
+      // Update local state
+      setIsCompleted(true);
+
+      // Refresh the dashboard context to update progress
+      await refreshProgress();
+
+      console.log("Devotional completed successfully");
+    } catch (err) {
+      console.error("Error completing devotional:", err);
+      setCompletionError(err.message);
+    } finally {
+      setIsCompleting(false);
     }
   };
 
-  if (loading) {
+  // Handle navigation actions
+  const handleReturnToDashboard = () => {
+    router.push("/dashboard");
+  };
+
+  const handleGoToVideos = () => {
+    router.push("/dashboard/videos");
+  };
+
+  // Loading states
+  if (status === "loading" || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <p>Loading devotional...</p>
@@ -72,10 +148,19 @@ export default function Devotional({ params }) {
     );
   }
 
+  // Error states
   if (error) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-red-500">Error loading devotional: {error}</p>
+        <div className="text-center">
+          <p className="mb-4 text-red-500">Error loading devotional: {error}</p>
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+          >
+            Return to Dashboard
+          </button>
+        </div>
       </div>
     );
   }
@@ -144,7 +229,7 @@ export default function Devotional({ params }) {
               <ReadingTime devotionText={devotionalData.devotionText || ""} />
             </div>
 
-            <div className="justify-left mt-[3vh] flex w-full">
+            <div className="justify-left wfull mt-[3vh] flex">
               <MainLesson devotionText={devotionalData.devotionText || ""} />
             </div>
 
@@ -155,14 +240,35 @@ export default function Devotional({ params }) {
                 />
               </div>
               <div className="wfull mt-[6vh] flex justify-center">
-                <ReflectionResponse />
+                <ReflectionResponse
+                  value={reflectionResponse}
+                  onChange={handleReflectionChange}
+                  disabled={isCompleted || isCompleting}
+                />
               </div>
             </div>
+
+            {/* Completion Error Display */}
+            {completionError && (
+              <div className="mt-4 flex w-full justify-center">
+                <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+                  <p className="font-medium">Error completing devotional:</p>
+                  <p className="text-sm">{completionError}</p>
+                </div>
+              </div>
+            )}
 
             <Divider />
 
             <div className="mt-[2vh] flex w-full justify-center">
-              <CompleteLesson />
+              <CompleteLesson
+                devotionalData={devotionalData}
+                isCompleted={isCompleted}
+                isCompleting={isCompleting}
+                onComplete={handleCompleteLesson}
+                onReturnToDashboard={handleReturnToDashboard}
+                onGoToVideos={handleGoToVideos}
+              />
             </div>
           </div>
         </div>
