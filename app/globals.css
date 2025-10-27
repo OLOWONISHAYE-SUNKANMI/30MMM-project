@@ -1,6 +1,172 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/container-queries';
+@plugin '@tailwindcss/typography';
+@plugin '@tailwindcss/aspect-ratio';
+@plugin 'tailwindcss-animate';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --breakpoint-2xs: 200px;
+  --breakpoint-xs: 400px;
+  --breakpoint-sm: 600px;
+  --breakpoint-iphone: 430px;
+  --breakpoint-iphone-landscape: 926px;
+
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
+  --background-image-jesus-hero: url('/jesus_hero.png');
+  --background-image-donate-desktop: url('/donate-horiz.png');
+  --background-image-donate-mobile: url('/donate-vert.png');
+  --background-image-lesson-card: url('/week-card.png');
+
+  --background-size-w-100-h-auto: 100% auto;
+
+  --color-placeholder-gray: #a7afb6;
+  --color-title-black: #13171b;
+  --color-description-gray: #5d6b84;
+  --color-gray-bg: #f2f3f5;
+  --color-formfield: #f9fafb;
+  --color-primary-red: #af3634;
+
+  --color-primaryred-50: #f9e7e4;
+  --color-primaryred-100: #f3cfca;
+  --color-primaryred-200: #ebb8b1;
+  --color-primaryred-300: #e2a098;
+  --color-primaryred-400: #d88980;
+  --color-primaryred-500: #cd7269;
+  --color-primaryred-600: #c15a52;
+  --color-primaryred-700: #af3634;
+  --color-primaryred-800: #902f2c;
+  --color-primaryred-900: #64261c;
+  --color-primaryred-950: #321614;
+  --color-primaryred: #af3634;
+
+  --color-accent-red: #64261c;
+  --color-almost-black: #1a1a1a;
+  --color-off-white: #fafcfe;
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --animate-roll: roll 1.5s ease-in-out infinite;
+  --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+  --animate-shimmer: shimmer 6s ease-in-out infinite;
+
+  --background-position-top-4: left 20% top 0;
+  --background-position-right-1: left 20% top 0;
+  --background-position-right-2: left 25% top 0;
+  --background-position-left-1: left 2rem top 0;
+
+  --radius-most: 6.25rem;
+  --radius-mid: 2.5rem;
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  @keyframes roll {
+    0% {
+      transform: scale(0.96) rotate(0deg);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.04) rotate(180deg);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(0.9) rotate(360deg);
+      opacity: 1;
+    }
+  }
+  @keyframes caret-blink {
+    0%,
+    70%,
+    100% {
+      opacity: 1;
+    }
+    20%,
+    50% {
+      opacity: 0;
+    }
+  }
+  @keyframes shimmer {
+    0%,
+    100% {
+      background-size: 100% 100%;
+    }
+    25% {
+      background-size: 190% 140%;
+    }
+    50% {
+      background-size: 180% 100%;
+    }
+    75% {
+      background-size: 140% 190%;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 @layer base {
   :root {

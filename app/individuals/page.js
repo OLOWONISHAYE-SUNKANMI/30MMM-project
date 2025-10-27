@@ -127,7 +127,7 @@ export default function CleanForIndividuals() {
                     {plan.price}
                   </p>
                 </CardHeader>
-                <CardContent className="flex-grow">
+                <CardContent className="grow">
                   <ul className="space-y-2 text-gray-600">
                     {plan.features.map((feature, fIndex) => (
                       <li

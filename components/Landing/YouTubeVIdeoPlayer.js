@@ -36,7 +36,7 @@ export default function VideoBackground({ videoId }) {
       <div className="relative h-full w-full">
         <div
           id="youtube-player"
-          className="absolute left-1/2 top-1/2 h-[300%] min-h-[100%] w-[300%] min-w-[100%] -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-1/2 top-1/2 h-[300%] min-h-full w-[300%] min-w-full -translate-x-1/2 -translate-y-1/2"
         />
         <div className="absolute inset-0 bg-primary-red/50" /> {/* Overlay */}
       </div>

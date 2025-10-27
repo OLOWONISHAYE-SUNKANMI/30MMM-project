@@ -3,7 +3,7 @@ import Image from "next/image";
 export function TwoFacesSection() {
   return (
     <section
-      className="py-24 bg-gradient-to-b from-gray-50 to-gray-100"
+      className="py-24 bg-linear-to-b from-gray-50 to-gray-100"
       id="TwoFaces"
     >
       <div className="container max-w-5xl px-4 mx-auto">

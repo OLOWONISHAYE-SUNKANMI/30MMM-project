@@ -13,7 +13,7 @@ import {
 
 const DonationPage = () => {
   return (
-    <div className="mt-20 min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="mt-20 min-h-screen bg-linear-to-b from-blue-50 to-white">
       <Script
         src="https://donorbox.org/install-popup-button.js"
         strategy="afterInteractive"

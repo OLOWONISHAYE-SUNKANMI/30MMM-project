@@ -118,7 +118,7 @@ export default function VideoCarousel() {
                     <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
                       <Play className="h-8 w-8 text-white md:h-10 md:w-10" />
                     </div>
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-1 md:p-2">
+                    <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 to-transparent p-1 md:p-2">
                       <p className="text-xs font-medium text-white md:text-sm">
                         {video.creator}
                       </p>

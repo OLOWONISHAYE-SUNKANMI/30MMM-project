@@ -125,7 +125,7 @@ export default function AboutPage() {
       </section>
 
       {/* Statistics Section */}
-      <section className="bg-gradient-to-b from-gray-50 to-gray-100 py-16 text-black">
+      <section className="bg-linear-to-b from-gray-50 to-gray-100 py-16 text-black">
         <div className="container mx-auto">
           <motion.div
             {...fadeIn}

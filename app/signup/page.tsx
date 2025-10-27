@@ -7,7 +7,7 @@ export default function SignUp() {
   return (
     <div className="inset-auto flex min-h-screen w-screen min-w-[400px] flex-col md:flex-row">
       {/* Image Container - Matched to reference styling */}
-      <div className="-z-50 aspect-[773/499] min-h-72 bg-white bg-jesus-hero bg-cover bg-center bg-no-repeat max-md:w-full max-md:bg-top max-xs:scale-x-125 sm:self-stretch md:order-2 md:w-3/4 md:overflow-x-clip md:bg-cover md:bg-clip-border md:bg-top-4 md:bg-origin-border" />
+      <div className="-z-50 aspect-773/499 min-h-72 bg-white bg-jesus-hero bg-cover bg-center bg-no-repeat max-md:w-full max-md:bg-top max-xs:scale-x-125 sm:self-stretch md:order-2 md:w-3/4 md:overflow-x-clip md:bg-cover md:bg-clip-border md:bg-top-4 md:bg-origin-border" />
 
       {/* Form Header: Image and Text */}
       <div className="w-full md:w-3/4">

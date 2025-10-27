@@ -133,7 +133,7 @@ export default function Settings() {
         >
           Upload Picture
         </Link>
-        <div className="flex min-h-[200px] w-full max-w-screen-lg flex-col items-center">
+        <div className="flex min-h-[200px] w-full max-w-(--breakpoint-lg) flex-col items-center">
           <div className="items-stetch my-2 inline-flex min-h-max flex-row justify-between gap-x-3 overflow-y-hidden rounded-3xl bg-gray-bg p-0.5 text-center">
             <button
               onClick={() => setFirstTabActive(true)}
