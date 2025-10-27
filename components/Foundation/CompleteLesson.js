@@ -10,6 +10,19 @@ export default function CompleteLesson({
   onReturnToDashboard,
   onGoToVideos,
 }) {
+  // Handle navigation actions
+  const handleReturnToDashboard = () => {
+    if (!isCompleting) {
+      onReturnToDashboard();
+    }
+  };
+
+  const handleGoToVideos = () => {
+    if (!isCompleting) {
+      onGoToVideos();
+    }
+  };
+
   // Render post-completion buttons
   if (isCompleted) {
     return (
@@ -43,8 +56,11 @@ export default function CompleteLesson({
         {/* Navigation buttons */}
         <div className="flex w-[60%] flex-row items-center justify-center gap-4 xs:w-full xs:flex-col xs:gap-3">
           <button
-            onClick={onReturnToDashboard}
-            className="flex flex-1 items-center justify-center rounded-full border-2 border-red-600 bg-red-600 px-6 py-4 text-lg text-white transition hover:bg-white hover:text-red-700 max-xs:text-sm xs:w-full"
+            onClick={handleReturnToDashboard}
+            disabled={isCompleting}
+            className={`flex flex-1 items-center justify-center rounded-full border-2 border-red-600 bg-red-600 px-6 py-4 text-lg text-white transition hover:bg-white hover:text-red-700 max-xs:text-sm xs:w-full ${
+              isCompleting ? "cursor-not-allowed opacity-50" : ""
+            }`}
           >
             <svg
               className="mr-2 h-5 w-5"
@@ -69,8 +85,11 @@ export default function CompleteLesson({
           </button>
 
           <button
-            onClick={onGoToVideos}
-            className="bg-purple-white hover:bg-grey flex flex-1 items-center justify-center rounded-full border-2 border-red-600 px-6 py-4 text-lg text-red-600 transition hover:text-primary-red max-xs:text-sm xs:w-full"
+            onClick={handleGoToVideos}
+            disabled={isCompleting}
+            className={`bg-purple-white hover:bg-grey flex flex-1 items-center justify-center rounded-full border-2 border-red-600 px-6 py-4 text-lg text-red-600 transition hover:text-primary-red max-xs:text-sm xs:w-full ${
+              isCompleting ? "cursor-not-allowed opacity-50" : ""
+            }`}
           >
             <svg
               className="mr-2 h-5 w-5"

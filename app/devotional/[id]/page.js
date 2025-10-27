@@ -63,16 +63,6 @@ export default function Devotional({ params }) {
         }
 
         setDevotionalData(result.devotional);
-
-        // Check if this devotional is already completed
-        if (userProgress && result.devotional) {
-          const devotionalNumber =
-            (result.devotional.week - 1) * 7 + result.devotional.day;
-          const isAlreadyCompleted =
-            userProgress.completedDevotionalIds?.includes(devotionalNumber) ||
-            false;
-          setIsCompleted(isAlreadyCompleted);
-        }
       } catch (err) {
         console.error("Error loading devotional:", err);
         setError(err.message);
@@ -84,7 +74,23 @@ export default function Devotional({ params }) {
     if (unwrappedParams.id && session) {
       loadDevotional();
     }
-  }, [unwrappedParams.id, session, userProgress]);
+  }, [unwrappedParams.id, session]);
+
+  // Check if this devotional is already completed
+  useEffect(() => {
+    if (userProgress && devotionalData) {
+      const devotionalNumber =
+        (devotionalData.week - 1) * 7 + devotionalData.day;
+      const isAlreadyCompleted =
+        userProgress.completedDevotionalIds?.includes(devotionalNumber) ||
+        false;
+
+      // Only update if different to prevent unnecessary re-renders
+      if (isAlreadyCompleted !== isCompleted) {
+        setIsCompleted(isAlreadyCompleted);
+      }
+    }
+  }, [userProgress, devotionalData, isCompleted]);
 
   // Handle reflection response changes
   const handleReflectionChange = (value) => {
@@ -115,18 +121,24 @@ export default function Devotional({ params }) {
         throw new Error(result.error);
       }
 
-      // Update local state
+      // Update local state FIRST before refreshing context
       setIsCompleted(true);
 
-      // Refresh the dashboard context to update progress
-      await refreshProgress();
+      // Don't await the refresh to prevent state conflicts
+      refreshProgress().catch(console.error);
 
       console.log("Devotional completed successfully");
     } catch (err) {
       console.error("Error completing devotional:", err);
       setCompletionError(err.message);
-    } finally {
+      // Reset completing state on error
       setIsCompleting(false);
+    } finally {
+      // Only reset completing state if there was no success
+      // On success, keep it true briefly to show loading state
+      setTimeout(() => {
+        setIsCompleting(false);
+      }, 500);
     }
   };
 

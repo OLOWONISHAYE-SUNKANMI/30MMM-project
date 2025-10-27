@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+import React from "react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -11,22 +10,6 @@ export default function ReflectionResponse({
   disabled = false,
   placeholder = "Write your reflection here.",
 }) {
-  const [reflection, setReflection] = useState("");
-  const [submittedReflections, setSubmittedReflections] = useState([]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Reflection has been submitted!");
-
-    if (reflection.trim()) {
-      // Add the reflection to submitted reflections
-      setSubmittedReflections((prev) => [...prev, reflection]);
-
-      // Clear the textarea after submission
-      setReflection("");
-    }
-  };
-
   const handleTextChange = (e) => {
     if (onChange && !disabled) {
       onChange(e.target.value);
@@ -35,34 +18,23 @@ export default function ReflectionResponse({
 
   return (
     <div className="w-full space-y-4">
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-4"
-      >
-        <div className="grid w-full gap-1.5">
-          <Label htmlFor="reflection">
-            <Textarea
-              id="reflection"
-              placeholder={disabled ? "Reflection completed" : placeholder}
-              value={value}
-              onChange={handleTextChange}
-              disabled={disabled}
-              className={`mx-auto w-full md:w-full lg:w-3/4 ${
-                disabled
-                  ? "cursor-not-allowed border-gray-200 bg-gray-50 text-gray-600"
-                  : "border-gray-300 bg-white"
-              }`}
-              rows={5}
-            />
-          </Label>
-        </div>
-        <Button
-          type="submit"
-          className="mx-auto block"
-        >
-          submit
-        </Button>
-      </form>
+      <div className="grid w-full gap-1.5">
+        <Label htmlFor="reflection">
+          <Textarea
+            id="reflection"
+            placeholder={disabled ? "Reflection completed" : placeholder}
+            value={value}
+            onChange={handleTextChange}
+            disabled={disabled}
+            className={`mx-auto w-full md:w-full lg:w-3/4 ${
+              disabled
+                ? "cursor-not-allowed border-gray-200 bg-gray-50 text-gray-600"
+                : "border-gray-300 bg-white"
+            }`}
+            rows={5}
+          />
+        </Label>
+      </div>
 
       {/* Character count indicator */}
       {!disabled && (
@@ -94,22 +66,6 @@ export default function ReflectionResponse({
               Your reflection has been saved
             </span>
           </div>
-        </div>
-      )}
-
-      {submittedReflections.length > 0 && (
-        <div className="mt-4">
-          <h3 className="mb-2 text-lg font-semibold">Submitted Reflections:</h3>
-          <ul className="space-y-2">
-            {submittedReflections.map((ref, index) => (
-              <li
-                key={index}
-                className="rounded bg-gray-100 p-2"
-              >
-                {ref}
-              </li>
-            ))}
-          </ul>
         </div>
       )}
     </div>
