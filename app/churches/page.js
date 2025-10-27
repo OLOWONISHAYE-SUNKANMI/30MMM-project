@@ -108,7 +108,7 @@ export default function CleanForChurches() {
                     {data.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="flex-grow">
+                <CardContent className="grow">
                   <p className="mb-4 text-gray-600">{data.description}</p>
                   <ul className="mb-4 space-y-2 text-gray-600">
                     {data.features.map((feature, fIndex) => (

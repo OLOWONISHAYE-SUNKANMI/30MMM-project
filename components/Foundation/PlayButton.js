@@ -20,4 +20,4 @@ const styleIcon =
   "text-3xl text-black max-xs:w-5 max-xs:h-5 max-sm:w-8 max-sm:h-8";
 
 const styleAnimation =
-  "absolute inset-0 w-full h-full rounded-full border-[8px] border-white opacity-10 animate-pulse";
+  "absolute inset-0 w-full h-full rounded-full border-8 border-white opacity-10 animate-pulse";

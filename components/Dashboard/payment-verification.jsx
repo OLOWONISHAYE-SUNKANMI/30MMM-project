@@ -106,7 +106,7 @@ const PaymentVerification = ({ children }) => {
             <div className="flex items-start">
               {toast.type === "success" ? (
                 <svg
-                  className="mr-2 mt-0.5 h-5 w-5 flex-shrink-0"
+                  className="mr-2 mt-0.5 h-5 w-5 shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -120,7 +120,7 @@ const PaymentVerification = ({ children }) => {
                 </svg>
               ) : (
                 <svg
-                  className="mr-2 mt-0.5 h-5 w-5 flex-shrink-0"
+                  className="mr-2 mt-0.5 h-5 w-5 shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -144,7 +144,7 @@ const PaymentVerification = ({ children }) => {
             </div>
             <button
               onClick={() => setToast(null)}
-              className="ml-4 flex-shrink-0 text-gray-400 hover:text-gray-600"
+              className="ml-4 shrink-0 text-gray-400 hover:text-gray-600"
             >
               <svg
                 className="h-4 w-4"

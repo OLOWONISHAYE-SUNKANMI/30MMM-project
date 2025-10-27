@@ -5,17 +5,17 @@ import { Button } from "@/components/ui/button";
 import VideoBackground from "./VideoBackground";
 
 // Replacing the classNames in the first p element will bring in the shimmer text:
-// "max-w-3xl relative before:absolute before:inset-0 before:bg-white before:bg-clip-text bg-blend-hue  mx-auto mb-8 text-lg italic text-transparent bg-gradient-to-b from-yellow-50 via-yellow-400 to-amber-100 animate-shimmer bg-clip-text drop-shadow-[0_35px_35px_rgba(0,0,0,0.75)] sm:text-xl md:text-2xl lg:text-3xl lg:font-medium xl:text-4xl"
+// "max-w-3xl relative before:absolute before:inset-0 before:bg-white before:bg-clip-text bg-blend-hue  mx-auto mb-8 text-lg italic text-transparent bg-linear-to-b from-yellow-50 via-yellow-400 to-amber-100 animate-shimmer bg-clip-text drop-shadow-[0_35px_35px_rgba(0,0,0,0.75)] sm:text-xl md:text-2xl lg:text-3xl lg:font-medium xl:text-4xl"
 // original: "max-w-3xl mx-auto mb-8 text-lg italic text-black drop-shadow-xl sm:text-xl md:text-2xl md:text-white lg:text-3xl"
 
 export function HeroSection() {
   const videoSources = ["/videos/CLEAN HERO VIDEO- LATEST.mp4"];
 
   return (
-    <section className="relative mt-[85px] flex min-h-[100dvh] w-full flex-col justify-end text-center after:absolute after:inset-0 after:bg-black/15">
+    <section className="relative mt-[85px] flex min-h-dvh w-full flex-col justify-end text-center after:absolute after:inset-0 after:bg-black/15">
       <VideoBackground videoSources={videoSources} />
       <div className="container relative z-10 mx-auto mb-24 px-4 md:text-white">
-        <p className="relative mx-auto mb-8 max-w-3xl animate-shimmer bg-gradient-to-b from-yellow-50 via-yellow-400 to-amber-100 bg-clip-text text-lg italic text-transparent bg-blend-hue drop-shadow-[0_35px_35px_rgba(0,0,0,0.75)] before:absolute before:inset-0 before:bg-white before:bg-clip-text sm:text-xl md:text-2xl lg:text-3xl lg:font-medium xl:text-4xl">
+        <p className="relative mx-auto mb-8 max-w-3xl animate-shimmer bg-linear-to-b from-yellow-50 via-yellow-400 to-amber-100 bg-clip-text text-lg italic text-transparent bg-blend-hue drop-shadow-[0_35px_35px_rgba(0,0,0,0.75)] before:absolute before:inset-0 before:bg-white before:bg-clip-text sm:text-xl md:text-2xl lg:text-3xl lg:font-medium xl:text-4xl">
           Discover your purpose and grow into the man God designed you to be.
         </p>
         <div className="space-x-3">

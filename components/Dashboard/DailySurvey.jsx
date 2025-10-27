@@ -20,7 +20,7 @@ export default function DailySurvey({ userProgress, userInfo }) {
             Daily Survey
           </button>
         </SheetTrigger>
-        <SheetContent className="z-[51] w-[299px] overflow-clip sm:w-[320px]">
+        <SheetContent className="z-51 w-[299px] overflow-clip sm:w-[320px]">
           <SheetHeader>
             <SheetTitle>Daily Survey</SheetTitle>
             <SheetDescription>

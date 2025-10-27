@@ -249,7 +249,7 @@ export default function TestimonialUploadPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-bg">
+    <div className="min-h-screen bg-linear-to-b from-white to-gray-bg">
       <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <h1 className="mb-8 text-center text-3xl font-bold text-primary-red">
           Upload Your Journeyman&apos;s Testimonial Video Here
