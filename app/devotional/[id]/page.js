@@ -109,6 +109,7 @@ export default function Devotional({ params }) {
 
     try {
       // Call the completeDevotional server action
+
       const result = await completeDevotional(
         session.user.id,
         devotionalData.id,
@@ -121,24 +122,22 @@ export default function Devotional({ params }) {
         throw new Error(result.error);
       }
 
-      // Update local state FIRST before refreshing context
-      setIsCompleted(true);
+      // Update local state to show completion
 
-      // Don't await the refresh to prevent state conflicts
+      setIsCompleted(true);
+      setIsCompleting(false);
+      // Keep isCompleting as true until user navigates away
+      // This prevents the flash of buttons
+
+      // Refresh progress in background
       refreshProgress().catch(console.error);
 
       console.log("Devotional completed successfully");
     } catch (err) {
       console.error("Error completing devotional:", err);
       setCompletionError(err.message);
-      // Reset completing state on error
+      // Only reset completing state on error
       setIsCompleting(false);
-    } finally {
-      // Only reset completing state if there was no success
-      // On success, keep it true briefly to show loading state
-      setTimeout(() => {
-        setIsCompleting(false);
-      }, 500);
     }
   };
 
