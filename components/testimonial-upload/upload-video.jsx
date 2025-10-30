@@ -243,7 +243,7 @@ function UploadVideo(week, day, firstName, lastName) {
         onDragOver={(e) => e.preventDefault()} // Prevent default browser behavior
       >
         {/* Upload Video section */}
-        <div className="mb-6">
+        <div className="mx-auto mb-6 w-full max-w-2xl">
           <label
             htmlFor="video"
             className="mb-2 block font-medium text-description-gray"
