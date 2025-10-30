@@ -167,7 +167,7 @@ export default function Devotional({ params }) {
           <p className="mb-4 text-red-500">Error loading devotional: {error}</p>
           <button
             onClick={() => router.push("/dashboard")}
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+            className="rounded bg-primary-red px-4 py-2 text-white hover:bg-red-800"
           >
             Return to Dashboard
           </button>
