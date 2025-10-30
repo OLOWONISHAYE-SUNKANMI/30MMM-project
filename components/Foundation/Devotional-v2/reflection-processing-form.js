@@ -6,7 +6,7 @@ import PostReflectionNavigationButtons from "@/components/Foundation/Devotional-
 import UploadVideo from "@/components/testimonial-upload/upload-video";
 
 function ReflectionProcessingForm({
-  devotionalId,
+  devotionalDataId,
   userId,
   week,
   day,
@@ -23,7 +23,9 @@ function ReflectionProcessingForm({
 
   // pull props from devotionalData and session user data
 
-  const onTextSubmit = async () => {
+  const onTextSubmit = async (reflectionText) => {
+    console.log("onTextSubmit: Submitting text reflection:", reflectionText);
+
     if (!reflectionText.trim()) {
       setError("Please enter your reflection before submitting.");
       return;
@@ -33,13 +35,20 @@ function ReflectionProcessingForm({
     setError(null);
     setIsSubmitting(true);
 
+    console.log("onTextSubmit: Calling submitTextReflection Server Action");
+
+    console.log("userId:", userId);
+    console.log("devotionalDataId:", devotionalDataId);
+    console.log("week:", week);
+    console.log("day:", day);
+
     try {
       // Here's where the magic happens - we call the Server Action directly
       // It looks like a regular function call, but it's actually making a request
       // to the server behind the scenes. Next.js handles all the networking for us.
       const result = await submitTextReflection(
         userId,
-        devotionalId,
+        devotionalDataId,
         reflectionText,
         week,
         day,
@@ -151,7 +160,10 @@ function ReflectionProcessingForm({
             <div className="flex justify-center">
               <button
                 type="submit"
-                onClick={onTextSubmit}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onTextSubmit(reflectionText);
+                }}
                 className={`"cursor-not-allowed bg-gray-400" "bg-primaryred hover:bg-primaryred-800" rounded-lg bg-primary-red px-6 py-2 text-white transition-colors`}
               >
                 Save Text Reflection
@@ -165,6 +177,7 @@ function ReflectionProcessingForm({
             day={day}
             firstName={firstName}
             lastName={lastName}
+            userId={userId}
           />
         )}
 

@@ -17,14 +17,16 @@ const prisma = new PrismaClient();
  */
 export async function submitTextReflection(
   userId,
-  devotionalId,
+  devotionalDataId,
   reflectionText,
   week,
   day,
 ) {
+  console.log(devotionalDataId, reflectionText, week, day);
+
   // Input validation on the server side is critical for security
   // Never trust that client-side validation is enough
-  if (!userId || !devotionalId || !reflectionText?.trim()) {
+  if (!devotionalDataId || !reflectionText?.trim()) {
     return {
       success: false,
       error:
@@ -32,7 +34,7 @@ export async function submitTextReflection(
     };
   }
 
-  console.log(devotionalId);
+  console.log(devotionalDataId);
 
   /**
    * Save the Reflection Entry As Text
@@ -40,8 +42,7 @@ export async function submitTextReflection(
   const record = await prisma.reflectionResponse.create({
     data: {
       // add other fields
-      userId: userId,
-      devotionalId: devotionalId,
+      devotionalId: devotionalDataId,
       response: reflectionText.trim(),
       week: week,
       day: day,

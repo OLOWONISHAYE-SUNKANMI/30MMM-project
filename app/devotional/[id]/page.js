@@ -204,7 +204,7 @@ export default function Devotional({ params }) {
 
             {/* ReflectionTextBox */}
             <ReflectionProcessingForm
-              devotionalId={devotionalId}
+              devotionalDataId={devotionalData.id}
               userId={session?.user?.id}
               week={devotionalData.week}
               day={devotionalData.day}
