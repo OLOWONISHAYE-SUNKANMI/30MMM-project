@@ -34,10 +34,6 @@ export default function Devotional({ params }) {
   const [devotionalData, setDevotionalData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // const [reflectionResponse, setReflectionResponse] = useState("");
-  // const [isCompleting, setIsCompleting] = useState(false);
-  // const [isCompleted, setIsCompleted] = useState(false);
-  // const [completionError, setCompletionError] = useState(null);
 
   /**
    * Effects and Data Fetching
@@ -203,16 +199,6 @@ export default function Devotional({ params }) {
                 />
               </div>
             </div>
-
-            {/* Completion Error Display */}
-            {completionError && (
-              <div className="mt-4 flex w-full justify-center">
-                <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
-                  <p className="font-medium">Error completing devotional:</p>
-                  <p className="text-sm">{completionError}</p>
-                </div>
-              </div>
-            )}
 
             <Divider />
 
