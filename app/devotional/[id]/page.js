@@ -188,11 +188,7 @@ export default function Devotional({ params }) {
             <Divider />
 
             {/* ReflectionTextBox */}
-            {!isCompleted ? (
-              <ReflectionResponse onSubmit={handleCompleteLesson} />
-            ) : (
-              <PostReflectionNavigationButtons />
-            )}
+            <div>ReflectionProcessingForm Placeholder</div>
           </div>
         </div>
       </div>
