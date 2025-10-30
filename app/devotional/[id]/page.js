@@ -34,10 +34,10 @@ export default function Devotional({ params }) {
   const [devotionalData, setDevotionalData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [reflectionResponse, setReflectionResponse] = useState("");
-  const [isCompleting, setIsCompleting] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [completionError, setCompletionError] = useState(null);
+  // const [reflectionResponse, setReflectionResponse] = useState("");
+  // const [isCompleting, setIsCompleting] = useState(false);
+  // const [isCompleted, setIsCompleted] = useState(false);
+  // const [completionError, setCompletionError] = useState(null);
 
   /**
    * Effects and Data Fetching
