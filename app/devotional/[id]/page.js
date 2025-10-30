@@ -250,13 +250,6 @@ export default function Devotional({ params }) {
                   reflectionQuestion={devotionalData.reflectionQuestion}
                 />
               </div>
-              <div className="wfull mt-[6vh] flex justify-center">
-                <ReflectionResponse
-                  value={reflectionResponse}
-                  onChange={handleReflectionChange}
-                  disabled={isCompleted || isCompleting}
-                />
-              </div>
             </div>
 
             {/* Completion Error Display */}
@@ -270,17 +263,6 @@ export default function Devotional({ params }) {
             )}
 
             <Divider />
-
-            <div className="mt-[2vh] flex w-full justify-center">
-              <CompleteLesson
-                devotionalData={devotionalData}
-                isCompleted={isCompleted}
-                isCompleting={isCompleting}
-                onComplete={handleCompleteLesson}
-                onReturnToDashboard={handleReturnToDashboard}
-                onGoToVideos={handleGoToVideos}
-              />
-            </div>
           </div>
         </div>
       </div>
