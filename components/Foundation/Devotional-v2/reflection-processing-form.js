@@ -10,6 +10,7 @@ function ReflectionProcessingForm({ devotionalId, userId }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
+  const isSubmitted = false;
 
   const onSubmit = async () => {
     // Client-side validation provides immediate feedback to the user
@@ -93,14 +94,16 @@ function ReflectionProcessingForm({ devotionalId, userId }) {
           className="w-full resize-none rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-black transition-all duration-200 ease-in-out placeholder:text-gray-400 hover:border-gray-400 focus:border-black focus:outline-none focus:ring-2 focus:ring-black/10 disabled:cursor-not-allowed disabled:opacity-50"
         />
 
-        <button
-          type="button"
-          onClick={onSubmit}
-          disabled={isSubmitting}
-          className="mx-auto mt-4 flex rounded-lg bg-primary-red px-6 py-3 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-primary-red focus:ring-offset-2 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {isSubmitting ? "Submitting..." : "Submit Reflection"}
-        </button>
+        {isSubmitted && (
+          <button
+            type="button"
+            onClick={onSubmit}
+            disabled={isSubmitting}
+            className="mx-auto mt-4 flex rounded-lg bg-primary-red px-6 py-3 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-primary-red focus:ring-offset-2 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {isSubmitting ? "Submitting..." : "Submit Reflection"}
+          </button>
+        )}
       </div>
     </div>
   );
