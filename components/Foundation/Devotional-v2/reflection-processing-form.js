@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { submitReflection } from "@/actions/reflection-submission";
 import PostReflectionNavigationButtons from "@/components/Foundation/Devotional-v2/post-reflection-navigation";
+import UploadVideo from "@/components/testimonial-upload/upload-video";
 
 function ReflectionProcessingForm({ devotionalId, userId }) {
   // State management remains the same - we still need to track what's happening on the client
@@ -11,6 +12,9 @@ function ReflectionProcessingForm({ devotionalId, userId }) {
   const [error, setError] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const isSubmitted = false;
+
+  // TODO : Add props for week, day, firstName, lastName to UploadVideo component
+  // pull props from devotionalData and session user data
 
   const onSubmit = async () => {
     // Client-side validation provides immediate feedback to the user
@@ -93,6 +97,8 @@ function ReflectionProcessingForm({ devotionalId, userId }) {
           placeholder="Enter your reflection..."
           className="w-full resize-none rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-black transition-all duration-200 ease-in-out placeholder:text-gray-400 hover:border-gray-400 focus:border-black focus:outline-none focus:ring-2 focus:ring-black/10 disabled:cursor-not-allowed disabled:opacity-50"
         />
+
+        <UploadVideo week={} day={} firstName={} lastName={} />
 
         {isSubmitted && (
           <button

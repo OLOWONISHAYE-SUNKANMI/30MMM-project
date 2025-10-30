@@ -1,13 +1,18 @@
 import React, { useRef, useState } from "react";
 
-function UploadVideo() {
+function UploadVideo(week, day, firstName, lastName) {
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
-  // Handle button click to trigger file input
-  const handleButtonClick = () => {
-    inputRef.current.click();
+  // Handle file selection via input
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    processFile(selectedFile);
   };
 
   // Handle file validation and preview
@@ -55,10 +60,178 @@ function UploadVideo() {
     }
   };
 
-  // Handle file selection via input
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    processFile(selectedFile);
+  // Handle button click to trigger file input
+  const handleButtonClick = () => {
+    inputRef.current.click();
+  };
+
+  // Handle form submission with progress tracking
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!week || !day || !file || !firstName || !lastName || !cohort) {
+      alert("Please add all fields to submit this form successfully");
+      return;
+    }
+
+    setIsUploading(true);
+    setUploadStatus(null);
+    setUploadProgress(0);
+
+    try {
+      // STEP 1: Get the Azure SAS URL
+      console.log("Step 1 starting, creating SAS URL...");
+      setUploadStatus({
+        success: true,
+        message: "Preparing upload...",
+        step: 1,
+        totalSteps: 3,
+      });
+
+      const fileInfo = {
+        filename: file.name,
+        contentType: file.type,
+        cohort: cohort,
+        firstName: firstName,
+        lastName: lastName,
+        week: week,
+        day: day,
+      };
+
+      const sasResponse = await fetch("/api/getVideoUploadUrl", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(fileInfo),
+      });
+
+      if (!sasResponse.ok) {
+        throw new Error("Failed to get upload URL");
+      }
+
+      const result = await sasResponse.json();
+      const sasUrl = result.uploadUrl;
+
+      // STEP 2: Upload the file with progress tracking
+      console.log("Step 1 complete, uploading video to azure...");
+      setUploadStatus({
+        success: true,
+        message: "Uploading video to Azure...",
+        step: 2,
+        totalSteps: 3,
+      });
+
+      // Create a new XMLHttpRequest to track upload progress
+      const xhr = new XMLHttpRequest();
+
+      // Create a promise that resolves when the upload is complete
+      const uploadPromise = new Promise((resolve, reject) => {
+        xhr.open("PUT", sasUrl, true);
+        xhr.setRequestHeader("x-ms-blob-type", "BlockBlob");
+        xhr.setRequestHeader("Content-Type", file.type);
+
+        // Track upload progress
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const percentComplete = Math.round(
+              (event.loaded / event.total) * 100,
+            );
+            setUploadProgress(percentComplete);
+          }
+        };
+
+        // Handle upload completion
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(xhr.response);
+          } else {
+            reject(new Error(`Upload failed with status: ${xhr.status}`));
+          }
+        };
+
+        // Handle upload error
+        xhr.onerror = () => {
+          reject(new Error("Network error occurred during upload"));
+        };
+
+        // Start the upload
+        xhr.send(file);
+      });
+
+      await uploadPromise;
+      setUploadProgress(100);
+
+      // STEP 3: Store metadata
+      console.log("Step 2 complete, storing metadata to mongodb...");
+      setUploadStatus({
+        success: true,
+        message: "Saving metadata...",
+        step: 3,
+        totalSteps: 3,
+      });
+
+      const metadataResponse = await fetch("/api/store-video-metadata", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cohort,
+          firstName,
+          lastName,
+          week,
+          day,
+          fileName: file.name,
+          fileType: file.type,
+          blobUrl: sasUrl,
+        }),
+      });
+
+      if (!metadataResponse.ok) {
+        console.warn("Metadata storage issue, but video upload was successful");
+      }
+
+      // Success!
+      console.log("Step 3 complete, success");
+      setUploadStatus({
+        success: true,
+        message: "Video uploaded successfully!",
+        step: 3,
+        totalSteps: 3,
+        completed: true,
+      });
+
+      // Reset form after successful upload
+      setCohort("");
+      setFirstName("");
+      setLastName("");
+      setWeek("");
+      setDay("");
+      setFile(null);
+      setPreviewUrl(null);
+    } catch (error) {
+      console.error("Upload error:", error);
+      setUploadStatus({
+        success: false,
+        message: `Upload failed: ${error.message}`,
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  // Handle reset of the form
+  const handleReset = () => {
+    setCohort("");
+    setFirstName("");
+    setLastName("");
+    setWeek("");
+    setDay("");
+    setFile(null);
+    setPreviewUrl(null);
+    setUploadStatus(null);
+    setUploadProgress(0);
   };
 
   return (
@@ -142,6 +315,140 @@ function UploadVideo() {
           </div>
         </div>
       </div>
+
+      {/* Preview URL component */}
+      {previewUrl && (
+        <div className="mb-6">
+          <div className="mb-2 flex items-center justify-between">
+            <h3 className="font-medium text-description-gray">Preview:</h3>
+            <button
+              type="button"
+              onClick={() => {
+                setFile(null);
+                setPreviewUrl(null);
+              }}
+              className="flex items-center text-sm text-red-600 hover:text-red-800"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mr-1"
+              >
+                <line
+                  x1="18"
+                  y1="6"
+                  x2="6"
+                  y2="18"
+                ></line>
+                <line
+                  x1="6"
+                  y1="6"
+                  x2="18"
+                  y2="18"
+                ></line>
+              </svg>
+              Remove Video
+            </button>
+          </div>
+          <div className="overflow-hidden rounded-lg">
+            <video
+              controls
+              className="h-auto w-full"
+            >
+              <source
+                src={previewUrl}
+                type={file.type}
+              />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      )}
+
+      {/* Submit Button */}
+      <div className="flex justify-center">
+        <button
+          type="submit"
+          disabled={
+            !week ||
+            !day ||
+            !file ||
+            !firstName ||
+            !lastName ||
+            !cohort ||
+            isUploading
+          }
+          className={`rounded-lg px-6 py-2 text-white transition-colors ${
+            !week ||
+            !day ||
+            !file ||
+            !firstName ||
+            !lastName ||
+            !cohort ||
+            isUploading
+              ? "cursor-not-allowed bg-gray-400"
+              : "bg-primaryred hover:bg-primaryred-800"
+          }`}
+        >
+          {isUploading ? "Uploading..." : "Upload Video"}
+        </button>
+      </div>
+
+      {/* Progress Tracking */}
+      {isUploading && (
+        <div className="mt-6 text-center">
+          <div className="relative pt-1">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="inline-block text-xs font-semibold text-description-gray">
+                  {uploadStatus?.message || "Uploading..."}
+                </span>
+              </div>
+              <div className="text-right">
+                <span className="inline-block text-xs font-semibold text-description-gray">
+                  {uploadProgress}%
+                </span>
+              </div>
+            </div>
+            <div className="mb-4 mt-2 flex h-2 overflow-hidden rounded bg-gray-200 text-xs">
+              <div
+                style={{ width: `${uploadProgress}%` }}
+                className="flex flex-col justify-center whitespace-nowrap bg-primaryred text-center text-white shadow-none"
+              ></div>
+            </div>
+            <div className="flex items-center justify-between text-xs text-description-gray">
+              <div>
+                {uploadStatus?.step && uploadStatus?.totalSteps && (
+                  <span>
+                    Step {uploadStatus.step} of {uploadStatus.totalSteps}
+                  </span>
+                )}
+              </div>
+              <div>
+                {file && (
+                  <span>
+                    {Math.round((file.size / (1024 * 1024)) * 10) / 10} MB
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Success Message */}
+      {uploadStatus && !uploadStatus.success && (
+        <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-center text-red-700">
+          <p>{uploadStatus.message}</p>
+        </div>
+      )}
     </div>
   );
 }
