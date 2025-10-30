@@ -73,15 +73,6 @@ export default function Devotional({ params }) {
     console.log("Submitting reflection:", reflectionResponse);
   };
 
-  // Handle navigation actions
-  const handleReturnToDashboard = () => {
-    router.push("/dashboard");
-  };
-
-  const handleGoToVideos = () => {
-    router.push("/dashboard/videos");
-  };
-
   // Loading states
   if (status === "loading" || loading) {
     return (
