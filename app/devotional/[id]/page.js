@@ -4,11 +4,11 @@
 
 import React, { use, useEffect, useState } from "react";
 import { getDevotionalById } from "@/actions/devotional";
-import { completeDevotional } from "@/actions/user-progress";
 import { useDashboardContext } from "@/contexts/dashboard/dashboard-provider";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Divider from "@/components/common/Divider";
+import PostReflectionNavigationButtons from "@/components/Foundation/Devotional-v2/post-reflection-navigation";
 import ReflectionResponse from "@/components/Foundation/Devotional-v2/text-area";
 import MainImage from "@/components/Foundation/MainImage";
 import MainLesson from "@/components/Foundation/MainLesson";
@@ -200,7 +200,7 @@ export default function Devotional({ params }) {
             {!isCompleted ? (
               <ReflectionResponse onSubmit={handleCompleteLesson} />
             ) : (
-              <div>Placeholder for submitted state</div>
+              <PostReflectionNavigationButtons />
             )}
           </div>
         </div>
