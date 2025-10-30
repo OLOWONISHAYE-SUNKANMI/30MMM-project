@@ -1,11 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { submitReflection } from "@/actions/reflection-submission";
+import { submitTextReflection } from "@/actions/reflection-submission";
 import PostReflectionNavigationButtons from "@/components/Foundation/Devotional-v2/post-reflection-navigation";
 import UploadVideo from "@/components/testimonial-upload/upload-video";
 
-function ReflectionProcessingForm({ devotionalId, userId }) {
+function ReflectionProcessingForm({
+  devotionalId,
+  userId,
+  week,
+  day,
+  firstName,
+  lastName,
+}) {
   // State management remains the same - we still need to track what's happening on the client
   const [reflectionText, setReflectionText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -14,12 +21,9 @@ function ReflectionProcessingForm({ devotionalId, userId }) {
   const isSubmitted = false;
   const [isVideo, setIsVideo] = useState(true);
 
-  // TODO : Add props for week, day, firstName, lastName to UploadVideo component
   // pull props from devotionalData and session user data
 
-  const onSubmit = async () => {
-    // Client-side validation provides immediate feedback to the user
-    // This happens before we even call the server, making the UX snappier
+  const onTextSubmit = async () => {
     if (!reflectionText.trim()) {
       setError("Please enter your reflection before submitting.");
       return;
@@ -33,10 +37,12 @@ function ReflectionProcessingForm({ devotionalId, userId }) {
       // Here's where the magic happens - we call the Server Action directly
       // It looks like a regular function call, but it's actually making a request
       // to the server behind the scenes. Next.js handles all the networking for us.
-      const result = await submitReflection(
+      const result = await submitTextReflection(
         userId,
         devotionalId,
         reflectionText,
+        week,
+        day,
       );
 
       // Check if the operation was successful
@@ -132,21 +138,33 @@ function ReflectionProcessingForm({ devotionalId, userId }) {
         </div>
 
         {!isVideo ? (
-          <textarea
-            value={reflectionText}
-            onChange={(e) => setReflectionText(e.target.value)}
-            rows={10}
-            required={true}
-            disabled={isSubmitting}
-            placeholder="Enter your reflection..."
-            className="w-full resize-none rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-gray-900 transition-all duration-200 ease-in-out placeholder:text-gray-400 hover:border-gray-400 focus:border-primary-red focus:outline-none focus:ring-2 focus:ring-primary-red focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-          />
+          <div>
+            <textarea
+              value={reflectionText}
+              onChange={(e) => setReflectionText(e.target.value)}
+              rows={10}
+              required={true}
+              disabled={isSubmitting}
+              placeholder="Enter your reflection..."
+              className="w-full resize-none rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-gray-900 transition-all duration-200 ease-in-out placeholder:text-gray-400 hover:border-gray-400 focus:border-primary-red focus:outline-none focus:ring-2 focus:ring-primary-red focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            />
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                onClick={onTextSubmit}
+                className={`"cursor-not-allowed bg-gray-400" "bg-primaryred hover:bg-primaryred-800" rounded-lg bg-primary-red px-6 py-2 text-white transition-colors`}
+              >
+                Save Text Reflection
+              </button>
+            </div>
+          </div>
         ) : (
+          // TODO : Add props for week, day, firstName, lastName to UploadVideo component
           <UploadVideo
-            week={1}
-            day={1}
-            firstName="test"
-            lastName="user"
+            week={week}
+            day={day}
+            firstName={firstName}
+            lastName={lastName}
           />
         )}
 

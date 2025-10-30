@@ -203,7 +203,14 @@ export default function Devotional({ params }) {
             <Divider />
 
             {/* ReflectionTextBox */}
-            <ReflectionProcessingForm />
+            <ReflectionProcessingForm
+              devotionalId={devotionalId}
+              userId={session?.user?.id}
+              week={devotionalData.week}
+              day={devotionalData.day}
+              firstName={session?.user?.firstName}
+              lastName={session?.user?.lastName}
+            />
           </div>
         </div>
       </div>
