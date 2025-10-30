@@ -9,13 +9,12 @@ import { useDashboardContext } from "@/contexts/dashboard/dashboard-provider";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Divider from "@/components/common/Divider";
-import CompleteLesson from "@/components/Foundation/CompleteLesson";
+import ReflectionResponse from "@/components/Foundation/Devotional-v2/text-area";
 import MainImage from "@/components/Foundation/MainImage";
 import MainLesson from "@/components/Foundation/MainLesson";
 import Quotes from "@/components/Foundation/Quotes";
 import ReadingTime from "@/components/Foundation/ReadingTime";
 import ReflectionBox from "@/components/Foundation/ReflectionBox";
-import ReflectionResponse from "@/components/Foundation/ReflectionResponse";
 import ScripturesSection from "@/components/Foundation/ScripturesSection";
 import SubTitle from "@/components/Foundation/SubTitle";
 import Title from "@/components/Foundation/Title";
@@ -265,10 +264,7 @@ export default function Devotional({ params }) {
             <Divider />
 
             {/* ReflectionTextBox */}
-            <div>Reflection Text Placeholder</div>
-
-            {/* Completion button */}
-            <div> Completion button container placeholder</div>
+            <ReflectionResponse />
           </div>
         </div>
       </div>
