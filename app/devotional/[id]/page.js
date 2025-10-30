@@ -37,16 +37,9 @@ export default function Devotional({ params }) {
   const [completionError, setCompletionError] = useState(null);
 
   // Dashboard context for progress management
-  const { userProgress, refreshProgress } = useDashboardContext();
+  const { userProgress } = useDashboardContext();
 
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (status === "loading") return; // Still loading
-    if (!session) {
-      router.push("/login");
-      return;
-    }
-  }, [session, status, router]);
+  const devotionalId = unwrappedParams.id;
 
   // Load devotional data
   useEffect(() => {
@@ -55,7 +48,7 @@ export default function Devotional({ params }) {
         setLoading(true);
         setError(null);
 
-        const result = await getDevotionalById(unwrappedParams.id);
+        const result = await getDevotionalById(devotionalId);
 
         if (!result.success) {
           throw new Error(result.error);
@@ -70,74 +63,14 @@ export default function Devotional({ params }) {
       }
     }
 
-    if (unwrappedParams.id && session) {
+    if (devotionalId && session) {
       loadDevotional();
     }
-  }, [unwrappedParams.id, session]);
-
-  // Check if this devotional is already completed
-  useEffect(() => {
-    if (userProgress && devotionalData) {
-      const devotionalNumber =
-        (devotionalData.week - 1) * 7 + devotionalData.day;
-      const isAlreadyCompleted =
-        userProgress.completedDevotionalIds?.includes(devotionalNumber) ||
-        false;
-
-      // Only update if different to prevent unnecessary re-renders
-      if (isAlreadyCompleted !== isCompleted) {
-        setIsCompleted(isAlreadyCompleted);
-      }
-    }
-  }, [userProgress, devotionalData, isCompleted]);
-
-  // Handle reflection response changes
-  const handleReflectionChange = (value) => {
-    setReflectionResponse(value);
-  };
+  }, [devotionalId, session]);
 
   // Handle devotional completion
   const handleCompleteLesson = async () => {
-    if (!devotionalData || !session?.user?.id) {
-      setCompletionError("Missing required data for completion");
-      return;
-    }
-
-    setIsCompleting(true);
-    setCompletionError(null);
-
-    try {
-      // Call the completeDevotional server action
-
-      const result = await completeDevotional(
-        session.user.id,
-        devotionalData.id,
-        devotionalData.week,
-        devotionalData.day,
-        reflectionResponse.trim() || undefined,
-      );
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
-      // Update local state to show completion
-
-      setIsCompleted(true);
-      setIsCompleting(false);
-      // Keep isCompleting as true until user navigates away
-      // This prevents the flash of buttons
-
-      // Refresh progress in background
-      refreshProgress().catch(console.error);
-
-      console.log("Devotional completed successfully");
-    } catch (err) {
-      console.error("Error completing devotional:", err);
-      setCompletionError(err.message);
-      // Only reset completing state on error
-      setIsCompleting(false);
-    }
+    console.log("Submitting reflection:", reflectionResponse);
   };
 
   // Handle navigation actions
@@ -264,7 +197,11 @@ export default function Devotional({ params }) {
             <Divider />
 
             {/* ReflectionTextBox */}
-            <ReflectionResponse />
+            {!isCompleted ? (
+              <ReflectionResponse onSubmit={handleCompleteLesson} />
+            ) : (
+              <div>Placeholder for submitted state</div>
+            )}
           </div>
         </div>
       </div>
