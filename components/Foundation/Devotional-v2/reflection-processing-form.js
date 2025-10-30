@@ -12,6 +12,7 @@ function ReflectionProcessingForm({ devotionalId, userId }) {
   const [error, setError] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const isSubmitted = false;
+  const [isVideo, setIsVideo] = useState(true);
 
   // TODO : Add props for week, day, firstName, lastName to UploadVideo component
   // pull props from devotionalData and session user data
@@ -84,28 +85,77 @@ function ReflectionProcessingForm({ devotionalId, userId }) {
       )}
 
       <div className="w-full">
-        <label className="mb-2 block text-sm font-medium text-black">
-          Your Response
+        <label className="mb-4 block text-lg font-semibold text-gray-900">
+          Your Response: Text or Video
         </label>
 
-        <textarea
-          value={reflectionText}
-          onChange={(e) => setReflectionText(e.target.value)}
-          rows={10}
-          required={true}
-          disabled={isSubmitting}
-          placeholder="Enter your reflection..."
-          className="w-full resize-none rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-black transition-all duration-200 ease-in-out placeholder:text-gray-400 hover:border-gray-400 focus:border-black focus:outline-none focus:ring-2 focus:ring-black/10 disabled:cursor-not-allowed disabled:opacity-50"
-        />
+        <button
+          onClick={() => setIsVideo(!isVideo)}
+          className="relative h-14 w-80 rounded-lg border-2 border-gray-300 bg-white p-1 shadow-sm transition-all duration-300 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-red focus:ring-offset-2"
+        >
+          {/* Sliding background */}
+          <div
+            className={`absolute top-1 h-11 w-[calc(50%-0.25rem)] rounded-md bg-primary-red shadow-sm transition-all duration-300 ease-in-out ${
+              isVideo ? "left-[calc(50%+0.125rem)]" : "left-1"
+            }`}
+          />
 
-        <UploadVideo week={} day={} firstName={} lastName={} />
+          {/* Text option */}
+          <div
+            className={`relative z-10 flex h-11 w-1/2 items-center justify-center transition-all duration-200 ${
+              !isVideo
+                ? "font-semibold text-white"
+                : "font-medium text-gray-600"
+            }`}
+          >
+            <span className="text-sm">📝 Text</span>
+          </div>
+
+          {/* Video option */}
+          <div
+            className={`absolute right-1 top-1 z-10 flex h-11 w-[calc(50%-0.25rem)] items-center justify-center transition-all duration-200 ${
+              isVideo ? "font-semibold text-white" : "font-medium text-gray-600"
+            }`}
+          >
+            <span className="text-sm">🎥 Video</span>
+          </div>
+        </button>
+
+        {/* Status display */}
+        <div className="mb-6 mt-4">
+          <p className="text-sm text-gray-600">
+            Selected:{" "}
+            <span className="font-semibold text-gray-900">
+              {isVideo ? "Video" : "Text"} Submission
+            </span>
+          </p>
+        </div>
+
+        {!isVideo ? (
+          <textarea
+            value={reflectionText}
+            onChange={(e) => setReflectionText(e.target.value)}
+            rows={10}
+            required={true}
+            disabled={isSubmitting}
+            placeholder="Enter your reflection..."
+            className="w-full resize-none rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-gray-900 transition-all duration-200 ease-in-out placeholder:text-gray-400 hover:border-gray-400 focus:border-primary-red focus:outline-none focus:ring-2 focus:ring-primary-red focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          />
+        ) : (
+          <UploadVideo
+            week={1}
+            day={1}
+            firstName="test"
+            lastName="user"
+          />
+        )}
 
         {isSubmitted && (
           <button
             type="button"
             onClick={onSubmit}
             disabled={isSubmitting}
-            className="mx-auto mt-4 flex rounded-lg bg-primary-red px-6 py-3 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-primary-red focus:ring-offset-2 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            className="mx-auto mt-6 flex rounded-lg bg-primary-red px-6 py-3 font-semibold text-white transition-all duration-200 ease-in-out hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-primary-red focus:ring-offset-2 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSubmitting ? "Submitting..." : "Submit Reflection"}
           </button>
