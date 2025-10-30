@@ -263,6 +263,12 @@ export default function Devotional({ params }) {
             )}
 
             <Divider />
+
+            {/* ReflectionTextBox */}
+            <div>Reflection Text Placeholder</div>
+
+            {/* Completion button */}
+            <div> Completion button container placeholder</div>
           </div>
         </div>
       </div>
