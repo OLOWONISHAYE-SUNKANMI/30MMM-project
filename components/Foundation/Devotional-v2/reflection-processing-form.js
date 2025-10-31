@@ -1,7 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { submitTextReflection } from "@/actions/reflection-submission";
+import {
+  submitTextReflection,
+  updateUserProgress,
+} from "@/actions/reflection-submission";
 import PostReflectionNavigationButtons from "@/components/Foundation/Devotional-v2/post-reflection-navigation";
 import UploadVideo from "@/components/testimonial-upload/upload-video";
 
@@ -35,12 +38,7 @@ function ReflectionProcessingForm({
     setError(null);
     setIsSubmitting(true);
 
-    console.log("onTextSubmit: Calling submitTextReflection Server Action");
-
-    console.log("userId:", userId);
-    console.log("devotionalDataId:", devotionalDataId);
-    console.log("week:", week);
-    console.log("day:", day);
+    console.log("onTextSubmit: Calling submitTextReflection Server Action...");
 
     try {
       // Here's where the magic happens - we call the Server Action directly
@@ -60,7 +58,6 @@ function ReflectionProcessingForm({
         throw new Error(result.error);
       }
 
-      // If we get here, everything worked! Show the success state
       setIsSuccess(true);
     } catch (err) {
       // If anything goes wrong, capture the error message

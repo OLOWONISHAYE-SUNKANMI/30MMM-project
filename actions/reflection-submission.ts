@@ -22,19 +22,21 @@ export async function submitTextReflection(
   week,
   day,
 ) {
-  console.log(devotionalDataId, reflectionText, week, day);
-
   // Input validation on the server side is critical for security
   // Never trust that client-side validation is enough
-  if (!devotionalDataId || !reflectionText?.trim()) {
+  if (
+    !userId ||
+    !week ||
+    !day ||
+    !devotionalDataId ||
+    !reflectionText?.trim()
+  ) {
     return {
       success: false,
       error:
         "Missing required fields. Please provide all necessary information.",
     };
   }
-
-  console.log(devotionalDataId);
 
   /**
    * Save the Reflection Entry As Text
@@ -52,34 +54,27 @@ export async function submitTextReflection(
     },
   });
 
-  /**
-   * Fetch the user's current progress
-   */
-
-  try {
-    const record = await prisma.userProgress.findUnique({
-      where: {
-        userId: userId,
-      },
-    });
-
-    if (!record) {
-      return {
-        success: false,
-        error: "User progress record not found.",
-      };
-    }
-    console.log("submitReflection - userProgress:", record);
-
-    return {
-      success: true,
-      data: record,
-    };
-  } catch (error) {
-    console.error("Error in submitReflection:", error);
+  if (!record) {
     return {
       success: false,
-      error: "An unexpected error occurred. Please try again later.",
+      error: "Failed to save reflection. Please try again.",
     };
   }
+  console.log("Text Reflection Submitted, moving to update user progress...");
+
+  /**
+   * Update weeek Progress by (if day 7, move to day 1 of next week)
+   */
+
+  /**
+   * Update Curent Day to next day (if day 7, move to day 1 of next week)
+   */
+
+  /**
+   * Return Block
+   */
+  return {
+    success: true,
+    data: record,
+  };
 }
