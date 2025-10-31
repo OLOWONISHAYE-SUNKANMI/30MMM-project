@@ -18,6 +18,7 @@ const prisma = new PrismaClient();
 export async function submitTextReflection(
   userId,
   devotionalDataId,
+  devotionalNumberId,
   reflectionText,
   week,
   day,
@@ -44,6 +45,8 @@ export async function submitTextReflection(
     const nextWeek = isLastDay ? week + 1 : week;
     const nextDay = isLastDay ? 1 : day + 1;
 
+    console.log("calculated params: ", isLastDay, nextWeek, nextDay);
+
     // Execute both queries as a transaction
     const [record, updatedUser] = await prisma.$transaction([
       /**
@@ -66,7 +69,7 @@ export async function submitTextReflection(
        * Update current week and day (if day 7, move to day 1 of next week)
        */
       prisma.userProgress.update({
-        where: { id: userId },
+        where: { userId: userId },
         data: {
           currentDay: isLastDay ? 1 : { increment: 1 },
           currentWeek: isLastDay ? { increment: 1 } : undefined,
@@ -89,6 +92,7 @@ export async function submitTextReflection(
         userProgress: {
           currentWeek: updatedUser.currentWeek,
           currentDay: updatedUser.currentDay,
+          completedDevotionalIds: { push: devotionalNumberId },
         },
       },
     };
