@@ -38,43 +38,65 @@ export async function submitTextReflection(
     };
   }
 
-  /**
-   * Save the Reflection Entry As Text
-   */
-  const record = await prisma.reflectionResponse.create({
-    data: {
-      // add other fields
-      devotionalId: devotionalDataId,
-      response: reflectionText.trim(),
-      week: week,
-      day: day,
-      user: {
-        connect: { id: userId },
-      },
-    },
-  });
+  try {
+    // Calculate next week and day
+    const isLastDay = day === 7;
+    const nextWeek = isLastDay ? week + 1 : week;
+    const nextDay = isLastDay ? 1 : day + 1;
 
-  if (!record) {
+    // Execute both queries as a transaction
+    const [record, updatedUser] = await prisma.$transaction([
+      /**
+       * Save the Reflection Entry As Text
+       */
+      prisma.reflectionResponse.create({
+        data: {
+          devotionalId: devotionalDataId,
+          response: reflectionText.trim(),
+          week: week,
+          day: day,
+          user: {
+            connect: { id: userId },
+          },
+        },
+      }),
+
+      /**
+       * Update User Progress
+       * Update current week and day (if day 7, move to day 1 of next week)
+       */
+      prisma.userProgress.update({
+        where: { id: userId },
+        data: {
+          currentDay: isLastDay ? 1 : { increment: 1 },
+          currentWeek: isLastDay ? { increment: 1 } : undefined,
+        },
+      }),
+    ]);
+
+    console.log(
+      "Text Reflection Submitted and user progress updated:",
+      `Week ${nextWeek}, Day ${nextDay}`,
+    );
+
+    /**
+     * Return Block
+     */
+    return {
+      success: true,
+      data: {
+        reflection: record,
+        userProgress: {
+          currentWeek: updatedUser.currentWeek,
+          currentDay: updatedUser.currentDay,
+        },
+      },
+    };
+  } catch (error) {
+    console.error("Transaction failed:", error);
     return {
       success: false,
-      error: "Failed to save reflection. Please try again.",
+      error: "Failed to save reflection and update progress. Please try again.",
     };
   }
-  console.log("Text Reflection Submitted, moving to update user progress...");
-
-  /**
-   * Update weeek Progress by (if day 7, move to day 1 of next week)
-   */
-
-  /**
-   * Update Curent Day to next day (if day 7, move to day 1 of next week)
-   */
-
-  /**
-   * Return Block
-   */
-  return {
-    success: true,
-    data: record,
-  };
 }

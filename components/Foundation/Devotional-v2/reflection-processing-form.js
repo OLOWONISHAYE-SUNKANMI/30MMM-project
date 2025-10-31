@@ -1,10 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  submitTextReflection,
-  updateUserProgress,
-} from "@/actions/reflection-submission";
+import { submitTextReflection} from "@/actions/reflection-submission";
 import PostReflectionNavigationButtons from "@/components/Foundation/Devotional-v2/post-reflection-navigation";
 import UploadVideo from "@/components/testimonial-upload/upload-video";
 

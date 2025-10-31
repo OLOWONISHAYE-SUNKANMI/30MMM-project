@@ -196,6 +196,7 @@ type Scripture {
 
 model Devotional {
   id                 String      @id @default(auto()) @map("_id") @db.ObjectId
+  numberId           Int?
   week               Int
   day                Int
   weekTitle          String
