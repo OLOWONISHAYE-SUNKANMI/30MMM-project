@@ -65,11 +65,14 @@ export default function Devotional({ params }) {
   }, [devotionalId, session]);
 
   /**
-   * Event Handlers
+   * Troubleshooting Logs
    */
-  const handleCompleteLesson = async () => {
-    console.log("Submitting reflection:", reflectionResponse);
-  };
+  useEffect(() => {
+    if (devotionalData) {
+      console.log("Devotional data updated:", devotionalData);
+      console.log("Devotional ID:", devotionalData.numberId);
+    }
+  }, [devotionalData]); // This runs whenever devotionalData changes
 
   /**
    * Loading State
@@ -205,7 +208,7 @@ export default function Devotional({ params }) {
             {/* ReflectionTextBox */}
             <ReflectionProcessingForm
               devotionalDataId={devotionalData.id}
-              devotionalNumberId={devotionalData.devotionalNumberId}
+              devotionalNumberId={devotionalData.numberId}
               userId={session?.user?.id}
               week={devotionalData.week}
               day={devotionalData.day}

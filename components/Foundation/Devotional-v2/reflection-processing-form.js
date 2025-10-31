@@ -42,6 +42,15 @@ function ReflectionProcessingForm({
       // Here's where the magic happens - we call the Server Action directly
       // It looks like a regular function call, but it's actually making a request
       // to the server behind the scenes. Next.js handles all the networking for us.
+      console.log("params: ", {
+        userId,
+        devotionalNumberId,
+        devotionalDataId,
+        reflectionText,
+        week,
+        day,
+      });
+
       const result = await submitTextReflection(
         userId,
         devotionalNumberId,

@@ -29,6 +29,7 @@ export async function getDevotionalById(id: string) {
         content: true,
         createdAt: true,
         updatedAt: true,
+        numberId: true,
       },
     });
 

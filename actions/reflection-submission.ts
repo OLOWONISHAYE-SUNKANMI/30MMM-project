@@ -25,6 +25,15 @@ export async function submitTextReflection(
 ) {
   // Input validation on the server side is critical for security
   // Never trust that client-side validation is enough
+  console.log("submitTextReflection called with:", {
+    userId,
+    devotionalDataId,
+    devotionalNumberId,
+    reflectionText,
+    week,
+    day,
+  });
+
   if (
     !userId ||
     !week ||
