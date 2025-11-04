@@ -190,8 +190,8 @@ type Scripture {
   text        String
   book        String
   chapter     String
-  verse       String
-  translation String
+  verse       String?
+  translation String?
 }
 
 model Devotional {
@@ -206,7 +206,6 @@ model Devotional {
   reflectionQuestion String? // Add this field that's in your MongoDB
   videoId            String? // Add this field that's in your MongoDB
   Scriptures         Scripture[] // Array of Scripture objects
-  content            String?
   createdAt          DateTime    @default(now())
   updatedAt          DateTime    @updatedAt
 

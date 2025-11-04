@@ -80,8 +80,10 @@
  */
 
 import { resolve } from "path";
+import prisma from "@/db";
+import { DevotionalData } from "@/sample-data/DevotionalData";
 import { config } from "dotenv";
-import { PrismaClient } from "../../generated/client/index.js";
+import { Devotional } from "../../generated/client/index.js";
 
 // Load environment variables
 config({ path: resolve(process.cwd(), ".env") });
@@ -92,87 +94,7 @@ if (!process.env.DATABASE_URL) {
   process.exit(1);
 }
 
-const prisma = new PrismaClient();
-
-// Type definition for new devotional data
-interface NewDevotional {
-  week: number;
-  day: number;
-  weekTitle: string;
-  dayTitle: string;
-  daySubTitle?: string;
-  Scriptures: Array<{
-    text: string;
-    book: string;
-    chapter: string;
-    verse: string;
-    translation: string;
-  }>;
-  content: string;
-}
-
-// Example devotionals to add
-const newDevotionals: NewDevotional[] = [
-  {
-    week: 1,
-    day: 1,
-    weekTitle: "Week 1: Foundation",
-    dayTitle: "Understanding God's Love",
-    daySubTitle: "The Greatest Gift",
-    Scriptures: [
-      {
-        text: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.",
-        book: "John",
-        chapter: "3",
-        verse: "16",
-        translation: "NIV",
-      },
-      {
-        text: "But God demonstrates his own love for us in this: While we were still sinners, Christ died for us.",
-        book: "Romans",
-        chapter: "5",
-        verse: "8",
-        translation: "NIV",
-      },
-    ],
-    content: `God's love is the foundation of everything we believe as Christians. It's not based on our performance or worthiness, but on His character and grace.
-
-In today's passage, we see the incredible depth of God's love demonstrated through the sacrifice of His Son. This wasn't just any gift - it was the ultimate expression of love that cost God everything.
-
-Take time today to reflect on what it means that God loves you personally. His love isn't distant or theoretical - it's intimate, powerful, and transformative.
-
-**Reflection Questions:**
-- How does knowing God's love change the way you see yourself?
-- In what ways can you respond to God's love today?
-- Who in your life needs to hear about God's love?`,
-  },
-  {
-    week: 1,
-    day: 2,
-    weekTitle: "Week 1: Foundation",
-    dayTitle: "Walking in Faith",
-    daySubTitle: "Trust and Obedience",
-    Scriptures: [
-      {
-        text: "Now faith is confidence in what we hope for and assurance about what we do not see.",
-        book: "Hebrews",
-        chapter: "11",
-        verse: "1",
-        translation: "NIV",
-      },
-    ],
-    content: `Faith is not blind belief - it's confident trust in God's character and promises. Today we explore what it means to walk by faith rather than by sight.
-
-The journey of faith often requires us to step into the unknown, trusting that God is faithful even when we can't see the full picture. This kind of faith is built through relationship and experience with God.
-
-**Key Points:**
-- Faith grows through testing and experience
-- God's faithfulness is the foundation of our faith
-- Walking in faith requires daily surrender
-
-Take time today to identify areas where God is calling you to trust Him more deeply.`,
-  },
-];
+const newDevotionals = DevotionalData; // Replace with new Devotionals as needed
 
 /**
  * Add new devotionals to the database
@@ -206,13 +128,16 @@ async function addDevotionals() {
         // Create new devotional
         const newDevotional = await prisma.devotional.create({
           data: {
+            numberId: devotionalData.numberId,
             week: devotionalData.week,
             day: devotionalData.day,
             weekTitle: devotionalData.weekTitle,
             dayTitle: devotionalData.dayTitle,
             daySubTitle: devotionalData.daySubTitle || null,
-            Scriptures: devotionalData.Scriptures,
-            content: devotionalData.content,
+            devotionText: devotionalData.devotionText,
+            reflectionQuestion: devotionalData.reflectionQuestion || null,
+            videoId: devotionalData.videoId || null,
+            Scriptures: devotionalData.Scriptures || null,
           },
         });
 
@@ -289,7 +214,7 @@ async function updateDevotionalScriptures(
 /**
  * Batch update devotionals from a JSON file or array
  */
-async function batchUpdateFromJSON(devotionalsArray: NewDevotional[]) {
+async function batchUpdateFromJSON(devotionalsArray: Devotional[]) {
   console.log(
     `\n📦 Batch updating ${devotionalsArray.length} devotionals...\n`,
   );
