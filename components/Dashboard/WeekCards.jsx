@@ -1,11 +1,6 @@
 import WeekCard from "./WeekCard";
 
 export default function WeekCards({ userProgress, devotionals }) {
-  console.log("WeekCards - Received props:", {
-    userProgress,
-    devotionalsCount: devotionals?.length || 0,
-  });
-
   // Check if devotionals is available and is an array
   if (!devotionals || !Array.isArray(devotionals)) {
     console.log("WeekCards - No devotionals available or not an array");
@@ -20,62 +15,78 @@ export default function WeekCards({ userProgress, devotionals }) {
     return acc;
   }, {});
 
-  console.log("WeekCards - Week titles:", weekTitles);
+  function getProgressForWeek(weekNumber, currentDay, daysPerWeek = 7) {
+    const firstDayOfWeek = (weekNumber - 1) * daysPerWeek + 1;
+    const lastDayOfWeek = weekNumber * daysPerWeek;
 
-  // Get all weeks (1-5) from the devotionals
-  const weekNumbers = Object.keys(weekTitles).map(Number).sort();
-  console.log("WeekCards - Week numbers:", weekNumbers);
+    let daysCompleted;
+    let status;
 
-  const calculateProgress = (weekNum) => {
-    if (!userProgress) {
-      console.log(`WeekCards - No user progress for week ${weekNum}`);
-      return 0;
+    if (currentDay < firstDayOfWeek) {
+      daysCompleted = 0;
+      status = "Upcoming";
+    } else if (currentDay >= lastDayOfWeek) {
+      daysCompleted = daysPerWeek;
+      status = "Completed";
+    } else {
+      daysCompleted = currentDay - firstDayOfWeek + 1;
+      status = "In Progress";
     }
 
-    // Get completed days for this specific week from userProgress
-    const weekKey = `week${weekNum}Completed`;
-    const daysCompleted = userProgress[weekKey] || 0;
+    const percentComplete = Math.round((daysCompleted / daysPerWeek) * 100);
 
-    console.log(`WeekCards - Week ${weekNum}: ${daysCompleted} days completed`);
+    return {
+      weekNumber: weekNumber,
+      daysCompleted: daysCompleted,
+      totalDays: daysPerWeek,
+      percentComplete: percentComplete,
+      status: status,
+      isComplete: status === "Completed",
+      isCurrent: status === "In Progress",
+      isUpcoming: status === "Upcoming",
+    };
+  }
 
-    // Calculate percentage (assuming 7 days per week)
-    return Math.round((daysCompleted / 7) * 100);
-  };
+  // Generate the progress for all 5 weeks based on the current day
+  const totalWeeks = 5;
+  const daysPerWeek = 7;
 
-  const getWeekStatus = (weekNum) => {
-    const progress = calculateProgress(weekNum);
+  const currentDay = userProgress?.currentDay - 1 || 0;
 
-    if (progress === 100) return "Completed";
-    if (progress > 0) return "In Progress";
+  // This creates an array with 5 week objects, indexed 0-4
+  // weekProgress[0] = week 1 data, weekProgress[1] = week 2 data, etc.
+  const weekProgress = Array.from({ length: totalWeeks }, (_, index) => {
+    const weekNumber = index + 1;
+    return getProgressForWeek(weekNumber, currentDay, daysPerWeek);
+  });
 
-    // Check if this week is upcoming based on current week
-    if (userProgress && weekNum > userProgress.currentWeek) {
-      return "Upcoming";
-    }
-
-    return "Not Started";
-  };
+  console.log("WeekCards - Week Progress Data:", weekProgress);
 
   return (
     <div className="flex w-full flex-row flex-wrap justify-center gap-3 py-3 md:gap-5">
-      {weekNumbers.map((weekNum) => {
-        const status = getWeekStatus(weekNum);
-        const progress = `${calculateProgress(weekNum)}%`;
+      {/* Map over weeks 1-5 to render each WeekCard */}
+      {weekProgress.map((week) => {
+        // Now 'week' is a single week object with all the calculated data
+        // week.weekNumber tells us which week this is (1, 2, 3, 4, or 5)
+        // We use that to look up the correct title from weekTitles
 
-        console.log(`WeekCards - Rendering week ${weekNum}:`, {
-          title: weekTitles[weekNum],
-          status,
-          progress,
+        console.log(`WeekCards - Rendering week ${week.weekNumber}:`, {
+          title: weekTitles[week.weekNumber],
+          status: week.status,
+          progress: week.percentComplete,
         });
 
         return (
           <WeekCard
-            key={weekNum}
-            week={weekNum}
-            title={weekTitles[weekNum]}
-            status={status}
-            progress={progress}
+            // Use weekNumber as the key since it's unique for each week
+            key={week.weekNumber}
+            week={week.weekNumber}
+            // Look up the title using the week number
+            title={weekTitles[week.weekNumber]}
+            status={week.status}
+            progress={week.percentComplete + "%"}
             userProgress={userProgress}
+            daysCompleted={week.daysCompleted}
           />
         );
       })}
