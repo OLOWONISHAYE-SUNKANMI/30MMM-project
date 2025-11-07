@@ -72,6 +72,13 @@ export async function submitTextReflection(
       };
     }
 
+    if (currentProgress.completedDevotionalIds?.includes(devotionalNumberId)) {
+      return {
+        success: false,
+        error:
+          "You've already completed ths devotional; proceed to the next one.",
+      };
+    }
     const [textResponse, updatedUser] = await prisma.$transaction([
       /**
        * Review Current User Progress
@@ -110,6 +117,7 @@ export async function submitTextReflection(
               : currentProgress.currentDay % 7 === 0 // if there's an end of the week
                 ? { increment: 1 }
                 : currentProgress.currentWeek,
+          completedDevotionalIds: { push: devotionalNumberId },
         },
       }),
     ]);

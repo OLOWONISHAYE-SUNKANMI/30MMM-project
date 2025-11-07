@@ -22,11 +22,8 @@ function ReflectionProcessingForm({
   const isSubmitted = false;
   const [isVideo, setIsVideo] = useState(true);
 
-  // pull props from devotionalData and session user data
-
   const onTextSubmit = async (reflectionText) => {
-    console.log("onTextSubmit: Submitting text reflection:", reflectionText);
-
+    // trim reflection text to avoid empty submissions
     if (!reflectionText.trim()) {
       setError("Please enter your reflection before submitting.");
       return;
@@ -35,8 +32,6 @@ function ReflectionProcessingForm({
     // Reset error state and indicate that we're processing
     setError(null);
     setIsSubmitting(true);
-
-    console.log("onTextSubmit: Calling submitTextReflection Server Action...");
 
     try {
       console.log("params: ", {
@@ -50,12 +45,14 @@ function ReflectionProcessingForm({
 
       const result = await submitTextReflection(
         userId,
-        devotionalNumberId,
         devotionalDataId,
+        devotionalNumberId,
         reflectionText,
         week,
         day,
       );
+
+      console.log("Submission result: ", result);
 
       // Check if the operation was successful
       // The Server Action returns an object with a success flag and either data or an error
