@@ -39,9 +39,6 @@ function ReflectionProcessingForm({
     console.log("onTextSubmit: Calling submitTextReflection Server Action...");
 
     try {
-      // Here's where the magic happens - we call the Server Action directly
-      // It looks like a regular function call, but it's actually making a request
-      // to the server behind the scenes. Next.js handles all the networking for us.
       console.log("params: ", {
         userId,
         devotionalNumberId,
@@ -176,7 +173,6 @@ function ReflectionProcessingForm({
             </div>
           </div>
         ) : (
-          // TODO : Add props for week, day, firstName, lastName to UploadVideo component
           <UploadVideo
             week={week}
             day={day}
