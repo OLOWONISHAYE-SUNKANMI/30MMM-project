@@ -69,8 +69,6 @@ export default function Devotional({ params }) {
    */
   useEffect(() => {
     if (devotionalData) {
-      console.log("Devotional data updated:", devotionalData);
-      console.log("Devotional ID:", devotionalData.numberId);
     }
   }, [devotionalData]); // This runs whenever devotionalData changes
 

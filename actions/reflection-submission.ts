@@ -10,10 +10,21 @@ const prisma = new PrismaClient();
  * Server Action to submit a reflection and update user progress
  *
  * This function handles all the database logic for:
- * - Creating a new reflection entry
+ *
+ * - establishing current User Progress
+ * - Saving the reflection entry as text
  * - Incrementing the user's current day
- * - Updating the appropriate week completion counter
+ * - Updating the week as necessary
  * - Managing the transition between weeks
+ * - Returning the updated progress and reflection data
+ *
+ * @param {string} userId - The ID of the user submitting the reflection
+ * @param {string} devotionalDataId - The Object ID of the devotional data
+ * @param {number} devotionalNumberId - The numeric ID of the devotional
+ * @param {string} reflectionText - The text of the user's reflection
+ * @param {number} week - The current week number
+ * @param {number} day - The current day number
+ * @returns {Object} Result object containing success status and data or error message
  */
 export async function submitTextReflection(
   userId,
@@ -49,15 +60,24 @@ export async function submitTextReflection(
   }
 
   try {
-    // Calculate next week and day
-    const isLastDay = day === 7;
-    const nextWeek = isLastDay ? week + 1 : week;
-    const nextDay = isLastDay ? 1 : day + 1;
-
-    console.log("calculated params: ", isLastDay, nextWeek, nextDay);
-
     // Execute both queries as a transaction
-    const [record, updatedUser] = await prisma.$transaction([
+    const currentProgress = await prisma.userProgress.findUnique({
+      where: { userId: userId },
+    });
+
+    if (!currentProgress) {
+      return {
+        success: false,
+        error: "User progress not found.",
+      };
+    }
+
+    const [textResponse, updatedUser] = await prisma.$transaction([
+      /**
+       * Review Current User Progress
+       * Find current week and day to determine if we need to increment week
+       */
+
       /**
        * Save the Reflection Entry As Text
        */
@@ -80,16 +100,19 @@ export async function submitTextReflection(
       prisma.userProgress.update({
         where: { userId: userId },
         data: {
-          currentDay: isLastDay ? 1 : { increment: 1 },
-          currentWeek: isLastDay ? { increment: 1 } : undefined,
+          currentDay:
+            currentProgress.currentDay === 35
+              ? { increment: 0 } // if finished, stay at 35
+              : { increment: 1 },
+          currentWeek:
+            currentProgress.currentDay === 35
+              ? { increment: 0 } // if finished, stay at current week
+              : currentProgress.currentDay % 7 === 0 // if there's an end of the week
+                ? { increment: 1 }
+                : currentProgress.currentWeek,
         },
       }),
     ]);
-
-    console.log(
-      "Text Reflection Submitted and user progress updated:",
-      `Week ${nextWeek}, Day ${nextDay}`,
-    );
 
     /**
      * Return Block
@@ -97,7 +120,7 @@ export async function submitTextReflection(
     return {
       success: true,
       data: {
-        reflection: record,
+        reflection: textResponse,
         userProgress: {
           currentWeek: updatedUser.currentWeek,
           currentDay: updatedUser.currentDay,
