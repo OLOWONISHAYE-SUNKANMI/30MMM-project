@@ -1,13 +1,10 @@
 // app/actions/reflections.js
 "use server";
 
-import { PrismaClient } from "@/generated/client/client";
-import { revalidatePath } from "next/cache";
-
-const prisma = new PrismaClient();
+import prisma from "@/db";
 
 /**
- * Server Action to submit a reflection and update user progress
+ * Submit Text Reflection
  *
  * This function handles all the database logic for:
  *
