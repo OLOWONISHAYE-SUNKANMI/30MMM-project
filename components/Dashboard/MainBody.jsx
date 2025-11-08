@@ -36,7 +36,6 @@ export default function MainBody() {
 
         // Fetch user progress
         const progressResult = await getUserProgress(session.user.id);
-        console.log("MainBody - Progress result:", progressResult);
 
         if (progressResult.success) {
           setUserProgress(progressResult.userProgress);
@@ -46,7 +45,6 @@ export default function MainBody() {
           const currentDay = progressResult.userProgress.currentDay || 1;
           const devotionalId = `${currentWeek}-${currentDay}`;
 
-          console.log("MainBody - Fetching devotional:", devotionalId);
           const devotionalResult = await getDevotionalById(devotionalId);
 
           if (devotionalResult.success) {
