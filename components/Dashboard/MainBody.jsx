@@ -31,7 +31,6 @@ export default function MainBody() {
       }
 
       try {
-        console.log("MainBody - Fetching data for user:", session.user.id);
         setLoading(true);
         setError(null);
 
