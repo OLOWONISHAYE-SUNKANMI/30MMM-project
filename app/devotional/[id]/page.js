@@ -25,7 +25,6 @@ export default function Devotional({ params }) {
   const unwrappedParams = use(params);
   const { data: session, status } = useSession();
   const router = useRouter();
-  const { userProgress } = useDashboardContext();
   const devotionalId = unwrappedParams.id;
 
   /**
@@ -40,7 +39,7 @@ export default function Devotional({ params }) {
    */
   useEffect(() => {
     const fetchDevotional = async () => {
-      if (devotionalId && session) {
+      if (devotionalId) {
         try {
           setLoading(true);
           setError(null);
@@ -62,7 +61,7 @@ export default function Devotional({ params }) {
     };
 
     fetchDevotional();
-  }, [devotionalId, session]);
+  }, [devotionalId]);
 
   /**
    * Troubleshooting Logs
