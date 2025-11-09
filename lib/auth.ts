@@ -1,5 +1,5 @@
 import prisma from "@/db";
-import { UserProgress } from "@/prisma/schema.prisma";
+import { UserProgress } from "@/generated/client";
 import { compare } from "bcrypt";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -162,6 +162,7 @@ export const authConfig = {
               id: true,
               role: true,
               profileCompleted: true,
+              userProgress: true,
             },
           });
 
@@ -169,6 +170,7 @@ export const authConfig = {
             token.id = dbUser.id;
             token.role = dbUser.role;
             token.profileCompleted = dbUser.profileCompleted;
+            token.userProgress = dbUser.userProgress;
           }
         } catch (error) {
           console.error("Error updating token:", error);
