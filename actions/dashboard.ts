@@ -1,13 +1,11 @@
 "use server";
 
-import { PrismaClient } from "@/generated/client";
+import prisma from "@/db";
 import { getUser as getServerUser } from "@/lib/session";
 import {
   FormattedUserProgress,
   formatUserProgressResponse,
 } from "@/lib/user-progress-utility";
-
-const prisma = new PrismaClient();
 
 export async function getCurrentUserWithProgress() {
   try {

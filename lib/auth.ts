@@ -1,10 +1,9 @@
-import { PrismaClient } from "@/generated/client";
+import prisma from "@/db";
+import { UserProgress } from "@/prisma/schema.prisma";
 import { compare } from "bcrypt";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
-
-const prisma = new PrismaClient();
 
 export const authConfig = {
   providers: [
@@ -183,6 +182,7 @@ export const authConfig = {
         session.user.id = token.id as string;
         session.user.role = token.role as string;
         session.user.profileCompleted = token.profileCompleted as boolean;
+        session.user.userProgress = token.userProgress as UserProgress;
       }
       return session;
     },

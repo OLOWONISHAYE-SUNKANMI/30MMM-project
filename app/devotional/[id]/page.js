@@ -4,7 +4,6 @@
 
 import React, { use, useEffect, useState } from "react";
 import { getDevotionalById } from "@/actions/devotional";
-import { useDashboardContext } from "@/contexts/dashboard/dashboard-provider";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Divider from "@/components/common/Divider";
@@ -67,9 +66,8 @@ export default function Devotional({ params }) {
    * Troubleshooting Logs
    */
   useEffect(() => {
-    if (devotionalData) {
-    }
-  }, [devotionalData]); // This runs whenever devotionalData changes
+    console.log("session data: ", session?.user?.userProgress);
+  }, [session]);
 
   /**
    * Loading State
