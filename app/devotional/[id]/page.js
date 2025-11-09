@@ -4,6 +4,7 @@
 
 import React, { use, useEffect, useState } from "react";
 import { getDevotionalById } from "@/actions/devotional";
+import { getUserProgress } from "@/actions/user-progress";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Divider from "@/components/common/Divider";
@@ -32,6 +33,7 @@ export default function Devotional({ params }) {
   const [devotionalData, setDevotionalData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userProgressData, setUserProgressData] = useState(null);
 
   /**
    * Effects and Data Fetching
@@ -63,11 +65,34 @@ export default function Devotional({ params }) {
   }, [devotionalId]);
 
   /**
-   * Troubleshooting Logs
+   *  User Progress Data to grab cohort info
    */
   useEffect(() => {
-    console.log("session data: ", session?.user?.userProgress);
-  }, [session]);
+    // I'd like this usEffect to query for the session user's userProgress data and log it out for troubleshooting
+    console.log(
+      "grabbing user progress data from session user:",
+      session?.user,
+    );
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = getUserProgress(session?.user?.id);
+
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
+      setUserProgressData(result.userProgress);
+
+      console.log("User Progress Data:", result.userProgress);
+    } catch (err) {
+      console.error("Error loading user progress data:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [session?.user]);
 
   /**
    * Loading State
