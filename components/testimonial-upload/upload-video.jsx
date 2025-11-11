@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-function UploadVideo(week, day, firstName, lastName) {
+function UploadVideo({ week, day, firstName, lastName }) {
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
@@ -68,6 +68,15 @@ function UploadVideo(week, day, firstName, lastName) {
   // Handle form submission with progress tracking
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log("Submitting video with details:", {
+      week,
+      day,
+      firstName,
+      lastName,
+      cohort,
+      file,
+    });
 
     if (!week || !day || !file || !firstName || !lastName || !cohort) {
       alert("Please add all fields to submit this form successfully");
@@ -382,26 +391,26 @@ function UploadVideo(week, day, firstName, lastName) {
         <div className="flex justify-center">
           <button
             type="submit"
-            disabled={
-              !week ||
-              !day ||
-              !file ||
-              !firstName ||
-              !lastName ||
-              !cohort ||
-              isUploading
-            }
-            className={`rounded-lg px-6 py-2 text-white transition-colors ${
-              !week ||
-              !day ||
-              !file ||
-              !firstName ||
-              !lastName ||
-              !cohort ||
-              isUploading
-                ? "cursor-not-allowed bg-gray-400"
-                : "bg-primaryred hover:bg-primaryred-800"
-            }`}
+            // disabled={
+            //   !week ||
+            //   !day ||
+            //   !file ||
+            //   !firstName ||
+            //   !lastName ||
+            //   !cohort ||
+            //   isUploading
+            // }
+            // className={`rounded-lg px-6 py-2 text-white transition-colors ${
+            //   !week ||
+            //   !day ||
+            //   !file ||
+            //   !firstName ||
+            //   !lastName ||
+            //   !cohort ||
+            //   isUploading
+            //     ? "cursor-not-allowed bg-gray-400"
+            //     : "bg-primaryred hover:bg-primaryred-800"
+            // }`}
           >
             {isUploading ? "Uploading..." : "Upload Video"}
           </button>

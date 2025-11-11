@@ -83,6 +83,8 @@ export async function getCurrentUserWithProgress() {
       user: {
         id: user.id,
         name: user.name,
+        firstName: user.userProfile?.firstName || "",
+        lastName: user.userProfile?.lastName || "",
         email: user.email,
         role: user.role,
         image: user.image,

@@ -3,8 +3,8 @@
 "use client";
 
 import React, { use, useEffect, useState } from "react";
+import { getCurrentUserWithProgress } from "@/actions/dashboard";
 import { getDevotionalById } from "@/actions/devotional";
-import { getUserProgress } from "@/actions/user-progress";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Divider from "@/components/common/Divider";
@@ -31,9 +31,9 @@ export default function Devotional({ params }) {
    * Data and State Management
    */
   const [devotionalData, setDevotionalData] = useState(null);
+  const [userProgressData, setUserProgressData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [userProgressData, setUserProgressData] = useState(null);
 
   /**
    * Effects and Data Fetching
@@ -65,34 +65,17 @@ export default function Devotional({ params }) {
   }, [devotionalId]);
 
   /**
-   *  User Progress Data to grab cohort info
+   * User Progress Data Fetching
    */
+
   useEffect(() => {
-    // I'd like this usEffect to query for the session user's userProgress data and log it out for troubleshooting
-    console.log(
-      "grabbing user progress data from session user:",
-      session?.user,
-    );
-    setLoading(true);
-    setError(null);
-
     try {
-      const result = getUserProgress(session?.user?.id);
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
-      setUserProgressData(result.userProgress);
-
-      console.log("User Progress Data:", result.userProgress);
+      const result = getCurrentUserWithProgress();
+      setUserProgressData(result);
     } catch (err) {
-      console.error("Error loading user progress data:", err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      console.error("Error loading user progress:", err);
     }
-  }, [session?.user]);
+  }, []);
 
   /**
    * Loading State
@@ -232,8 +215,9 @@ export default function Devotional({ params }) {
               userId={session?.user?.id}
               week={devotionalData.week}
               day={devotionalData.day}
-              firstName={session?.user?.firstName}
-              lastName={session?.user?.lastName}
+              firstName={userProgressData?.user?.firstName}
+              lastName={userProgressData?.user?.lastName}
+              cohort={userProgressData?.progress?.cohortNumber || 1}
             />
           </div>
         </div>
