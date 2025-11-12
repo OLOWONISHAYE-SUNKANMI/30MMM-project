@@ -1,4 +1,7 @@
+import { useRouter } from "next/navigation";
+
 export default function PostReflectionNavigationButtons({ className = "" }) {
+  const router = useRouter();
   // Handle navigation actions
   const handleReturnToDashboard = () => {
     router.push("/dashboard");
