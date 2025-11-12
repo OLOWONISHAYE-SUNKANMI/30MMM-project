@@ -69,12 +69,22 @@ export default function Devotional({ params }) {
    */
 
   useEffect(() => {
-    try {
-      const result = getCurrentUserWithProgress();
-      setUserProgressData(result);
-    } catch (err) {
-      console.error("Error loading user progress:", err);
-    }
+    const fetchUserProgress = async () => {
+      try {
+        const result = await getCurrentUserWithProgress();
+        setUserProgressData(result);
+
+        if (!result.success) {
+          throw new Error(result.error);
+        }
+
+        setUserProgressData(result);
+      } catch (err) {
+        console.error("Error loading user progress:", err);
+        setError(err.message);
+      }
+    };
+    fetchUserProgress();
   }, []);
 
   /**

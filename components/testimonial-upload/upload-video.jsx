@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
+import PostReflectionNavigationButtons from "@/components/Foundation/Devotional-v2/post-reflection-navigation";
 
-function UploadVideo({ week, day, firstName, lastName }) {
+function UploadVideo({ week, day, firstName, lastName, cohort }) {
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
@@ -91,7 +92,7 @@ function UploadVideo({ week, day, firstName, lastName }) {
       // STEP 1: Get the Azure SAS URL
       console.log("Step 1 starting, creating SAS URL...");
       setUploadStatus({
-        success: true,
+        success: false,
         message: "Preparing upload...",
         step: 1,
         totalSteps: 3,
@@ -125,7 +126,7 @@ function UploadVideo({ week, day, firstName, lastName }) {
       // STEP 2: Upload the file with progress tracking
       console.log("Step 1 complete, uploading video to azure...");
       setUploadStatus({
-        success: true,
+        success: false,
         message: "Uploading video to Azure...",
         step: 2,
         totalSteps: 3,
@@ -174,7 +175,7 @@ function UploadVideo({ week, day, firstName, lastName }) {
       // STEP 3: Store metadata
       console.log("Step 2 complete, storing metadata to mongodb...");
       setUploadStatus({
-        success: true,
+        success: false,
         message: "Saving metadata...",
         step: 3,
         totalSteps: 3,
@@ -211,12 +212,7 @@ function UploadVideo({ week, day, firstName, lastName }) {
         completed: true,
       });
 
-      // Reset form after successful upload
-      setCohort("");
-      setFirstName("");
-      setLastName("");
-      setWeek("");
-      setDay("");
+      // Reset the form
       setFile(null);
       setPreviewUrl(null);
     } catch (error) {
@@ -228,19 +224,6 @@ function UploadVideo({ week, day, firstName, lastName }) {
     } finally {
       setIsUploading(false);
     }
-  };
-
-  // Handle reset of the form
-  const handleReset = () => {
-    setCohort("");
-    setFirstName("");
-    setLastName("");
-    setWeek("");
-    setDay("");
-    setFile(null);
-    setPreviewUrl(null);
-    setUploadStatus(null);
-    setUploadProgress(0);
   };
 
   return (
@@ -391,26 +374,26 @@ function UploadVideo({ week, day, firstName, lastName }) {
         <div className="flex justify-center">
           <button
             type="submit"
-            // disabled={
-            //   !week ||
-            //   !day ||
-            //   !file ||
-            //   !firstName ||
-            //   !lastName ||
-            //   !cohort ||
-            //   isUploading
-            // }
-            // className={`rounded-lg px-6 py-2 text-white transition-colors ${
-            //   !week ||
-            //   !day ||
-            //   !file ||
-            //   !firstName ||
-            //   !lastName ||
-            //   !cohort ||
-            //   isUploading
-            //     ? "cursor-not-allowed bg-gray-400"
-            //     : "bg-primaryred hover:bg-primaryred-800"
-            // }`}
+            disabled={
+              !week ||
+              !day ||
+              !file ||
+              !firstName ||
+              !lastName ||
+              !cohort ||
+              isUploading
+            }
+            className={`rounded-lg px-6 py-2 text-white transition-colors ${
+              !week ||
+              !day ||
+              !file ||
+              !firstName ||
+              !lastName ||
+              !cohort ||
+              isUploading
+                ? "cursor-not-allowed bg-gray-400"
+                : "bg-primaryred hover:bg-primaryred-800"
+            }`}
           >
             {isUploading ? "Uploading..." : "Upload Video"}
           </button>
@@ -459,9 +442,16 @@ function UploadVideo({ week, day, firstName, lastName }) {
         )}
 
         {/* Success Message */}
-        {uploadStatus && !uploadStatus.success && (
-          <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-center text-red-700">
-            <p>{uploadStatus.message}</p>
+        {uploadStatus && uploadStatus.success && (
+          <div>
+            <div className="mt-6 w-full">
+              <div className="mb-4 rounded-lg bg-green-50 p-4 text-green-800">
+                Your reflection has been saved successfully! Great work on
+                completing today&apos;s devotional.
+              </div>
+              {/* Replace this with your actual PostReflectionNavigationButtons component */}
+              <PostReflectionNavigationButtons />
+            </div>
           </div>
         )}
       </form>

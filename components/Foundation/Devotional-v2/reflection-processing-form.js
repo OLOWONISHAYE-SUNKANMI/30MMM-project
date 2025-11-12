@@ -13,6 +13,7 @@ function ReflectionProcessingForm({
   day,
   firstName,
   lastName,
+  cohort,
 }) {
   // State management remains the same - we still need to track what's happening on the client
   const [reflectionText, setReflectionText] = useState("");
@@ -176,6 +177,7 @@ function ReflectionProcessingForm({
             firstName={firstName}
             lastName={lastName}
             userId={userId}
+            cohort={cohort}
           />
         )}
 
