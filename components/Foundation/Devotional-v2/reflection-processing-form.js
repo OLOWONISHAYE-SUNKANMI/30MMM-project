@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { submitTextReflection } from "@/actions/reflection-submission";
 import PostReflectionNavigationButtons from "@/components/Foundation/Devotional-v2/post-reflection-navigation";
-import UploadVideo from "@/components/testimonial-upload/upload-video";
+import UploadVideo from "@/components/Foundation/Devotional-v2/upload-video";
 
 function ReflectionProcessingForm({
   devotionalNumberId,
@@ -178,6 +178,8 @@ function ReflectionProcessingForm({
             lastName={lastName}
             userId={userId}
             cohort={cohort}
+            devotionalDataId={devotionalDataId}
+            devotionalNumberId={devotionalNumberId}
           />
         )}
 

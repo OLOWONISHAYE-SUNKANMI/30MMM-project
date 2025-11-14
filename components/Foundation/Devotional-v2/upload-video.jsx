@@ -1,7 +1,17 @@
 import React, { useRef, useState } from "react";
+import { submitVideoReflection } from "@/actions/reflection-submission";
 import PostReflectionNavigationButtons from "@/components/Foundation/Devotional-v2/post-reflection-navigation";
 
-function UploadVideo({ week, day, firstName, lastName, cohort }) {
+function UploadVideo({
+  week,
+  day,
+  firstName,
+  lastName,
+  cohort,
+  userId,
+  devotionalDataId,
+  devotionalNumberId,
+}) {
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
@@ -95,7 +105,7 @@ function UploadVideo({ week, day, firstName, lastName, cohort }) {
         success: false,
         message: "Preparing upload...",
         step: 1,
-        totalSteps: 3,
+        totalSteps: 4,
       });
 
       const fileInfo = {
@@ -129,7 +139,7 @@ function UploadVideo({ week, day, firstName, lastName, cohort }) {
         success: false,
         message: "Uploading video to Azure...",
         step: 2,
-        totalSteps: 3,
+        totalSteps: 4,
       });
 
       // Create a new XMLHttpRequest to track upload progress
@@ -178,7 +188,7 @@ function UploadVideo({ week, day, firstName, lastName, cohort }) {
         success: false,
         message: "Saving metadata...",
         step: 3,
-        totalSteps: 3,
+        totalSteps: 4,
       });
 
       const metadataResponse = await fetch("/api/store-video-metadata", {
@@ -203,16 +213,37 @@ function UploadVideo({ week, day, firstName, lastName, cohort }) {
       }
 
       // Success!
-      console.log("Step 3 complete, success");
+      console.log("Step 3 complete, success", metadataResponse);
       setUploadStatus({
         success: true,
         message: "Video uploaded successfully!",
         step: 3,
-        totalSteps: 3,
-        completed: true,
+        totalSteps: 4,
+        completed: false,
       });
 
       // Todo: add in update to currentDay
+      const resultVid = await submitVideoReflection(
+        userId,
+        devotionalDataId,
+        devotionalNumberId,
+        week,
+        day,
+        sasUrl,
+      );
+
+      if (!resultVid.success) {
+        throw new Error(resultVid.error);
+      }
+
+      console.log("Step 4 complete, successfully updated user progress");
+      setUploadStatus({
+        success: true,
+        message: "User Progress has been updated!",
+        step: 3,
+        totalSteps: 4,
+        completed: true,
+      });
 
       // Reset the form
       setFile(null);

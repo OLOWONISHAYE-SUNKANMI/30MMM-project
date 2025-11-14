@@ -233,11 +233,11 @@ model ReflectionResponse {
 model VideoUpload {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String?
-  cohort    String
+  cohort    Int
   firstName String
   lastName  String
-  week      String
-  day       String
+  week      Int // Changed from String
+  day       Int // Changed from String
   fileName  String
   fileType  String
   blobUrl   String
