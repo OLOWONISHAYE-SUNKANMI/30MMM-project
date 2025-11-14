@@ -35,16 +35,6 @@ export async function submitTextReflection(
   day,
 ) {
   // Input validation on the server side is critical for security
-  // Never trust that client-side validation is enough
-  console.log("submitTextReflection called with:", {
-    userId,
-    devotionalDataId,
-    devotionalNumberId,
-    reflectionText,
-    week,
-    day,
-  });
-
   if (
     !userId ||
     !week ||
@@ -148,13 +138,21 @@ export async function submitTextReflection(
 
 export async function submitVideoReflection(
   userId,
-  day,
-  week,
   devotionalDataId,
   devotionalNumberId,
+  week,
+  day,
   videoUrl,
 ) {
-  if (!userId || day == null || week == null) {
+  // Input validation on the server side is critical for security
+  if (
+    !userId ||
+    !week ||
+    !day ||
+    !devotionalNumberId ||
+    !devotionalDataId ||
+    !videoUrl?.trim()
+  ) {
     return {
       success: false,
       error:
@@ -163,6 +161,7 @@ export async function submitVideoReflection(
   }
 
   try {
+    // Execute both queries as a transaction
     const currentProgress = await prisma.userProgress.findUnique({
       where: { userId: userId },
     });
@@ -181,27 +180,7 @@ export async function submitVideoReflection(
           "You've already completed ths devotional; proceed to the next one.",
       };
     }
-    const [videoResponse, updatedUser] = await prisma.$transaction([
-      /**
-       * Review Current User Progress
-       * Find current week and day to determine if we need to increment week
-       */
-
-      /**
-       * Save the Reflection Entry As Text
-       */
-      prisma.reflectionResponse.create({
-        data: {
-          devotionalId: devotionalDataId,
-          response: videoUrl.trim(),
-          week: week,
-          day: day,
-          user: {
-            connect: { id: userId },
-          },
-        },
-      }),
-
+    const [updatedUser] = await prisma.$transaction([
       /**
        * Update User Progress
        * Update current week and day (if day 7, move to day 1 of next week)
@@ -224,11 +203,13 @@ export async function submitVideoReflection(
       }),
     ]);
 
-    // Return Block
+    /**
+     * Return Block
+     */
     return {
       success: true,
       data: {
-        reflection: videoResponse,
+        videoUrl: videoUrl,
         userProgress: {
           currentWeek: updatedUser.currentWeek,
           currentDay: updatedUser.currentDay,
@@ -237,7 +218,7 @@ export async function submitVideoReflection(
       },
     };
   } catch (error) {
-    console.error("Update failed:", error);
+    console.error("Transaction failed:", error);
     return {
       success: false,
       error: "Failed to save reflection and update progress. Please try again.",

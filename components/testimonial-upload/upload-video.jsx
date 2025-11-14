@@ -212,6 +212,8 @@ function UploadVideo({ week, day, firstName, lastName, cohort }) {
         completed: true,
       });
 
+      // Todo: add in update to currentDay
+
       // Reset the form
       setFile(null);
       setPreviewUrl(null);
