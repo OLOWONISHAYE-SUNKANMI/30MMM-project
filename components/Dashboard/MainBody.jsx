@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { getDevotionalById } from "@/actions/devotional";
 import { getUserProgress } from "@/actions/user-progress";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
 import { FaChevronDown } from "react-icons/fa";
 import DonateHero from "@/components/Dashboard/DonateHero";
+import { calculateWeekAndDay } from "@/lib/calculateWeekAndDay";
 import CardSection from "./CardSection";
 
 export default function MainBody() {
@@ -41,8 +41,10 @@ export default function MainBody() {
           setUserProgress(progressResult.userProgress);
 
           // Fetch current devotional
-          const currentWeek = progressResult.userProgress.currentWeek || 1;
-          const currentDay = progressResult.userProgress.currentDay || 1;
+
+          const totalDays = progressResult.userProgress.currentDay || 1;
+          const { week: currentWeek, day: currentDay } =
+            calculateWeekAndDay(totalDays);
           const devotionalId = `${currentWeek}-${currentDay}`;
 
           const devotionalResult = await getDevotionalById(devotionalId);
@@ -107,8 +109,10 @@ export default function MainBody() {
 
   // Default values
   const cohortDisplay = userProgress?.cohortRoman || "I";
-  const weekDisplay = userProgress?.currentWeek || 1;
-  const dayDisplay = userProgress?.currentDay || 1;
+  const totalDays = userProgress?.currentDay || 1;
+  const { week: currentWeek, day: currentDay } = calculateWeekAndDay(totalDays);
+  const weekDisplay = currentWeek;
+  const dayDisplay = currentDay;
   const devotionalTitle = currentDevotional?.dayTitle || "Loading...";
 
   // Create the devotional ID in the format "week-day"
