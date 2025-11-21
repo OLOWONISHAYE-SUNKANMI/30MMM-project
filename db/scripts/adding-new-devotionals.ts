@@ -82,8 +82,8 @@
 import { resolve } from "path";
 import prisma from "@/db";
 import { DevotionalData } from "@/sample-data/DevotionalData";
+import { Devotional } from "@prisma/client";
 import { config } from "dotenv";
-import { Devotional } from "../../generated/client/index.js";
 
 // Load environment variables
 config({ path: resolve(process.cwd(), ".env") });
