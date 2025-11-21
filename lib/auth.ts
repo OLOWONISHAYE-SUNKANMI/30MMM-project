@@ -1,5 +1,5 @@
 import prisma from "@/db";
-import { UserProgress } from "@/generated/client";
+import { UserProgress } from "@prisma/client";
 import { compare } from "bcrypt";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";

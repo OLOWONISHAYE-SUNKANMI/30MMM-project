@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/db";
-import type { Profile, User } from "@/generated/client";
+import type { Profile, User } from "@prisma/client";
 import { auth } from "@/lib/auth";
 
 export type ProfileData = Profile;

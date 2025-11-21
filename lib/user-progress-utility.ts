@@ -1,5 +1,5 @@
 import prisma from "@/db";
-import { Devotional, UserProgress } from "@/generated/client";
+import { Devotional, UserProgress } from "@prisma/client";
 
 // Type for Scripture items - matches your component's expectations
 interface Scripture {
