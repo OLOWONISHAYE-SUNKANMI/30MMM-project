@@ -1,6 +1,5 @@
-import { Devotional, PrismaClient, UserProgress } from "@/generated/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/db";
+import { Devotional, UserProgress } from "@/generated/client";
 
 // Type for Scripture items - matches your component's expectations
 interface Scripture {

@@ -1,7 +1,5 @@
-import { PrismaClient } from "@/generated/client";
+import prisma from "@/db";
 import { auth } from "@/lib/auth";
-
-const prisma = new PrismaClient();
 
 /** -----------------------------------------------------------------
  *              getUser()
