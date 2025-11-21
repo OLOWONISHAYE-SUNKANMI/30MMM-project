@@ -16,7 +16,7 @@ interface FormattedDevotional {
   id: string; // Add the id field
   title: string;
   scriptures: Scripture[];
-  content: string | null;
+  devotionText: string | null;
 }
 
 // Type for the formatted response
@@ -217,7 +217,7 @@ export async function formatUserProgressResponse(
           id: currentDevotional.id, // Add this line
           title: currentDevotional.dayTitle || "",
           scriptures: formattedScriptures,
-          content: currentDevotional.content || null,
+          devotionText: currentDevotional.devotionText || null,
         }
       : null,
   };

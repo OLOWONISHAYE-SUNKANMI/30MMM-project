@@ -241,7 +241,7 @@ async function batchUpdateFromJSON(devotionalsArray: Devotional[]) {
             dayTitle: devData.dayTitle,
             daySubTitle: devData.daySubTitle || null,
             Scriptures: devData.Scriptures,
-            content: devData.content,
+            devotionText: devData.devotionText,
           },
         });
         console.log(
@@ -258,7 +258,7 @@ async function batchUpdateFromJSON(devotionalsArray: Devotional[]) {
             dayTitle: devData.dayTitle,
             daySubTitle: devData.daySubTitle || null,
             Scriptures: devData.Scriptures,
-            content: devData.content,
+            devotionText: devData.devotionText,
           },
         });
         console.log(

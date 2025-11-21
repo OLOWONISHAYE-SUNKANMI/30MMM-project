@@ -24,6 +24,7 @@ export default function SidePanel() {
   const [expandedWeeks, setExpandedWeeks] = React.useState(new Set());
   const router = useRouter();
   const { data: session, status } = useSession();
+  const userId = session?.user?.id;
 
   React.useEffect(() => {
     const loadDevotionalsWithProgress = async () => {
@@ -35,7 +36,7 @@ export default function SidePanel() {
           throw new Error(devotionalsResult.error);
         }
 
-        if (status === "unauthenticated" || !session?.user?.id) {
+        if (status === "unauthenticated" || userId) {
           console.log("MainBody - No user session found");
           setLoading(false);
           return;
@@ -43,7 +44,7 @@ export default function SidePanel() {
 
         // Load user progress - THIS IS THE KEY CHANGE
         // You need to get the userId first, then pass it to getUserProgress
-        const progressResult = await getUserProgress(session.user.id); // Or getUserProgress(userId) if available
+        const progressResult = await getUserProgress(userId); // Or getUserProgress(userId) if available
 
         // Add debugging to see what's being returned
         console.log("SidePanel - Progress result:", progressResult);
@@ -169,7 +170,7 @@ export default function SidePanel() {
     };
 
     loadDevotionalsWithProgress();
-  }, []);
+  }, [userId, status]);
 
   const toggleWeekExpansion = (weekId) => {
     setExpandedWeeks((prev) => {

@@ -10,7 +10,7 @@ import {
 } from "@/lib/user-progress-utility";
 
 // GET - Fetch user progress (create if doesn't exist)
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const session = await auth();
 
@@ -34,7 +34,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Format for frontend consumption
-    const formattedProgress = await formatUserProgressResponse(userProgress);
+    const formattedProgress = await formatUserProgressResponse(
+      userProgress,
+      null,
+    );
 
     return NextResponse.json({
       success: true,
@@ -149,7 +152,10 @@ export async function PATCH(request: NextRequest) {
     });
 
     // Format response
-    const formattedProgress = await formatUserProgressResponse(updatedProgress);
+    const formattedProgress = await formatUserProgressResponse(
+      updatedProgress,
+      null,
+    );
 
     return NextResponse.json({
       success: true,
@@ -211,7 +217,10 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      const formattedProgress = await formatUserProgressResponse(resetProgress);
+      const formattedProgress = await formatUserProgressResponse(
+        resetProgress,
+        null,
+      );
 
       return NextResponse.json({
         success: true,
@@ -228,7 +237,10 @@ export async function POST(request: NextRequest) {
       data: initialProgress,
     });
 
-    const formattedProgress = await formatUserProgressResponse(newProgress);
+    const formattedProgress = await formatUserProgressResponse(
+      newProgress,
+      null,
+    );
 
     return NextResponse.json(
       {

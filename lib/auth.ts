@@ -54,7 +54,7 @@ export const authConfig = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account }) {
       // For Google provider, check if user exists and create if needed
       if (account?.provider === "google") {
         try {

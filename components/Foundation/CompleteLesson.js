@@ -3,7 +3,6 @@ import CompleteLessonButton from "./CompleteLessonButton";
 import PreviousLessonButton from "./PreviousLessonButton";
 
 export default function CompleteLesson({
-  devotionalData,
   isCompleted = false,
   isCompleting = false,
   onComplete,
