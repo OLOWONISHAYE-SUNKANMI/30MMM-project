@@ -1,10 +1,6 @@
-@import 'tailwindcss';
-
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/container-queries';
-@plugin '@tailwindcss/typography';
-@plugin '@tailwindcss/aspect-ratio';
-@plugin 'tailwindcss-animate';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @custom-variant dark (&:is(.dark *));
 
@@ -20,10 +16,10 @@
     from 180deg at 50% 50%,
     var(--tw-gradient-stops)
   );
-  --background-image-jesus-hero: url('/jesus_hero.png');
-  --background-image-donate-desktop: url('/donate-horiz.png');
-  --background-image-donate-mobile: url('/donate-vert.png');
-  --background-image-lesson-card: url('/week-card.png');
+  --background-image-jesus-hero: url("/jesus_hero.png");
+  --background-image-donate-desktop: url("/donate-horiz.png");
+  --background-image-donate-mobile: url("/donate-vert.png");
+  --background-image-lesson-card: url("/week-card.png");
 
   --background-size-w-100-h-auto: 100% auto;
 
