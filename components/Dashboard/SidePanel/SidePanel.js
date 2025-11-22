@@ -14,8 +14,7 @@ import { useRouter } from "next/navigation";
 import { FaCheck, FaChevronDown, FaChevronRight } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoLockClosed } from "react-icons/io5";
-import DiscussionPlane from "./DiscussionPlane";
-import JoinConversationButton from "./JoinConversationButton";
+import DiscussionSection from "./discussion-section";
 
 export default function SidePanel() {
   const [open, setOpen] = React.useState(false);
@@ -44,62 +43,74 @@ export default function SidePanel() {
         // Load user progress - THIS IS THE KEY CHANGE
         // You need to get the userId first, then pass it to getUserProgress
         const progressResult = await getUserProgress(userId);
-        console.log("progressResult:", progressResult);
         const userProgress = progressResult.success
           ? progressResult.progress || progressResult.userProgress
           : null;
 
-        // Process the data to match the component's expected format
         const processedWeeks = devotionalsResult.weekTitles.map((weekData) => {
-          const { week, weekTitle, days } = weekData;
+          const weekNum = weekData.week;
 
-          // Calculate completion status for this week
-          let weekCompleted = false;
-          let weekLocked = false;
-          let weekCurrent = false;
+          // Determine if this week is completed based on weekXCompleted fields
+          let isWeekCompleted = false;
+          let isWeekLocked = false;
+
+          if (weekNum < userProgress?.currentWeek) {
+            isWeekCompleted = true;
+          }
+          // Determine if this week is locked (future weeks beyond current week)
+          if (weekNum > userProgress?.currentWeek) {
+            isWeekLocked = true;
+          }
+
+          // Determine if this is the current week
+          const isCurrentWeek = userProgress?.currentWeek === weekNum;
+
+          // Process days for this week
+          const processedDays = weekData.days.map((dayData) => {
+            const dayNum = dayData.day;
+
+            const devotionalId = (weekNum - 1) * 7 + dayNum; // Calculate devotional ID (1-35)
+
+            // Check if this specific day is completed
+            const isDayCompleted =
+              userProgress?.completedDevotionalIds?.includes(devotionalId) ||
+              false;
+            let isDayLocked = false;
+            let isCurrentDay = false;
+
+            // Determine if day is locked
+            if (dayNum > userProgress?.currentDay) {
+              isDayLocked = true;
+            }
+
+            if (dayNum + (weekNum - 1) * 7 == userProgress?.currentDay) {
+              isCurrentDay = true;
+            }
+
+            console.log(
+              `${weekNum}-${dayNum}`,
+              isDayCompleted,
+              isDayLocked,
+              isCurrentDay,
+            );
+
+            return {
+              id: `${weekNum}-${dayNum}`,
+              day: dayNum,
+              title: dayData.dayTitle,
+              completed: isDayCompleted,
+              locked: isDayLocked,
+              current: isCurrentDay,
+            };
+          });
 
           return {
-            id: week,
-            title: weekTitle,
-            completed: weekCompleted,
-            locked: weekLocked,
-            current: weekCurrent,
-            days: days.map((day) => {
-              let dayCompleted = false;
-              let dayLocked = false;
-              let dayCurrent = false;
-
-              if (userProgress) {
-                // Day is completed if it's within the completed days count for this week
-                dayCompleted = day.day <= userProgress.currentDay - 1;
-
-                // Day is current if it's the next day to be completed in current week
-                dayCurrent =
-                  week === userProgress.currentWeek &&
-                  day.day === userProgress.currentDay;
-
-                // Day is locked based on week and progress
-                if (week > userProgress.currentWeek) {
-                  dayLocked = true;
-                } else if (week === userProgress.currentWeek) {
-                  dayLocked = day.day > userProgress.currentDay;
-                } else {
-                  dayLocked = false; // Previous weeks are unlocked
-                }
-              } else {
-                dayLocked = weekLocked || (week === 1 && day.day > 1);
-                dayCurrent = week === 1 && day.day === 1;
-              }
-
-              return {
-                id: `${week}-${day.day}`,
-                day: day.day,
-                title: day.dayTitle,
-                completed: dayCompleted,
-                locked: dayLocked,
-                current: dayCurrent,
-              };
-            }),
+            id: weekNum,
+            title: weekData.weekTitle,
+            completed: isWeekCompleted,
+            locked: isWeekLocked,
+            current: isCurrentWeek,
+            days: processedDays,
           };
         });
 
@@ -111,29 +122,6 @@ export default function SidePanel() {
         }
       } catch (error) {
         console.error("Error loading devotionals with progress:", error);
-
-        // Enhanced fallback with more realistic progress simulation
-        const fallbackWeeks = Array.from({ length: 5 }, (_, index) => {
-          const weekNum = index + 1;
-          return {
-            id: weekNum,
-            title: `Week ${weekNum}`,
-            completed: weekNum < 3, // First 2 weeks completed
-            locked: weekNum > 4, // Week 5+ locked
-            current: weekNum === 3, // Week 3 is current
-            days: Array.from({ length: 7 }, (_, dayIndex) => ({
-              id: `${weekNum}-${dayIndex + 1}`,
-              day: dayIndex + 1,
-              title: `Day ${dayIndex + 1}`,
-              completed: weekNum < 3 || (weekNum === 3 && dayIndex < 2),
-              locked: weekNum > 4 || (weekNum === 4 && dayIndex > 0),
-              current: weekNum === 3 && dayIndex === 2,
-            })),
-          };
-        });
-
-        setWeeks(fallbackWeeks);
-        setExpandedWeeks(new Set([3])); // Expand current week in fallback
       } finally {
         setLoading(false);
       }
@@ -316,19 +304,10 @@ export default function SidePanel() {
 
         <Divider />
 
-        {/* Discussions Section */}
-        <div className="mb-4 mt-[2vh] text-xl font-semibold text-gray-800">
-          Discussions
-        </div>
-        <div className="mx-0 flex flex-row items-center justify-between">
-          <DiscussionPlane
-            comments={comments}
-            notes={notes}
-          />
-        </div>
-        <div className="mt-4 flex items-center justify-center">
-          <JoinConversationButton />
-        </div>
+        <DiscussionSection
+          comments={comments}
+          notes={notes}
+        />
       </div>
     </Box>
   );
