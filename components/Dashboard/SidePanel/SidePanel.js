@@ -87,13 +87,6 @@ export default function SidePanel() {
               isCurrentDay = true;
             }
 
-            console.log(
-              `${weekNum}-${dayNum}`,
-              isDayCompleted,
-              isDayLocked,
-              isCurrentDay,
-            );
-
             return {
               id: `${weekNum}-${dayNum}`,
               day: dayNum,
