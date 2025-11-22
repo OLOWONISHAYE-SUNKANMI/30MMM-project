@@ -44,20 +44,10 @@ export default function SidePanel() {
 
         // Load user progress - THIS IS THE KEY CHANGE
         // You need to get the userId first, then pass it to getUserProgress
-        const progressResult = await getUserProgress(userId); // Or getUserProgress(userId) if available
-
-        // Add debugging to see what's being returned
-        console.log("SidePanel - Progress result:", progressResult);
-        console.log(
-          "SidePanel - User progress data:",
-          progressResult.progress || progressResult.userProgress,
-        );
-
+        const progressResult = await getUserProgress(userId);
         const userProgress = progressResult.success
-          ? progressResult.progress || progressResult.userProgress // Handle different response formats
+          ? progressResult.progress || progressResult.userProgress
           : null;
-
-        console.log("SidePanel - Final userProgress:", userProgress);
 
         // Process the data to match the component's expected format
         const processedWeeks = devotionalsResult.weekTitles.map((weekData) => {
@@ -68,24 +58,11 @@ export default function SidePanel() {
           let weekLocked = false;
           let weekCurrent = false;
 
-          if (userProgress) {
-            const currentWeek = userProgress.currentWeek;
-            const completedWeekField = `week${week}Completed`;
-            const weekCompletedDays = userProgress[completedWeekField] || 0;
-
-            // Week is locked if it's more than 1 week ahead of current week
-            weekLocked = week > currentWeek;
-
-            // Week is current if it matches user's current week
-            weekCurrent = week === currentWeek;
-
-            // Week is completed if all days are completed (7 days per week)
-            weekCompleted = weekCompletedDays === 7;
-          } else {
-            // Fallback logic when no user progress is available
-            weekLocked = week > 1;
-            weekCurrent = week === 1;
-          }
+          console.log(
+            "User Progress:",
+            userProgress.currentWeek,
+            userProgress?.currentDay,
+          );
 
           return {
             id: week,
