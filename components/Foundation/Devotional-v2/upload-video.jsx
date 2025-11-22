@@ -80,15 +80,6 @@ function UploadVideo({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Submitting video with details:", {
-      week,
-      day,
-      firstName,
-      lastName,
-      cohort,
-      file,
-    });
-
     if (!week || !day || !file || !firstName || !lastName || !cohort) {
       alert("Please add all fields to submit this form successfully");
       return;
@@ -100,7 +91,6 @@ function UploadVideo({
 
     try {
       // STEP 1: Get the Azure SAS URL
-      console.log("Step 1 starting, creating SAS URL...");
       setUploadStatus({
         success: false,
         message: "Preparing upload...",
@@ -134,7 +124,6 @@ function UploadVideo({
       const sasUrl = result.uploadUrl;
 
       // STEP 2: Upload the file with progress tracking
-      console.log("Step 1 complete, uploading video to azure...");
       setUploadStatus({
         success: false,
         message: "Uploading video to Azure...",
@@ -183,7 +172,6 @@ function UploadVideo({
       setUploadProgress(100);
 
       // STEP 3: Store metadata
-      console.log("Step 2 complete, storing metadata to mongodb...");
       setUploadStatus({
         success: false,
         message: "Saving metadata...",
@@ -213,7 +201,6 @@ function UploadVideo({
       }
 
       // Success!
-      console.log("Step 3 complete, success", metadataResponse);
       setUploadStatus({
         success: true,
         message: "Video uploaded successfully!",
@@ -222,7 +209,6 @@ function UploadVideo({
         completed: false,
       });
 
-      // Todo: add in update to currentDay
       const resultVid = await submitVideoReflection(
         userId,
         devotionalDataId,
@@ -236,7 +222,6 @@ function UploadVideo({
         throw new Error(resultVid.error);
       }
 
-      console.log("Step 4 complete, successfully updated user progress");
       setUploadStatus({
         success: true,
         message: "User Progress has been updated!",
