@@ -20,12 +20,10 @@ export default function MainBody() {
   useEffect(() => {
     const fetchUserData = async () => {
       if (status === "loading") {
-        console.log("MainBody - Session is loading, waiting...");
         return;
       }
 
       if (status === "unauthenticated" || !session?.user?.id) {
-        console.log("MainBody - No user session found");
         setLoading(false);
         return;
       }
@@ -51,20 +49,11 @@ export default function MainBody() {
 
           if (devotionalResult.success) {
             setCurrentDevotional(devotionalResult.devotional);
-            console.log(
-              "MainBody - Current devotional:",
-              devotionalResult.devotional,
-            );
           }
         } else {
-          console.error(
-            "MainBody - Failed to fetch user progress:",
-            progressResult.error,
-          );
           setError(progressResult.error);
         }
       } catch (error) {
-        console.error("MainBody - Error fetching user data:", error);
         setError("Failed to fetch user data");
       } finally {
         setLoading(false);
@@ -117,15 +106,6 @@ export default function MainBody() {
 
   // Create the devotional ID in the format "week-day"
   const devotionalId = `${weekDisplay}-${dayDisplay}`;
-
-  console.log("MainBody - Rendering with:", {
-    userId: session.user.id,
-    userProgress,
-    currentDevotional,
-    cohortDisplay,
-    weekDisplay,
-    dayDisplay,
-  });
 
   return (
     <div className="relative mx-auto mb-8 flex min-h-screen w-full max-w-[1200px] flex-col items-start gap-y-5 space-y-4 pt-12 max-lg:mx-2">

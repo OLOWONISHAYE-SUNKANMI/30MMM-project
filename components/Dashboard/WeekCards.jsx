@@ -3,7 +3,6 @@ import WeekCard from "./WeekCard";
 export default function WeekCards({ userProgress, devotionals }) {
   // Check if devotionals is available and is an array
   if (!devotionals || !Array.isArray(devotionals)) {
-    console.log("WeekCards - No devotionals available or not an array");
     return <div>Loading devotionals...</div>;
   }
 
@@ -60,8 +59,6 @@ export default function WeekCards({ userProgress, devotionals }) {
     return getProgressForWeek(weekNumber, currentDay, daysPerWeek);
   });
 
-  console.log("WeekCards - Week Progress Data:", weekProgress);
-
   return (
     <div className="flex w-full flex-row flex-wrap justify-center gap-3 py-3 md:gap-5">
       {/* Map over weeks 1-5 to render each WeekCard */}
@@ -69,12 +66,6 @@ export default function WeekCards({ userProgress, devotionals }) {
         // Now 'week' is a single week object with all the calculated data
         // week.weekNumber tells us which week this is (1, 2, 3, 4, or 5)
         // We use that to look up the correct title from weekTitles
-
-        console.log(`WeekCards - Rendering week ${week.weekNumber}:`, {
-          title: weekTitles[week.weekNumber],
-          status: week.status,
-          progress: week.percentComplete,
-        });
 
         return (
           <WeekCard

@@ -10,78 +10,44 @@ export default function CardSection({ userId }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log("CardSection - Received userId:", userId);
-
   useEffect(() => {
     const fetchData = async () => {
-      console.log("CardSection - useEffect triggered with userId:", userId);
-
       // Don't fetch if userId is not available
       if (!userId) {
-        console.log("CardSection - No userId provided");
         setLoading(false);
         return;
       }
 
       try {
-        console.log("CardSection - Starting data fetch for userId:", userId);
         setLoading(true);
         setError(null);
 
         // Fetch user progress
         const progressResult = await getUserProgress(userId);
-        console.log("CardSection - Progress result:", progressResult);
 
         if (progressResult.success) {
           setUserProgress(progressResult.userProgress);
-          console.log(
-            "CardSection - User progress set:",
-            progressResult.userProgress,
-          );
         } else {
-          console.error(
-            "CardSection - Failed to fetch user progress:",
-            progressResult.error,
-          );
           setError(progressResult.error);
         }
 
         // Fetch all devotionals
         const devotionalsResult = await getAllDevotionals();
-        console.log("CardSection - Devotionals result:", devotionalsResult);
 
         if (devotionalsResult.success) {
           setDevotionals(devotionalsResult.devotionals);
-          console.log(
-            "CardSection - Devotionals set, count:",
-            devotionalsResult.devotionals.length,
-          );
         } else {
-          console.error(
-            "CardSection - Failed to fetch devotionals:",
-            devotionalsResult.error,
-          );
           setError(devotionalsResult.error);
         }
       } catch (error) {
-        console.error("CardSection - Error fetching dashboard data:", error);
         setError("Failed to fetch dashboard data");
       } finally {
         setLoading(false);
-        console.log("CardSection - Fetch completed");
       }
     };
 
     fetchData();
   }, [userId]);
-
-  console.log("CardSection - Render state:", {
-    loading,
-    error,
-    userId,
-    userProgress,
-    devotionals: devotionals.length,
-  });
 
   if (loading) {
     return <div>Loading...</div>;

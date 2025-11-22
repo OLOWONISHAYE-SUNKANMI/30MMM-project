@@ -37,7 +37,6 @@ export default function SidePanel() {
         }
 
         if (status === "unauthenticated" || userId) {
-          console.log("MainBody - No user session found");
           setLoading(false);
           return;
         }
