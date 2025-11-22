@@ -35,15 +35,6 @@ function ReflectionProcessingForm({
     setIsSubmitting(true);
 
     try {
-      console.log("params: ", {
-        userId,
-        devotionalNumberId,
-        devotionalDataId,
-        reflectionText,
-        week,
-        day,
-      });
-
       const result = await submitTextReflection(
         userId,
         devotionalDataId,
@@ -52,8 +43,6 @@ function ReflectionProcessingForm({
         week,
         day,
       );
-
-      console.log("Submission result: ", result);
 
       // Check if the operation was successful
       // The Server Action returns an object with a success flag and either data or an error
