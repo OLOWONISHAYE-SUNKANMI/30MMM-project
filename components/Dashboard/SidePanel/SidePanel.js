@@ -36,7 +36,7 @@ export default function SidePanel() {
           throw new Error(devotionalsResult.error);
         }
 
-        if (status === "unauthenticated" || userId) {
+        if (status === "unauthenticated" || !userId) {
           setLoading(false);
           return;
         }
@@ -44,6 +44,7 @@ export default function SidePanel() {
         // Load user progress - THIS IS THE KEY CHANGE
         // You need to get the userId first, then pass it to getUserProgress
         const progressResult = await getUserProgress(userId);
+        console.log("progressResult:", progressResult);
         const userProgress = progressResult.success
           ? progressResult.progress || progressResult.userProgress
           : null;
@@ -56,12 +57,6 @@ export default function SidePanel() {
           let weekCompleted = false;
           let weekLocked = false;
           let weekCurrent = false;
-
-          console.log(
-            "User Progress:",
-            userProgress?.currentWeek,
-            userProgress?.currentDay,
-          );
 
           return {
             id: week,
