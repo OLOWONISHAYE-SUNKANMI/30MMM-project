@@ -59,7 +59,7 @@ export default function SidePanel() {
 
           console.log(
             "User Progress:",
-            userProgress.currentWeek,
+            userProgress?.currentWeek,
             userProgress?.currentDay,
           );
 
@@ -108,7 +108,6 @@ export default function SidePanel() {
           };
         });
 
-        console.log("Processed weeks with progress:", processedWeeks);
         setWeeks(processedWeeks);
 
         // Auto-expand current week
