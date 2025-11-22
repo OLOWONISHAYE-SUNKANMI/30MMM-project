@@ -1,0 +1,848 @@
+export const DevotionalData = [
+  {
+    numberId: 1,
+    week: 1,
+    day: 1,
+    videoId: "IUNi6c-nEco",
+    weekTitle: "Introduction",
+    dayTitle: "Sanctification (To Be Set Apart)",
+    daySubTitle: null,
+    devotionText:
+      "My brother, to sanctify is to be set apart as holy. Saul had to be called out into the open by Samuel to be set apart for God.\n  Our Lord Jesus Christ called Simon and Andrew from the boat and set them apart for himself in service of His kingdom. Moses was called by his curiosity of the burning bush to be set apart for God.\n If you are reading this and have begun this journey to sexual obedience, then you too, like me, have been called and set apart by God.  This is the beginning of the sanctification process.\n Welcome!  Like Saul, Simon and Andrew, and Moses, this is the beginning of the journey to be set apart and used by God in the way that He designed you.",
+    reflectionQuestion:
+      "What do you think you could achieve with sexual obedience that would be impossible to do so without it?",
+    Scriptures: [
+      {
+        book: "Romans",
+        chapter: "1",
+        verse: "1",
+        translation: "CSB",
+        text: "Paul, a servant of Christ Jesus, called as an apostle and set apart for the gospel of God.",
+      },
+      {
+        book: "Acts",
+        chapter: "13",
+        verse: "2",
+        translation: "CSB",
+        text: 'As they were worshipping the Lord and fasting, the Holy Spirit said, "Set apart for me Barnabas and Saul for the work to which I have called them."',
+      },
+      {
+        book: "1 Corinthians",
+        chapter: "1",
+        verse: "2",
+        translation: "CSB",
+        text: "To the church of God at Corinth, to those sanctified in Christ Jesus, called as saints, with all those in every place who call on the name of Jesus Christ our Lord—both their Lord and ours.",
+      },
+    ],
+  },
+  {
+    numberId: 2,
+    week: 1,
+    day: 2,
+    videoId: "knjSlz3j2zI",
+    weekTitle: "Introduction",
+    dayTitle: "Singles/Married to Christ",
+    daySubTitle: null,
+    devotionText:
+      "My brother, you probably heard this verse before.  Who hasn\u2019t?  Find a good spouse, you find a good life.  What else is there to say?  If you find a wife as described in Proverbs 31, and you yourself have submitted to our God and Father, then a good life you will certainly find.  But that is not all\u2026\n\nThe AND statement is the key!  If you find a good spouse, you will also find more.  What more?  The favor of God. You mean God favors those men who decide to marry?!?  Yes!  He certainly does.  I tell men all the time that God speaks to you differently in marriage then when you are not married.  God blesses this institution when it operates under his perfect law of liberty.  The marriage itself provides a good life, but what you did not anticipate is that God also favors it.  This means that he does everything in His power to bless you under this institution.  Isn\u2019t that great news for those who seek and find marriage?  This is great news indeed!\n\n And Jesus Christ ultimately is that good thing that shows up in your marriage.",
+    reflectionQuestion:
+      "How do you interpret this verse?  Why do you think God favors you in marriage?",
+    Scriptures: [
+      {
+        book: "Proverbs",
+        chapter: "18",
+        verse: "22",
+        translation: "NKJV",
+        text: "He who finds a wife finds a good thing, And obtains favor from the LORD.",
+      },
+    ],
+  },
+  {
+    numberId: 3,
+    week: 1,
+    day: 3,
+    videoId: "NS-9x1TQLvI",
+    weekTitle: "Introduction",
+    dayTitle: "Your Spouse is the Savior of Your Body",
+    daySubTitle:
+      "Avoid sin.  Your spouse is the savior of your body.  (Embrace your marriage/Get married)",
+    devotionText:
+      "Look brother!  You have two options to live in the will of God.  The first option is to be like Paul.  Paul is suggesting full submission to Christ--all your mind, body, heart and strength.  This includes forgoing a marital relationship.  Paul stated that he wished all people were like he was, and acknowledged that he was gifted to be this way.  The only other man in the Bible that had the same gifting to live unencumbered without a wife was our Lord and Savior Jesus Christ.  Even Peter the rock that the church would be built on was married!  The second option is to get married.  Submit your body to your wife and let your wife submit her body to you.  Paul states that we do so because of our lack of self control and so Satan will not tempt us with sexual sin.  Think about this choice today.  The only other options include a broad swath of choices that all lead down the road to sexual disobedience.  Paul is not saying that it is easy.  He is saying that the choice is one of necessity.",
+    reflectionQuestion:
+      "Think about Paul\u2019s words today.   Paul did not make the command for sexual obedience.  God did.  Paul is only repackaging that prudent solution of marriage, but only as a concession.  How do you interpret Paul\u2019s words?",
+    Scriptures: [
+      {
+        book: "1 Corinthians",
+        chapter: "7",
+        verse: "1-7",
+        translation: "AMP",
+        text: "Now as to the matters of which you wrote: It is good (beneficial, advantageous) for a man not to touch a woman [outside marriage]. But because of [the temptation to participate in] sexual immorality, let each man have his own wife, and let each woman have her own husband. The husband must fulfill his [marital] duty to his wife [with good will and kindness], and likewise the wife to her husband. The wife does not have [exclusive] authority over her own body, but the husband shares with her; and likewise the husband does not have [exclusive] authority over his body, but the wife shares with him. Do not deprive each other [of marital rights], except perhaps by mutual consent for a time, so that you may devote yourselves [unhindered] to prayer, but come together again so that Satan will not tempt you [to sin] because of your lack of self-control. But I am saying this as a concession, not as a command. I wish that all the people were as I am; but each person has his own gift from God, one of this kind and one of that.",
+      },
+    ],
+  },
+  {
+    numberId: 4,
+    week: 1,
+    day: 4,
+    videoId: "Wua7nTr7JTo",
+    weekTitle: "Introduction",
+    dayTitle: "Marriage",
+    daySubTitle: null,
+    devotionText:
+      "My brother, are you still considering the important need for marriage. We know that God created Eve after he saw that Adam was alone. Adam also knew that he was alone. During Adam\u2019s task to name all the animals, Adam saw the animals were made in pairs. He already knew what male and female were.  He could tell he had no counterpart. When God presented Eve to Adam, Adam cried out “this is flesh of my flesh and bone of my bone”. He immediately knew that this woman was his counterpart.\n In today\u2019s chapter, through Malachi, God tells us the purpose of marriage but not until he reconfirms that it was HE that made marriage in the first place.  Man did not make marriage no matter the myriad of ways we choose to prepare the wedding ceremony.  So if God made marriage, is it not His right to also tell us the purpose of the marriage?!?  Malachi writes clearly that the purpose of marriage is to bring forth children of God or holy seeds.  In other words, marriage is meant for not only procreation so that the human race can continue on, but it is also meant to raise and establish children that know and follow God!  Marriage was not created for your own personal happiness.  It can provide that too, but God has a bigger plan in mind.  And if you return to the story of the first sin, you may also remember that it is the holy seed that will eventually crush the head of Satan.\n But don\u2019t miss the first part of the passage that hearkens back to 1 Peter 3:7 which says that if you do not treat your wife with honor, that God will not hear your prayers.",
+    reflectionQuestion:
+      "Have you ever given thought about the purpose of marriage from God\u2019s perspective?",
+    Scriptures: [
+      {
+        book: "Malachi",
+        chapter: "2",
+        verse: "13-15",
+        translation: "MSG",
+        text: "And here\u2019s a second offense: You fill the place of worship with your whining and sniveling because you don\u2019t get what you want from God. Do you know why? Simple. Because God was there as a witness when you spoke your marriage vows to your young bride, and now you\u2019ve broken those vows, broken the faith-bond with your vowed companion, your covenant wife. God, not you, made marriage. His Spirit inhabits even the smallest details of marriage. And what does he want from marriage? Children of God, that\u2019s what. So guard the spirit of marriage within you. Don\u2019t cheat on your spouse.",
+      },
+    ],
+  },
+  {
+    numberId: 5,
+    week: 1,
+    day: 5,
+    videoId: "qrkmwaQeVvM",
+    weekTitle: "Introduction",
+    dayTitle: "Rely on Your Wife for Your Sexual Needs",
+    daySubTitle: null,
+    devotionText:
+      "My brother, I am going to challenge you on this one.  You thought that when you got married that every sexual need that you could ever have imagined would be right at your fingertips day and night.  You thought that you would never have to chase sex again.  You have a beautiful wife, so your days of finding ways to meet your sexual needs are now long over.\nWhat you didn\u2019t realize is that your wife is a thinking, breathing, human being that has needs and wants too.  She has to be happy and cared for and taken care of and… and… and… to be available for you to have sex with.  Now you are realizing that this marriage thing to meet your sexual needs is not what it was cracked up to be.  Why didn\u2019t someone tell you this before you entered this union?\nMy brother, don\u2019t worry, this is bigger than you.  This is my challenge.  Make up your mind to meet all of your sexual needs through your wife.  Period.  No if ands or buts.  Just do it.  This will change everything.  Your wife is upset and you would rather sneak a few minutes of pornography in the bathroom.  Nope!  Turn back around and make it right.  Another woman is showing you the respect that you feel you deserve, so maybe if I make her my wife for the night. Nope!  Turn around and have a conversation with your covenant wife.  You can\u2019t bother to meet her needs tonight.  You just want to get off quick and go to sleep.  Maybe I can think about a sexual experience with another woman from my past and get off.  Nope!  Get back to reality and get that need met through your wife.\nIf you are married, your first step to fully connecting to God is to fully connect with your wife.  There is no way around it.  Your wife is the entryway to developing your relationship with your heavenly father.  Trust me on this: This step is a necessity during this journey to sexual obedience.  It starts here but it doesn\u2019t end here.",
+    reflectionQuestion:
+      "Think about this challenge.  Can you commit to do it for the next 4 weeks on this Clean journey?  This is the sacrifice that I am asking of you.  For those brothers that are not yet married, you are married to Christ until you find a saviour for your body.  If you are not married and haven\u2019t had sex before, you are blessed.  I commend you.  If you are single and have had sex before, you can do it.  Let the Lord be with you these next few weeks.  Submit your heart, soul, mind and strength to our God and Father, He will sustain you.",
+    Scriptures: [
+      {
+        book: "Proverbs",
+        chapter: "5",
+        verse: "17-20",
+        translation: "MSG",
+        text: "Enjoy the wife you married as a young man!  Lovely as an angel, beautiful as a rose—don\u2019t ever quit taking delight in her body.  Never take her love for granted!  Why would you trade enduring intimacies for cheap thrills with a whore? For dalliance with a promiscuous stranger?",
+      },
+    ],
+  },
+  {
+    numberId: 6,
+    week: 1,
+    day: 6,
+    videoId: "XbeZ10datKs",
+    weekTitle: "Introduction",
+    dayTitle: "The Flesh vs The Spirit",
+    daySubTitle: null,
+    devotionText:
+      "My brother, I gave you a big challenge yesterday!  Let me now tell you more about the battle that you are engaged in.  And really this is the ultimate versus battle for every man born in the flesh.  This battle is one of the flesh against the Spirit.  These two entities are literally complete opposites in every way.   And honestly they can\u2019t occupy the same space at the same time.  If you are feeding one, you are in turn starving the other.  It is as simple as that.\nThis is what you have to understand today.  You have to be aware of which of these two you are feeding.  In your daily activity, are you feeding the flesh or are you feeding the Spirit?  On the one hand, reread the works of the flesh as described by Paul: adultery, fornication, uncleanness, lewdness, idolatry, sorcery, hatred, contentions, jealousies, outbursts of wrath, selfish ambitions, dissensions, heresies, envy, murders, drunkenness, reveleries.  Think about your daily being and reflect on these works.  Christ said that you can know the tree by the fruit that it produces.   The works of the flesh are all selfish in nature.\nOn the other hand, the fruit of the Spirit is love, joy, peace, longsuffering, kindness, goodness, faithfulness, gentleness, self-control.   Did you notice that Paul described the works of the flesh in the plural, but the fruit of the spirit in singular?  The fruit of the spirit is like a multifaceted diamond.  This is the single character of the Spirit which can shine in different ways depending on where the light is reflected, but the whole still remains the same.  In other words, the fruit of the mango can be juicy, rich and sweet in the same bite.  So the fruit of the Spirit can have all these characteristics at the same time.\nTo win this battle against flesh, you have to at the very least feed the Spirit more than the flesh.  Most Christians feed the Spirit for 1-hour per week in Church but the other 167-hours in the week, they feed the flesh. This won\u2019t work in this fight for sexual obedience.  I hear you asking yourself: how do you feed the Spirit?  You feed the Spirit through reading the Word of God, prayer, fasting. You feed the Spirit through praise and worship. You feed the spirit by loving God and loving your neighbor.  The fruit of the Spirit is ultimately found full through your selflessness.",
+    reflectionQuestion:
+      "Think about your typical week, which are you feeding more--the flesh or the Spirit? In what ways can you give the Spirit the advantage?",
+    Scriptures: [
+      {
+        book: "Galatians",
+        chapter: "5",
+        verse: "17-24",
+        translation: "NKJV",
+        text: "For the flesh lusts against the Spirit, and the Spirit against the flesh; and these are contrary to one another, so that you do not do the things that you wish. But if you are led by the Spirit, you are not under the law.\nNow the works of the flesh are evident, which are: adultery, fornication, uncleanness, lewdness, idolatry, sorcery, hatred, contentions, jealousies, outbursts of wrath, selfish ambitions, dissensions, heresies, envy, murders, drunkenness, revelries, and the like; of which I tell you beforehand, just as I also told you in time past, that those who practice such things will not inherit the kingdom of God.\nBut the fruit of the Spirit is love, joy, peace, longsuffering, kindness, goodness, faithfulness, gentleness, self-control. Against such there is no law. And those who are Christ\u2019s have crucified the flesh with its passions and desires. If we live in the Spirit, let us also walk in the Spirit.",
+      },
+    ],
+  },
+  {
+    numberId: 7,
+    week: 1,
+    day: 7,
+    videoId: "QW26c1c6uaU",
+    weekTitle: "Introduction",
+    dayTitle: "Fight One Day at a Time",
+    daySubTitle: null,
+    devotionText:
+      "My brother, tough week right?!?!   I am well aware.  Remember, I went through the same journey that you are now embarking.  I am writing this from my personal experience and based on the men that have walked down this same narrow road.   I know exactly what you are going through.  You think that I am asking more of you than you think you can give.  And you are right, I am.\nOne thing that I realized in this fight is that it is all about intent.  You actually do not have to win the fight yourself.  God does not expect you to win.  In fact, He knows that you cannot win the fight against sin through your own will power.  Does this sound familiar?  Is this not why God sent His only begotten Son to set us free because He knew that we would need a saviour?  When I took the baton as far as could--through reading the Word, praying and fasting--God met me where I was on that track and took the baton and finished the race.  And boy did I need it.  When I had the baton, I told myself the same thing EVERY SINGLE DAY: Do not worry about tomorrow.  Worry about the fight today, tonight, this moment.  Win right now!  You might fall tomorrow.  Just do not fall now no matter what.  If you fall tomorrow, so be it.  But under no circumstance do you fall at this moment.  Just fight one day at a time.  Can you give me another moment, evening, day?  Do not get ahead of yourself.  Do not count the days.  Just live your life for our God and fight!  Like me, pray and know for certain that God will meet you where you are when you have done everything that you can in your own power.  God only needs you to choose Him. He cannot do that for you.",
+    reflectionQuestion:
+      "Can you take on this mentality and fight for sexual obedience one day at a time?  Do you believe that God will finish the race for you?",
+    Scriptures: [
+      {
+        book: "Matthew",
+        chapter: "6",
+        verse: "34",
+        translation: "NIV",
+        text: "Therefore do not worry about tomorrow, for tomorrow will worry about itself. Each day has enough trouble of its own.",
+      },
+    ],
+  },
+  {
+    numberId: 8,
+    week: 2,
+    day: 1,
+    videoId: "XDJNTnewPx8",
+    weekTitle: "Soul Ties",
+    dayTitle: "Healthy Bonding",
+    daySubTitle: null,
+    devotionText:
+      "My brother, in the beginning God created male and female.  If you are familiar with the book of Genesis chapter 2 verse 24, the inspired writer of the book Moses, after Adam meets Eve for the first time, comments, “Therefore a man shall leave his father and mother and be joined to his wife, and they shall become one flesh.”  This is obviously a commentary from the writer because neither Adam nor Eve had a fleshly father or mother since they were the first human beings created by God.  However, Moses pointed out that man and woman were meant to become united as one flesh.  And Jesus reverberated these words in the Book of Matthew in today\u2019s scripture in answering the Pharisees question about divorce..\nThe physical act of sexual intercourse is the uniting of male and female.  In other words, sexual intercourse is marriage under God\u2019s law. It is a blood covenant. The first sexual act for a woman breaks the hymen and this breaking releases blood signifying marriage between man and woman. The man, at the time of Abraham, had to be circumcised which also caused the shedding of blood as a symbol of his covenant or marriage to God. This blood covenant is not to be broken once male and female have been joined together.  Marriage is a covenant institution, and that covenant is established through sexual intercourse.  (If you explore further, the breaking of this covenant can only happen when one partner has sex with another person outside of marriage through sexual immoratlity committing adultery. Sex can be both part of the joining together and the separation of a marriage.)\nSimply put, sex is the basis of marriage, and is the singular, healthy way man and woman are to be united. This is how the lives of male and female are knit together.  And because it is under God, this bond is spiritual, as much as it is physical.The one flesh is a coming together of mind, body and soul.  Many refer to marriage as a holy covenant when done according to God\u2019s law. Colloquially, some also call it a soul tie.",
+    reflectionQuestion:
+      "Do you understand God\u2019s design for marriage through the holy covenant of male and female?",
+    Scriptures: [
+      {
+        book: "Matthew",
+        chapter: "19",
+        verse: "4-6",
+        translation: "NIV",
+        text: "Haven\u2019t you read,” he replied, “that at the beginning the Creator \u2019made them male and female,\u2019 and said, \u2019For this reason a man will leave his father and mother and be united to his wife, and the two will become one flesh\u2019? So they are no longer two, but one flesh. Therefore what God has joined together, let no one separate.",
+      },
+    ],
+  },
+  {
+    numberId: 9,
+    week: 2,
+    day: 2,
+    videoId: "m0lRWNKiJAw",
+    weekTitle: "Soul Ties",
+    dayTitle: "Unhealthy Bonding",
+    daySubTitle: null,
+    devotionText:
+      "My brother, so now you are thinking, I am not a virgin and I am not married, so I definitely missed this whole healthy bonding thing yesterday!  Actually, I am not a virgin many times over.  Paul says since our bodies are owned by Christ that we should never unite those bodies with a prostitute.  In this case, a prostitute refers to someone that is not our wife.  But Paul further states that if we do unite our body with a prostitute that we become one flesh with that prostitute.  Paul makes it clear that the principle of bonding between male and female happens when sexual intercourse occurs.  And he makes it plain that we cannot choose who we become one body with when sex is involved.  When we choose sex, we also as a consequence, whether intended or not, become bonded with that partner.  Becoming one flesh with different women through sex is sexual immorality.  And every woman that we have sex also creates a bond with that woman.  This is the case whether it is a girlfriend from our past that we had a long relationship with to a one night stand after a party, or literally a paid encounter with a prostitute.  These covenants that we made where the intention was not marriage, but our own pleasure are called unholy covenants and represent unhealthy bonding. And it is these types of covenants that open the door to the enemy.\nThese bonds can easily be validated in the mind.  Have you ever been out somewhere familiar and that place triggered a memory of a woman that you have been with sexually in the past?  Or has a sexual event from your past appeared to your mind visually out of nowhere?  Or have you ever had a dream where you were taken back to a moment with a woman from your past or a woman that you have lusted after?",
+    reflectionQuestion:
+      "Have you experienced unhealthy bonding in your life?  Do you still sense a connection between these previous partners?  How has that connection shown up in your life since separating from that partner?",
+    Scriptures: [
+      {
+        book: "1 Corinthians",
+        chapter: "6",
+        verse: "12-20",
+        translation: "NIV",
+        text: '"I have the right to do anything," you say—but not everything is beneficial. "I have the right to do anything"—but I will not be mastered by anything. You say, "Food for the stomach and the stomach for food, and God will destroy them both." The body, however, is not meant for sexual immorality but for the Lord, and the Lord for the body.\nBy his power God raised the Lord from the dead, and he will raise us also. Do you not know that your bodies are members of Christ himself? Shall I then take the members of Christ and unite them with a prostitute? Never! Do you not know that he who unites himself with a prostitute is one with her in body? For it is said, "The two will become one flesh." But whoever is united with the Lord is one with him in spirit. Flee from sexual immorality. All other sins a person commits are outside the body, but whoever sins sexually, sins against their own body. Do you not know that your bodies are temples of the Holy Spirit, who is in you, whom you have received from God? You are not your own; you were bought at a price. Therefore honor God with your bodies.',
+      },
+    ],
+  },
+  {
+    numberId: 10,
+    week: 2,
+    day: 3,
+    videoId: "s4j_cniqgxA",
+    weekTitle: "Soul Ties",
+    dayTitle: "Spiritual Act of Worship",
+    daySubTitle: null,
+    devotionText:
+      "My brother, your sex life is a spiritual form of worship to God.  Up until this point, you were applauded for the number of women that you had sex with.  We were wrong.  I realized that every woman that I had sex with actually put distance between me and God.  Actually God is the immovable object, but we, ourselves, pull farther away.  Do you want to really draw closer to God?  An important part of that directional move is to offer your body as a living sacrifice to Him.  Submit your members (your penis) to Him, and use it only under the parameters that he deemed holy and pleasing to Him.\nLet’s also broaden the idea of sex by using a snippet from Jesus’ Sermon on the Mount which preached, “You have heard that it was said to those of old, ‘You shall not commit adultery.’  But I say to you that whoever looks at a woman to lust for her has already committed adultery with her in his heart. ” (Matthew 5:27-28 NKJV).  Furthermore, Job 31:1-4 (MSG) says, “I made a solemn pact with myself never to undress a girl with my eyes. So what can I expect from God? What do I deserve from God Almighty above?  Isn’t calamity reserved for the wicked? Isn’t disaster supposed to strike those who do wrong? Isn’t God looking, observing how I live? Doesn’t he mark every step I take?” Both make it clear that while the sin is full grown under the act of fornication or adultery, sexual sin is first conceived at the point of lust.  Ask David what happened when he saw Bathsheba bathing on that rooftop! To be thorough, I want you to conclude that everything from lust of the eyes to the physical act of sexual intercourse, and every sexual encounter that falls short of intercourse should be included in unhealthy bonding.  This includes but is not limited to lusting after a woman that you could not have sex with, receiving or giving oral sex, engaging in pornography, frequenting strip clubs, being molested, having sex with a woman whose name that you cannot remember, and having sex with women whose names you can remember.\nOne topic that comes up consistently is to or not to masturbate.  Let me add this for those who need an extra push.  You are right, the topic of masturbation cannot be found anywhere in the Bible.  The closest we have is the Onan, the son of Judah, spilling his seed on the ground because he did not want to have children with Tamar.  Because of this lack of mention of masturbation as sin in the Bible, some men have argued that it is ok to masturbate.  So let us say that you are able to masturbate without the help of a physical interaction with a woman that is not your wife, without the help of pornography, or without the help of fantasizing about a woman, have you ever been able to masturbate and pray to your God thereafter? No.  And that is because masturbation alone brings shame and causes you to hide from God.  Anything that causes you to turn from God in your life should be avoided.",
+    reflectionQuestion:
+      "What would it mean for you to submit your body as a living sacrifice to God?",
+    Scriptures: [
+      {
+        book: "Romans",
+        chapter: "12",
+        verse: "1",
+        translation: "NKJV",
+        text: "Therefore, I urge you brothers, in view of God's mercy, to offer your bodies as living sacrifices, holy and pleasing to God -- this is your spiritual act of worship",
+      },
+    ],
+  },
+  {
+    numberId: 11,
+    week: 2,
+    day: 4,
+    videoId: "LyZ6ONSdNEA",
+    weekTitle: "Soul Ties",
+    dayTitle: "Soul Tie Assignment",
+    daySubTitle: null,
+    devotionText:
+      "Make a list, for yourself, of every woman that you had sex with outside of marriage.  Use the safe broad definition that we discussed yesterday.  Pray and ask the Holy Spirit to reveal to you the names and faces of these women.  Make note of women who are not your wife that come to memory and under what circumstance.\nFor the list, Initials are fine.  No title is fine.  If you can’t remember the name, make a note of the event or whatever placeholder that makes sense.  This list is for you, but it will be something that we will use for tomorrow’s devotional.\nAnd make note of all the activity in your dreams this week.\nIf you have concerns, take a peak at Week 2, Day 5 now.  The purpose is to pray to break the soul tie that you have with these past women under the blood of our saviour and king Jesus Christ.",
+    reflectionQuestion: null,
+    Scriptures: [],
+  },
+  {
+    numberId: 12,
+    week: 2,
+    day: 5,
+    videoId: "F5OHHJ6YtdQ",
+    weekTitle: "Soul Ties",
+    dayTitle: "Soul Ties Prayer",
+    daySubTitle: null,
+    devotionText:
+      "We are going to stand on the promise of our Lord Jesus Christ, His cleansing blood and His renewing spirit.\nFor each one of the names that are on your list and those that the Holy Spirit has not yet brought to your remembrance, you will pray the following to break the unholy covenants and soul ties of your past.\n\nBREAKING SOUL TIES PRAYER\nLord God, I repent for my sin with _____.  Please forgive me God.  I renounce the relationship before you.  Please break any soul ties I may have with _______ in the name of Jesus Christ.  I release her in your Holy name.\nPlease bring to my remembrance any and everyone that I need to break soul ties with.  LORD God I wish to be free for my covenant wife.  *REPEAT\n\nEXAMPLE\nLord God, I repent for my sin with Jessica.  Please forgive me God.  I renounce the relationship before you.  Please break any soul ties I may have with Jessica in the name of Jesus Christ.  I release her in your Holy name.\nPlease bring to my remembrance any and everyone that I need to break soul ties with.  LORD God I wish to be free for my covenant wife.  *REPEAT\n\nIt seems so simple.  I get it.  The gift of Jesus Christ is simple and attainable by all who believe.  You have already said that you believe in Him before we started this Clean journey.  Stand on His promise in his Holy Name.  He can and will free you from your past.  Stand on it.  Pray and release your past so you can get out of the land of Egypt and/or the wilderness and into your Promised Land.\nBut wait, these prayers will really free you from the past.  These past memories will begin to dissipate from your mind.  Your escapes into these fantasies will be harder to get to and in some cases will be completely gone from your memory.  Are you ready for that leap?  If you marry, your wife is all that you will be able to rely on for your sexual needs.  This is the way that God designed it.\nFinally, this prayer is short so you can do it anywhere and everywhere.  When fantasies of other women come into your mind, you should break that soul tie immediately.  Don’t wait.  Do it on the spot.  Capture the thought and cast it down immediately.",
+    reflectionQuestion:
+      "Do what you can today, but this will be a continual process during Clean and beyond Clean.",
+    Scriptures: [
+      {
+        book: "John",
+        chapter: "15",
+        verse: "17",
+        translation: "NIV",
+        text: "If you remain in me and my words remain in you, ask whatever you wish, and it will be done for you.",
+      },
+    ],
+  },
+  {
+    numberId: 13,
+    week: 2,
+    day: 6,
+    videoId: "X_d4RNan4yI",
+    weekTitle: "Soul Ties",
+    dayTitle: "Sexual Temptation in Dreams",
+    daySubTitle: null,
+    devotionText:
+      "My brother, how is the assignment going?  Keep going.  Continue to ask the Holy Spirit to reveal those soul ties that you may have missed.  Be obedient and break those soul ties as they come to your remembrance.  Do not relish in the past, just release it in Jesus’ name.\nOne thing that I have experienced personally and have heard through the testimonies of many of the brothers like you who have moved through the Clean process is attacks in the dream state.  You may have already experienced this prior to Clean.  While sleeping, you may experience a dream where you are offered sex or find yourself in a sexually compromising situation.  Young boys colloquially called these wet dreams.  They are similar, but in order to clear up the misunderstanding around these types of dreams, let me explain.  This temptation is not from God.  These dreams are demonic attacks from the enemy and one must resist them.  I know, this is weird, and this might be the first time you are hearing about something like this.  I get it.  But listen.  Through the breaking of soul ties, you are cleaning up your past through the cleansing blood of our Lord and Saviour Jesus Christ.  And this act in and of itself is going to alert the enemy.  You were complicit in sexual disobedience, and the enemy is trying to make sure that he doesn’t lose one of his best members.\nThe key is that the fight against sexual disobedience must not only happen in the physical realm, but all seeds must be killed at the conception stage wherever they appear, including the dream state.  You have to fight the enemy on all levels.  If you are faced with a sexual proposition in your dream, you say no!  You resist, You run.  You get out of there.  And if worse comes to worse and you find yourself succumbing to the proposition then you WAKE UP!  There is no shame in that.  And even if you do fall during the dream, you pray, you repent, and you fight again the next time.  Don’t give up!    And finally, if you experience sleep paralysis or torment or any other demonic attack, you cry out--whether audibly or inaudibly--the name Jesus Christ.  The name above every name will set you free.\nAnd remember “No temptation has overtaken you except such as is common to man; but God is faithful, who will not allow you to be tempted beyond what you are able, but with the temptation will also make the way of escape, that you may be able to bear it.” (1 Corinthians 10:13)",
+    reflectionQuestion:
+      "Have you had sexual dreams in the past?  How do you act in that dream?  If you have a sexual dream during this process, make a note of it and share the dream and your response with the group.",
+    Scriptures: [
+      {
+        book: "James",
+        chapter: "1",
+        verse: "12-15",
+        translation: "NKJV",
+        text: 'Blessed is the man who endures tempation; for when he has been approved, he will receive the crown of life which the Lord has promised to those who love Him. Let no one say when he is tempted, "I am tempted by God"; for God cannot be tempted by evil, nor does He Himself tempt anyone. But each one is tempted when he is drawn away by his own desires and enticed. Then, when desire has conceived, it gives birth to sin; and sin, when it is full-grown, brings forth death.',
+      },
+    ],
+  },
+  {
+    numberId: 14,
+    week: 2,
+    day: 7,
+    videoId: "b3zWpnQzfOU",
+    weekTitle: "Soul Ties",
+    dayTitle: "Strip Clubs are a Place of Worship",
+    daySubTitle: null,
+    devotionText:
+      "My brother, I get it.  You are married or waiting faithfully to be married and you are relying on your wife for all of your needs.  But sometimes, you need something a little different to get that release.  The two most popular releases today are strip clubs and pornography.  It is harmless right?  There is no physical connection, so no possibility to really hurt anyone.\n This is where the scripture from Hosea comes in.  (And honestly, if you are familiar with the Prophet Books in the Old Testament, you are then well aware that God constantly uses the metaphor of adultery when His children seek other Gods.  This confirms the importance of loyalty in marriage to God.)  Look at what God says in this scripture, he is not going to go after the whoring daughters or adulterous wives but the men.  Tough love right?!  Yea.  Unfair right?! Probably.  But God’s order? Certainly.  You know you are the head of the household whether you have a wife and children yet or not.  God is preparing you to serve Him and his provided you with a call-first responsibility.  When Adam and Eve were hiding in those bushes, who did he call first although Eve was equally guilty of the first sin?  He called Adam.\n One day it occurred to me that the worship at the holy whorehouses described in Hosea symbolized today’s strip clubs.  At least back in Hosea’s day, the people worshipped under the auspices of fertility needs.  Though still a no no from God’s perspective.  Men do not have fertility in mind today, just personal pleasure--spilling their seed in some way.  The worship house gets the right rhythm going and lights turned down for the clothesless praise dance.  The feminine goddess who entertains you (or is it who you entertain) is naked and does a praise dance around a metal pole to get you erect.  You prepare your offering through tithes for her good work.  And you lay those tithes on the altar where her dance takes place.  Maybe you pay her extra for a personal one-on-one consultation.  You have specific needs right?!  For a moment, you submit and worship her.   You entertain this goddess that you placed on that pedestal and worship her.  Let’s not confuse the obvious: this is worship at the holy whorehouse, I mean, the stripclub.",
+    reflectionQuestion:
+      "How will you heed the call of God in this selected Hosea scripture?  Why do you think God cares so much about sexual obedience?",
+    Scriptures: [
+      {
+        book: "Hosea",
+        chapter: "4",
+        verse: "11-14b",
+        translation: "MSG",
+        text: "Before you know it, your daughters are whores and the wives of your sons are sleeping around.  But I’m not going after your whoring daughters or the adulterous wives of your sons.  It’s the men who pick up the whores that I’m after, the men who worship at the holy whorehouses—a stupid people, ruined by whores!",
+      },
+    ],
+  },
+  {
+    numberId: 15,
+    week: 3,
+    day: 1,
+    videoId: "vbU2gES_fyc",
+    weekTitle: "Generational Curses",
+    dayTitle: "No Clean Slate",
+    daySubTitle: null,
+    devotionText:
+      "You are not born with a Clean Slate.  On the one hand, the Lord your God says that he punishes the children to the third and fourth generation of those who hate Him.  This is the basis of a generational curse.  On the other hand, the Lord your God says that he shows love to a thousand generations of those who love Him and keep His commandments.  This is the basis of the generational blessing.\n Whether you realize it or not, you come with the advantages and disadvantages of your parents or grandparents.  Those prayers your grandmother stored up for you and because of her obedience to God has mattered more than you know in your life.  But, disobedience from your father and his sins against God have mattered equally so.\n You may ask why a curse of 3-4 generations?  The curse of 3-4 generations means that it is associated with people who are still living or who have lived during your lifetime.\n The bonus is the “sins of the father” and its arms too short to box with the righteousness and the sacrifice of the Son.",
+    reflectionQuestion: "What hit you about the cursing and blessing of God? ",
+    Scriptures: [
+      {
+        book: "Exodus",
+        chapter: "20",
+        verse: "1-6",
+        translation: "NIV",
+        text: "And God spoke all these words:  “I am the Lord your God, who brought you out of Egypt, out of the land of slavery. You shall have no other gods before[a] me. You shall not make for yourself an image in the form of anything in heaven above or on the earth beneath or in the waters below. You shall not bow down to them or worship them; for I, the Lord your God, am a jealous God, punishing the children for the sin of the parents to the third and fourth generation of those who hate me, but showing love to a thousand generations of those who love me and keep my commandments.",
+      },
+    ],
+  },
+  {
+    numberId: 16,
+    week: 3,
+    day: 2,
+    videoId: "eU-vQ8DQjAM",
+    weekTitle: "Generational Curses",
+    dayTitle: "Family Curses",
+    daySubTitle: null,
+    devotionText:
+      "My brother, I get it.  You don’t believe in curses even if described by God in His own words by His own finger.  Let me give you an abbreviated example of how a family cursed played out in scripture several generations after the Ten Commandments were introduced.\n Saul, selected and anointed by God through the Prophet Samuel, was crowned the first king of Israel.  Early on in Saul’s kingship, God commanded Saul to destroy the Amalekites, including people, animals and riches. No remnants of the Amalekites should remain.  (The reason for this command from God is rooted in the Amalekites attack on the children of Israel during the days of Moses.)  Saul failed to be obedient to God.  God then promised to rip the kingdom from Saul and his family.  This disobedience was the beginning of a generational curse.\n Saul later lost his own life and the lives of his three sons--Jonathan, Abinidab, and Malchishua (from his covenant wife) in a single day during a battle against the Philistines.  Ishobeth his son from a concubine rose to kinship over Israel but lost his life in an assasination attempt.  One of Saul’s daughters Michal was married to David, but because of an irreconcilable disagreement with David, Michal never bore any of David’s (many) children.  Merab (from Saul’s covenant wife) and Aiah (from Saul’s concubine) had 7 sons between them.  Now, Saul tried to wipe out the Gibeonites in what appears to have been a despicable act.  Long after Saul’s death, the Gibeonites asked David for retribution.  Because of this, all 7 sons of Merab and Aiah were hanged by the Gibeonites in retribution.  The sole survivor from the branch of Saul was Mephibosheth, the son of Jonathan.  However, Mephibosheth when he was still a boy was dropped by his caregiver and left lame in both his legs all of his life.  Because of the promise made between David and Jonthan, David ultimately took Mephibosheth into his household, the father of Mephibosheth.  Through this sole survivor, the line of Saul was shown mercy by God.  It took 3-4 generations after Mephibosheth for the branch to be restored.  Later on these descendants were described as a group of valiant men.  Still, the curse vetted out against the family of Saul, because of Saul’s disobedience, gets played out across several decades until every child of Saul was accounted for by God.\n My brother, you are fighting for your success despite the sins of your parents.  You are fighting for the success of your offspring.  The blessing in both of today’s scriptures is that you do not have to suffer for the sins of your father if you choose to go the way of obedience toward God.",
+    reflectionQuestion:
+      "Think about your larger family--both nuclear and extended.  Is choosing the way of God out of alignment with what your family currently believes?",
+    Scriptures: [
+      {
+        book: "Jeremiah",
+        chapter: "31",
+        verse: "29-30",
+        translation: "MSG",
+        text: "When that time comes you won’t hear the old proverb anymore, ‘Parents ate the green apples, their children got the stomachache.’  No, each person will pay for his own sin.  You eat green apples, you’re the one who gets sick.",
+      },
+      {
+        book: "Ezekiel",
+        chapter: "18",
+        verse: "20",
+        translation: "NKJV",
+        text: "The soul who sins shall die. The son shall not bear the guilt of the father, nor the father bear the guilt of the son. The righteousness of the righteous shall be upon himself, and the wickedness of the wicked shall be upon himself.",
+      },
+    ],
+  },
+  {
+    numberId: 16,
+    week: 3,
+    day: 3,
+    videoId: "gCVVW3HQJ3c",
+    weekTitle: "Generational Curses Assignment",
+    dayTitle: "Family Curses",
+    daySubTitle: null,
+    devotionText:
+      "In order to successfully complete this assignment, you will most likely have to reach out to family members.  I would suggest you start with what you know first.  What have you seen?  Who is married?  Who is divorced?  Whose kids are older than the length of their marriage?  Where do you see sexual obedience and where did you see sexual obedience.  Fill out the Sexual Integrity Family Tree as much as you can.  Put question marks around the family members that you do not quite know about.  Start with your generation, including all of your siblings and cousins.  Depending on your age, I suggest you move forward to your children’s generation and children’s children’s generation before working your way back.  After this, go backwards and continue to work on your parent’s generation and then your grandparents’ generation.  I encourage you to pray and then pick one to three of your friendliest most option family members and talk to them about family history in general.  Let the Holy Spirit guide the conversation.  It will take you longer than the duration of this group to thoroughly complete this assignment, but I want you to keep this information in mind as you move forward.\n The scripture from Week 3, Day 1 says that God will curse 3-4 generations of those who hate me.  John 14:15 confirms “if you love, keep my commandments.”  By deductive logic, if you hate God, ignore His commandments, right?  I soon came to realize that the 3-4 generations refer to those generations that are living during your lifetime.  How merciful is God to limit the generational curse to 3-4 generations, but to extend the generational blessing to one-thousand generations?!  Be encouraged.  You will be the chain breaker.",
+    reflectionQuestion:
+      "Can you identify 3 members who you can reach out to this week?",
+    Scriptures: [],
+    additionalData: {
+      link: "https://docs.google.com/spreadsheets/d/1sAk6pGIfx_ljA2Z6XsvLY3rhogQAwNzWoLmE0DMsIno/edit?gid=548186339#gid=548186339",
+    },
+  },
+  {
+    numberId: 18,
+    week: 3,
+    day: 4,
+    videoId: "L70SEgJGMnw",
+    weekTitle: "Generational Curses",
+    dayTitle: "David and Goliath (Chapters and Footnotes)",
+    daySubTitle: null,
+    devotionText:
+      "My brother, David’s victory over Goliath was a pivotal moment in not only the life of David but of all of Israel as well.  It took several chapters in the book of 1 Samuel to give the complete back story leading up to the fateful match, a detailed description of the victory of David over Goliath, and the follow up response to that victory.   I would conservatively say at least 1 Samuel 15-18 would give you everything that you need to understand this story.  Now, think about that, it took 4 chapters, at least, to describe the defeat of this single giant in the lives of David and the children of Israel.  This moment though changed the ENTIRE culture of Israel and set the next generation on a new path.\n The second half of 2 Samuel 21:15-22 - the writer describes the 4 children of the giant at Gath (aka Goliath) that were later killed.  The first giant actually almost killed David himself.  This was an older David, and maybe one that should not still be on the battlefield.  The light of Israel, David, was almost extinguished before Abishai, his nephew and armor bearer, jumps in to kill the giant. The second giant was killed by one of David’s mighty men whose victory was described only in a single sentence. The third giant who was also mentioned as Goliath’s brother was killed by another of David’s mighty men in yet another short sentence.  In full circle, the fourth giant was killed by Jonathan the son of Shimea.  Jonathan is the nephew of David.  Shimea, David’s brother, was both there when Goliath taunted all of Israel for 40 days, and witnessed when David killed Goliath as a boy.\n This passage of scripture reminds us that the giant you kill today is still a giant that your children will face tomorrow.  However, the difference is: your children will face that giant and defeat it.  In your story, like David’s, this giant was the main character.  In your children’s story, with God’s help, it will only be a footnote.  Keep fighting brothers!",
+    reflectionQuestion:
+      "What is the primary giant in your life today?  And will you make it a footnote in the story of your children’s lives?",
+    Scriptures: [
+      {
+        book: "2 Samuel",
+        chapter: "21",
+        verse: "15-22",
+        translation: "NKJV",
+        text: "When the Philistines were at war again with Israel, David and his servants with him went down and fought against the Philistines; and David grew faint. Then Ishbi-Benob, who was one of the sons of the giant, the weight of whose bronze spear was three hundred shekels, who was bearing a new sword, thought he could kill David. But Abishai the son of Zeruiah came to his aid, and struck the Philistine and killed him. Then the men of David swore to him, saying, “You shall go out no more with us to battle, lest you quench the lamp of Israel.”Now it happened afterward that there was again a battle with the Philistines at Gob. Then Sibbechai the Hushathite killed Saph, who was one of the sons of ]the giant. Again there was war at Gob with the Philistines, where Elhanan the son of Jaare-Oregim the Bethlehemite killed the brother of Goliath the Gittite, the shaft of whose spear was like a weaver’s beam. Yet again there was war at Gath, where there was a man of great stature, who had six fingers on each hand and six toes on each foot, twenty-four in number; and he also was born to the giant.So when he defied Israel, Jonathan the son of Shimea, David’s brother, killed him. These four were born to the giant in Gath, and fell by the hand of David and by the hand of his servants.",
+      },
+    ],
+    additionalData: {
+      link: "https://www.biblegateway.com/passage/?search=2%20Samuel+21&version=NKJV#fen-NKJV-8601i",
+    },
+  },
+  {
+    numberId: 19,
+    week: 3,
+    day: 5,
+    videoId: "GJU3NUyhR7s",
+    weekTitle: "Generational Curses",
+    dayTitle: "You Have a Choice",
+    daySubTitle: null,
+    devotionText:
+      "This is one of my favorite moments in the Bible. If you are familiar with the Books of Chronicles then you know those books are dense with more genealogy histories than narrative ones.  The two verse miniature story of Jabez is one the most powerful stories in all of the scriptures.  Jabez’ future was determined by his mother at no fault of his own.  And he prayed to God.  There is always a way out with God. God is the and statement in your life.  My father loved women so maybe I will too. My father had kids out of wedlock so I will too.  My father’s pornography collection was vast so what would you expect from me.  My father left my mother for another woman after 10 years of marriage so my marriage won’t last either. And I prayed to God asking, requesting, beseeching, crying out His hand would be with me and that my situation would be different.",
+    reflectionQuestion:
+      "What are you asking God for change in your life?  What family issue has been passed on to you that you cannot bear alone?\n Good thing you don’t have to bear it. Like Jabez, whatever your circumstance, your testimony can be: And God granted me what I requested.",
+    Scriptures: [
+      {
+        book: "1 Chronicles",
+        chapter: "4",
+        verse: "9-10",
+        translation: "NKJV",
+        text: "Now Jabez was more honorable than his brothers, and his mother called his name Jabez, saying, “Because I bore him in pain.” And Jabez called on the God of Israel saying, “Oh, that You would bless me indeed, and enlarge my territory, that Your hand would be with me, and that You would keep me from evil, that I may not cause pain!” So God granted him what he requested.",
+      },
+    ],
+    additionalData: {
+      clink:
+        "https://www.biblegateway.com/passage/?search=1%20Chronicles%204&version=NKJV#fen-NKJV-10395c",
+      dlink:
+        "https://www.biblegateway.com/passage/?search=1%20Chronicles%204&version=NKJV#fen-NKJV-10396d",
+    },
+  },
+  {
+    numberId: 20,
+    week: 3,
+    day: 6,
+    videoId: "d6DqN1vst5A",
+    weekTitle: "Generational Curses",
+    dayTitle: "Generational Curses Prayer",
+    daySubTitle: null,
+    devotionText:
+      "My brother, this prayer below is the one that you will use to begin to break those generational curses that you uncover in your Sexual Integrity Family Tree.  Dog ear this page.  You will be back to this page.  Also, check out the appendix for additional specific prayers that you can call on.  Let us tackle these one by one.  In the spirit of Jabez, let us call on the holy name of Jesus Christ to change our situation.\n\n GENERATIONAL CURSES PRAYER\n\n LORD please break the curse of “poverty/lust/fatherlessness/etc” over my life. Break the covenant that my family members may have made with Satan creating this curse in the name of my Lord Jesus Christ.  Break this curse Lord.  Break this covenant made with Satan in the name of the Lord Jesus Christ. Father God I repent for the sins of my parents and grandparents that they did not cover under the blood of Jesus. You are my Lord God, and I worship you and you alone. \n\n Example 1: I bind up this spirit of poverty and cast it out of my life in the name of the Lord Jesus Christ.  \n Example 2: I bind up every sexual sin in my life: masturbation, pornography, lust, fornication, molestation, and I loose liberty and freedom in the name of the Lord Jesus Christ.\n I decree and declare that Satan has no power over me or my future.  Replace this spirit with the Holy Spirit. And let the Holy Spirit guide my life from this point on.\n\nI pray, God, that you reveal to me any curses that are over my life.  Search my heart God and reveal to me all that keeps me from worshiping you completely.\n\nAmen. \n\n*Pray one curse at a time over time.  In my experience God wants you to show intention here so he can meet you and take the baton as you already know.*",
+    reflectionQuestion:
+      "The soul ties assignment and the generational curses assignment should be ongoing ones.  Continue to work the tools for the rest of this group and beyond.  Are you being intentional?  Have you been putting your best foot forward so God can carry you through?",
+    Scriptures: [],
+  },
+  {
+    numberId: 21,
+    week: 3,
+    day: 7,
+    videoId: "6oJ_1We_j6M",
+    weekTitle: "Generational Curses",
+    dayTitle: "Your Responsibility to your family - Pray like Daniel",
+    daySubTitle: null,
+    devotionText:
+      "My brother, one can argue that Daniel did not have to pray a prayer like this for himself. This is the Daniel that stood up to his conquerors by not eating the foods they called delicacies.  Instead he fasted eating only vegetables and water.  This is the Daniel that refused to worship the king like a God. Instead he kept praying to his God which landed him in the lion's den. This Daniel has no problem standing up to those who tried to separate him from his God.  In this instance, Daniel is not standing up for himself through prayer but he is interceding on the behalf of all of Israel because of who he is to God.\nYou have been praying on behalf of yourself for the past few weeks to be free from sexual sin so you can live in sexual obedience to God.  But look back at your Sexual Integrity Family Tree Assignment.  This problem did not start with you, but it can end with you if only you will stand up to it.  This problem did not start with your brother, your cousin, your uncle, your father, your grandfather, but who will intercede on their behalf like Daniel did for his Israelite family.",
+    reflectionQuestion:
+      "Who else on your family tree is dealing with issues of sexual integrity? Like Daniel, who can you pray for?  Bonus: Make the Daniel Prayer your own--see the appendix for an example.",
+    Scriptures: [
+      {
+        book: "Daniel",
+        chapter: "9",
+        verse: "15-23",
+        translation: null,
+        text: "Now, Lord our God, who brought your people out of Egypt with a mighty hand and who made for yourself a name that endures to this day, we have sinned, we have done wrong. Lord, in keeping with all your righteous acts, turn away your anger and your wrath from Jerusalem, your city, your holy hill. Our sins and the iniquities of our ancestors have made Jerusalem and your people an object of scorn to all those around us. “Now, our God, hear the prayers and petitions of your servant. For your sake, Lord, look with favor on your desolate sanctuary. Give ear, our God, and hear; open your eyes and see the desolation of the city that bears your Name. We do not make requests of you because we are righteous, but because of your great mercy. Lord, listen! Lord, forgive! Lord, hear and act! For your sake, my God, do not delay, because your city and your people bear your Name.”\n While I was speaking and praying, confessing my sin and the sin of my people Israel and making my request to the Lord my God for his holy hill— while I was still in prayer, Gabriel, the man I had seen in the earlier vision, came to me in swift flight about the time of the evening sacrifice. He instructed me and said to me, “Daniel, I have now come to give you insight and understanding. As soon as you began to pray, a word went out, which I have come to tell you, for you are highly esteemed. Therefore, consider the word and understand the vision...",
+      },
+    ],
+  },
+  {
+    numberId: 22,
+    week: 4,
+    day: 1,
+    videoId: "f6kJOdMbQ3k",
+    weekTitle: "The Tools",
+    dayTitle: "The Word - Chase after God",
+    daySubTitle: null,
+    devotionText:
+      "These devotional and commentaries are not reading the Word.  Your Pastor preaching is not reading the Word (even if the graphics are fancy).  Your daily email with one or two verses pulled by an algorithm from your daily app is not reading the Word.  These are all supplements to the actual reading of the Word of God.   And you can’t live off of supplements.  Even Jesus Christ said that “Man shall not live by bread alone, but by every word that proceeds from the mouth of God.”  Even the vitamin bottle full of supplements says to digest with food!  And the Bible is that food.  Everything else, commentaries, devotionals, and preaching are supplements.  If you ate supplements only, even if they have vitamins, you would be malnourished.  Supplements are a good start, but they are not enough for you to live off of, and this reason why I nudge (well maybe push) you to read the Bible itself.  And the Holy Spirit talks to you specifically through the Bible.   If you don’t read it, you miss this important mode of communication in your life as a follower of Christ.\n Ezekiel says he ate the scroll and it tasted like honey.  The scroll is the Word of God.  And you have to pick it up and read it for yourself.  Ask the Holy Spirit for insight, for guidance.  Make a plan and push yourself to read through the entire book in a year.  Get in a group with other brothers if you have to.  If you read about 3 chapters a day, every day, you will be able to read the Word in a year!  Take more time if you need to, but get through it.  You don’t have to understand everything.  Hebrews 4:12 says that the Word of God is living and powerful.  This means that while the Word stays the same, you are different every time that you read it.  This difference provides you different insights.  The Holy Spirit ultimately uses your reading of the Word to transform you.\nMy last intermediate concession is for you to listen to the Word.  Let it play and soak it in as a concession.  But read the Word everyday no matter what.  Meditate on it day and night.  This is how God speaks with you.  The Word is your sword of truth.  Get armed.",
+    reflectionQuestion:
+      "Have you read the Word all the way through before?  Dr. Myles Munroe says that it is a good idea to read through the Word of God every year from start to finish.",
+    Scriptures: [
+      {
+        book: "Ezekiel",
+        chapter: "3",
+        verse: "3",
+        translation: null,
+        text: 'Then he said to me, "Son of man, eat this scroll I am giving you and fill your stomach with it." So I ate it, and it tasted as sweet as honey in my mouth.',
+      },
+      {
+        book: "Hebrews",
+        chapter: "4",
+        verse: "12",
+        translation: null,
+        text: "For the word of God is living and powerful, and sharper than any two-edged sword, piercing even to the division of soul and spirit, and of joints and marrow, and is a discerner of the thoughts and intents of the heart.",
+      },
+    ],
+  },
+  {
+    numberId: 23,
+    week: 4,
+    day: 2,
+    videoId: "cgUG8I21gzw",
+    weekTitle: "The Tools",
+    dayTitle: "Prayer",
+    daySubTitle: null,
+    devotionText:
+      "My brother, prayer is a combination of petitioning and commanding, and listening.  You must listen.  You have to be still, to let that still small voice speak to you.  And He will.  The voice is not going to talk over you.  It is gentle.  It is soft.  But it is willing to guide you if you let it.  The Holy Spirit may also urge you to pray, or what to pray, or who to pray for.  This direction comes from listening and obeying.\nPrayer is also transformative.  The first scripture tells you first to humble yourself so that you can pray.  Do you come humbly before the God of the universe before you begin to pray.  Do you remember how Jesus taught the disciples how they should pray.  Do you begin with the majesty of God?  Our Father, who art in Heaven.  Hallowed be your name.  Do you ask to be forgiven for your sins so God can actually hear your prayer?  Do you forgive those who sinned against you before you ask God for such a bold request?  God says that if we come to him humbly, if we pray, if we seek His face, and if we turn from our wickedness, only then will he hear us, forgive our sins, and heal us.  One thing that you should have received up until this point: prayer is critical to the transformation that we seek.  The prayer doesn’t have to be fancy, but it has to be sincere.  It doesn’t have to be long, but it should be specific.  Prayer is a lifeline provided to us by our creator, I pray that you use it.\nMark 9:29 says that some things can only come out by prayer and fasting.  I found that this spirit of lust can only be broken through fasting.  You are going to need God working on your behalf to break this stronghold over your life.  I know, you may not know much about fasting.  Fasting is the third critical tool in the life of Clean along with the Word of God, and prayer.",
+    reflectionQuestion:
+      "Think about the ways that you pray to God.  Are you coming to him humbly with His majesty in mind?  The end of the book of Job reminds us of how magnificent the creator of the universe really is in His own words.  If God can loosen Orion’s belt, he can surely break sexual sin in your life.  Will you let him?",
+    Scriptures: [
+      {
+        book: "2 Chronicles",
+        chapter: "7",
+        verse: "14",
+        translation: null,
+        text: "If my people who are called by my name humble themselves, and pray and seek my face and turn from their wicked ways, then I will hear from heaven and will forgive their sin and heal their land.",
+      },
+      {
+        book: "Mark",
+        chapter: "9",
+        verse: "29",
+        translation: null,
+        text: "So He said to them, “This kind can come out by nothing but prayer and fasting.”",
+      },
+    ],
+  },
+  {
+    numberId: 24,
+    week: 4,
+    day: 3,
+    videoId: "KqYNu7uMsBM",
+    weekTitle: "The Tools",
+    dayTitle: "Corporal Fast",
+    daySubTitle: null,
+    devotionText:
+      "My brother, this is what we have been gearing up for--the corporal fast.  I don’t know if you have fasted before or not. If you have, then I encourage you to push yourself a little on this one.  If you haven’t fasted, this might be one of the most important experiences of your Christian life.  Christ says “when we fast…” (Matthew 6:16-18). He does not if we fast. Fasting is an essential part of Christian faith. Now there are different types of fast that you can choose from. I am not the Christian fasting police, but I strongly recommended choosing from one of the following: the Daniel fast, a juice fast, or a water fast. In my opinion, this is where you want to grow into in your Christian journey, even if it is not where you are now.\nThe Daniel fast (Daniel 1:11-16) has many variations but the most common is no meat or processed foods including sugar and some say breads as well.  The easiest way to think about it is as a true vegetarian diet without any processed foods.  The juice fast is fresh pressed juice only during the fast.  A common way is with a juicer (not a blender) at home or the simplest way is to purchase a set of juices from a juice location.  (Although some have done a smoothie fast!)  The most challenging fast is the water fast (or is it Esther’s no food or drink fast!).  The water fast is the simplest (and cheapest).  I leave it up to you to choose among these three.  But the goal in your choice is to choose something that makes you dependent on God.  Try Him.  He will sustain you.\nThe unsaid given of the fast is how you deal with the outside world during this time.  While fasting, it is a given to remain in God’s presence to the extent that you can.  If you want to listen to something, listen to gospel.  If you want to watch something, pull up a favorite sermon or pastor.  If you want to read something, read the Word or some book centered on Christ.  If you are hungry, pray.  If you are thirsty, pray.  You will be surprised how feeding the Holy Spirit in these various ways actually kills any hunger pains.  This is how the Spirit gets fed.  The goal of the fast is to starve the flesh, so the Spirit can get stronger in you.  It is this Spirit that we need to break yokes and heal us.\nThe fast that I want you to undergo is a three-day fast of your choosing starting the evening of Day 4 until the evening of Day 7.  The fast is an extended prayer.  In this case, it would be the equivalent of praying to God for three straight days.  If you know the story of Esther, she called this fast of all the Jews because she was about to go to the King with an impossible request.  And she wanted God on her side for it.  You are also going to your King Jesus Christ with an impossible request.  If you are in the will of Christ, He will answer you.  If only you would listen!\nIf you are part of a Clean group, then you will go on this fast in agreement with other men chasing after God.  We are not only praying for ourselves, but for each other during this time.  James 5:16 says “Confess your trespasses to one another, and pray for one another, that you may be healed.  The effective, fervent prayer of a righteous man avails much.” If you want to know more about the type of fasting that pleases God, refer to Isaiah 58.",
+    reflectionQuestion:
+      "Which fast will you choose?  Select one and let God sustain you. ",
+    Scriptures: [
+      {
+        book: "Esther",
+        chapter: "4",
+        verse: "15-16",
+        translation: null,
+        text: "Then Esther told them to reply to Mordecai, “Go, gather all the Jews to be found in Susa, and hold a fast on my behalf, and do not eat or drink for three days, night or day. I and my young women will also fast as you do. Then I will go to the king, though it is against the law, and if I perish, I perish.”",
+      },
+    ],
+  },
+  {
+    numberId: 25,
+    week: 4,
+    day: 4,
+    videoId: "z5ZzIhAq9OQ",
+    weekTitle: "The Tools",
+    dayTitle: "Fast Kick Off 1 (Soul Ties)",
+    daySubTitle: null,
+    devotionText:
+      "My brother, your fast should begin at the time of your last meeting for your Clean group.  If you meet at 7pm on Sunday for instance, then your fast should ideally begin together at 7pm on Thursday.  If you are able, you should kick off the fast in testimony and corporal prayer at the beginning of your fast.\nMy brother, let us spend the first evening of the fast alone continuing our prayers against unholy covenants and soul ties.  Remind our Lord and Saviour Jesus Christ of your intention to break these yokes!  Remind Him of all the work that you have already done in these past 3 weeks preparing for this final call.  Ask the Holy Spirit to bring any more unholy covenants to your remembrance.  Pray against those soul ties.  Ask God to break these strongholds in your life.  Let Him know that you want to strengthen your marital bond.  Let God know that you want to find your covenant wife.  Let Him know that you don’t know if you are ready, but you want to be.  And it is through Him with all the power and the glory that you can be made ready.\nGod has plans to prosper you and not to harm you.   This is refinement.  It is challenging.  It may be painful.  But do you trust your God’s words here?  Call on Him and pray, and he will listen.  Seek Him with your whole heart and you will find him.\nAnd now be still, and listen.  Quiet your thoughts, and listen.  What do you hear?  What is the Spirit telling you?",
+    reflectionQuestion:
+      "Focus on this prayer this evening into the next day.  Confess your sins to God so you can be set free.  Note anything that you hear in your Spirit.  Note any happenings in your dreams.  And as always, if you have a dream where you feel an attack, call on the name of JESUS CHRIST.  There is no name above that name.  Remember the enemy attacks when you are disobedient to him.  You make the enemy unhappy, when you turn against him.  I pray that the Lord will be with you during this fasting period in Jesus’ name.  Amen.",
+    Scriptures: [
+      {
+        book: "Isaiah",
+        chapter: "58",
+        verse: "6",
+        translation: null,
+        text: "Is this not the fast that I have chosen:\nno loose the bonds of wickedness,\nTo undo the heavy burdens \nTo let the oppressed go free,\n And that you break every yoke?",
+      },
+      {
+        book: "Jeremiah",
+        chapter: "29",
+        verse: "12",
+        translation: null,
+        text: "For I know the plans I have for you,” declares the Lord, “plans to prosper you and not to harm you, plans to give you hope and a future. 12 Then you will call on me and come and pray to me, and I will listen to you. 13 You will seek me and find me when you seek me with all your heart.",
+      },
+    ],
+  },
+  {
+    numberId: 26,
+    week: 4,
+    day: 5,
+    videoId: "JIfSplH-kv0",
+    weekTitle: "The Tools",
+    dayTitle: "Fast Kick Off 2 (Generational Curses)",
+    daySubTitle: null,
+    devotionText: null,
+    reflectionQuestion:
+      "Continue to focus on this prayer this evening into the next day.  Continue to confess your sins to God and those of your family, so you can be set free.  Note anything that you hear in your Spirit.  Note any happenings in your dreams.  And as always, if you have a dream where you feel an attack, call on the name of JESUS CHRIST.  There is no name above that name.   I pray that the Lord will be with you in Jesus’ name.  Amen.",
+    Scriptures: [
+      {
+        book: "Isaiah",
+        chapter: "58",
+        verse: "12",
+        translation: null,
+        text: "Is this not the fast that I have chosen:\nno loose the bonds of wickedness,\nTo undo the heavy burdens \nTo let the oppressed go free,\n And that you break every yoke?",
+      },
+      {
+        book: "Jeremiah",
+        chapter: "29",
+        verse: "12",
+        translation: null,
+        text: "For I know the plans I have for you,” declares the Lord, “plans to prosper you and not to harm you, plans to give you hope and a future. 12 Then you will call on me and come and pray to me, and I will listen to you. 13 You will seek me and find me when you seek me with all your heart.",
+      },
+    ],
+  },
+  {
+    numberId: 27,
+    week: 4,
+    day: 6,
+    videoId: "YXc4BTifuno",
+    weekTitle: "The Tools",
+    dayTitle: "Fast Kick Off 3 (Temptation?)",
+    daySubTitle: null,
+    devotionText:
+      "My brother, this is the final evening of your fast.  This evening you should continue to seek God.  Pray for and/or against what the Spirit is showing you.  Have you been listening?  Have you been observant to all things around you?  God is going to use everything and anything to get your attention.  He will speak to you in the way that you need to hear.  Are you paying attention?  What is the Spirit telling you to pray?\nIf you get hungry, remember that the Lord will satisfy your soul.  If you are weak, let God know.  Call out to Him to feed your spirit.  Let him know that the Spirit is willing, but the flesh is weak.  Let God know that these sins are behind you.  That you are charting a new path under His light.  That He will now be a lamp to your feet moving forward.  Let God know how much you need Him, and there will be no continuing without Him.  Pray that God breaks these yokes that are obstacles between you and Him.  Pray that God continues to reveal those yokes that you do not know about.  Let God be a strength to your bones.  Let God be like a spring that never fails in your life.\nBut lastly, listen to God and what he is saying and revealing to you.  This only works if you obey.  Disobedience is a sin.  God wants you to obey Him.  Do what he tells you however difficult it may be, so you can be truly free.  Forgive that family member.  Confess that transgression.  Pray for that enemy.  Do what is required.\nIn my experience, during a fast like this one, the enemy may make a strike against you.  When your flesh is weak is when the enemy will test you.  Submit to God.  Resist the Devil and he will flee from you.  All you have to do is obey God and resist the enemy’s temptation.  God always makes a way for escape in EVERY temptation.  1 Corinthinians says “No temptation has overtaken you except such as is common to man; but God is faithful, who will not allow you to be tempted beyond what you are able, but with the temptation will also make the way of escape, that you may be able to bear it.”  The Devil can only tempt you.  He cannot make you do anything that you are unwilling to do.\n",
+    reflectionQuestion:
+      "Have you been obeying God during this fast?  What have you been hearing and seeing?  Continue to confess your sins to God and those of your family, so you can be set free.  Note anything that you hear in your Spirit.  Note any happenings in your dreams.  And as always, if you have a dream where you feel an attack, call on the name of JESUS CHRIST.  There is no name above that name.   I pray that the Lord will be with you in Jesus’ name.",
+    Scriptures: [
+      {
+        book: "Isaiah",
+        chapter: "58",
+        verse: "11",
+        translation: "NKJV",
+        text: "And the Lord will continually guide you,\nAnd satisfy your soul in scorched and dry places,\nAnd give strength to your bones;\nAnd you will be like a watered garden,\nAnd like a spring of water whose waters do not fail.",
+      },
+      {
+        book: "Matthew",
+        chapter: "4",
+        verse: "1-11",
+        translation: "NKJV",
+        text: "Then Jesus was led by the Spirit into the wilderness to be tempted[a] by the devil. After fasting forty days and forty nights, he was hungry. The tempter came to him and said, “If you are the Son of God, tell these stones to become bread.” Jesus answered, “It is written: ‘Man shall not live on bread alone, but on every word that comes from the mouth of God.’[b]” Then the devil took him to the holy city and had him stand on the highest point of the temple. “If you are the Son of God,” he said, “throw yourself down. For it is written: “‘He will command his angels concerning you, and they will lift you up in their hands, so that you will not strike your foot against a stone.’” Jesus answered him, “It is also written: ‘Do not put the Lord your God to the test.’” Again, the devil took him to a very high mountain and showed him all the kingdoms of the world and their splendor. “All this I will give you,” he said, “if you will bow down and worship me.” Jesus said to him, “Away from me, Satan! For it is written: ‘Worship the Lord your God, and serve him only.” Then the devil left him, and angels came and attended him.",
+      },
+    ],
+    additionalData: {
+      alink:
+        "https://www.biblegateway.com/passage/?search=Matthew+4&version=NIV#fen-NIV-23211a",
+      blink:
+        "https://www.biblegateway.com/passage/?search=Matthew+4&version=NIV#fen-NIV-23214b",
+    },
+  },
+  {
+    numberId: 28,
+    week: 4,
+    day: 7,
+    videoId: "T6e6pQ7NaQ8",
+    weekTitle: "The Tools",
+    dayTitle: "Obedience is better than Sacrifice",
+    daySubTitle: null,
+    devotionText:
+      "My brother, I pray that you have or will experience a move of God during this fast or soon afterward. And that this experience catapults you into the victory that God has for you.\nRemember that obedience is better than sacrifice. It is better to listen and obey God, than to have to offer sacrifices and offerings to mend the mistakes made in sin.\nAnd meditate on the words of Proverbs 28:9, God has no use for the prayers of the people who won’t listen to him. Why pray to God if you refuse to hear and listen to Him? The fast should have helped to bring some clarity to your specific personal and family situation. Are you listening to God? You can’t solve every problem that you have ever faced in this 3-day fast, but this fast--in addition to the Word and prayer--should have revealed to you that you can solve the problems of this world when you seek God in this way.\nToday is your last meeting with Clean, but the journey far from ends here. It is only the beginning. Continue to read the Word, pray and fast regularly. God wants you to call on Him. Jesus says that the three ways to seek Him are: “Ask, and it will be given to you; seek, and you will find; knock, and it will be opened to you. For everyone who asks receives, and he who seeks finds, and to him who knocks it will be opened” (Matthew 7:7-8). Continue to try and test His words.   He loves to show up and confirm what He has said.",
+    reflectionQuestion:
+      "What things did God reveal to you during this fast?  In what ways, did you see God move during this Clean journey thus far?",
+    Scriptures: [
+      {
+        book: "1 Samuel",
+        chapter: "15",
+        verse: "22",
+        translation: null,
+        text: "“But Samuel replied:\n“Does the Lord delight in burnt offerings and sacrifices\nas much as in obeying the Lord?\nTo obey is better than sacrifice,\nand to heed is better than the fat of rams.”",
+      },
+      {
+        book: "Proverbs",
+        chapter: "28",
+        verse: "9",
+        translation: null,
+        text: "God has no use for the prayers of the people who won’t listen to him.",
+      },
+    ],
+  },
+  {
+    numberId: 29,
+    week: 5,
+    day: 1,
+    videoId: "5URKmmIaYWM",
+    weekTitle: "Exit Interview",
+    dayTitle: "Don't Look Back",
+    daySubTitle: null,
+    devotionText:
+      "My brother, there is no turning back.  Your next fall will be a rebuke!  If you turn back and try to go back to Egypt it won’t be there.   If you are unwilling to go forward and you can’t go back, then you may get stuck in the wilderness.\nMy brother, if you have gone this far, you may now realize that there is no turning back.  When the children of Israel were brought forth by God through Moses from Egypt, they were led into the wilderness.  At this point, they lamented about all that they missed back home in slavery.  They actually cried out to God to go back to Egypt!!!  They missed the food and the comforts of slavery.  If they knew freedom was going to be like this in the wilderness, they would have remained slaves.\nGod responded not by granting their desires, but by leading those original Israelites from Egypt around the wilderness like musical chairs until they all died out!  Maybe not all, a few men like Joshua got a chance to see all of the above, Egypt, the wilderness, and the Promised Land.  The majority weren’t ready to go forward to what God had for them, but God knew that going back was also not an option.\nClean is now over so the question that you must ask yourself honestly is will you put your hand to the plow and advance to what God has for you?  Or will you look back?  Or worse yet, will you mistake going around in the same old cycles as advancement until all the chairs are removed from you?",
+    reflectionQuestion:
+      "You have a decision to make.  Will you continue to work the tools--reading the Word, praying daily, and fasting regularly--that you learned?  Or will you turn back?",
+    Scriptures: [
+      {
+        book: "Luke",
+        chapter: "9",
+        verse: "62",
+        translation: "LAMP",
+        text: "But Jesus said to him, “No one who puts his hand to the plow and looks back [to the things left behind] is fit for the kingdom of God.”",
+      },
+    ],
+  },
+  {
+    numberId: 30,
+    week: 5,
+    day: 2,
+    videoId: "W41wINOysEU",
+    weekTitle: "Exit Interview",
+    dayTitle: "Don't Look Back",
+    daySubTitle: null,
+    devotionText:
+      "My brother, the Helper in this scripture selection is the Holy Spirit, left by Jesus Christ to convict the world of sin, of righteousness, and of judgment.  If you are like me, after going through Clean, there will be some things that will become more difficult to do.  For me, my ability to engage in media changed drastically.  Over time it became more difficult to watch certain television programs and movies.  I became more cautious about what I was spent time watching.  Beyond letting go of watching pornography, the world’s media is comprised of soft porn.  You would be hard pressed to watch an adult television series or movie that did not promote nudity and sexual content.  At first, I would continue to watch these shows, but would fast forward through sex scenes or scenes with sexual content.  Then, I began to watch shows that were more family friendly.  And soon, I would only watch shows once in a while instead of on a consistent basis.   The same things happened with music and books.  You may also rethink how you spend time pursuing personal pleasures, friendships and relationships.  I now guard more time.  I think more about the ways that I can spend feeding the spirit and doing the work of God.  This is important to keep in mind to remain trending toward deliverance.\nA few practical things that you can do include listening to a broader range of sermons, gospel music, and the audio Bible; subscribing to faith centered programming like Pureflix and the Chosen; reading Christ centered books on topics that would help to grow my faith.\n Whatever you choose, let the Holy Spirit convict you of sin. The Holy Spirit will point out things in your life that are not of Him.  He will convict you, if you listen and obey. I do not know how this will show up in your life, albeit there is really but one narrow road.  The only difference might be where you are on that narrow road during your unique journey.",
+    reflectionQuestion:
+      "Are there specific ways that you can restructure your daily life right now to give your spirit the advantage over your flesh?",
+    Scriptures: [
+      {
+        book: "John",
+        chapter: "16",
+        verse: "5-11",
+        translation: null,
+        text: "But now I go away to Him who sent Me, and none of you asks Me, ‘Where are You going?’ But because I have said these things to you, sorrow has filled your heart. Nevertheless I tell you the truth. It is to your advantage that I go away; for if I do not go away, the Helper will not come to you; but if I depart, I will send Him to you. And when He has come, He will convict the world of sin, and of righteousness, and of judgment: of sin, because they do not believe in Me; of righteousness, because I go to My Father and you see Me no more; 11 of judgment, because the ruler of this world is judged.",
+      },
+    ],
+  },
+  {
+    numberId: 31,
+    week: 5,
+    day: 3,
+    videoId: "o6Ih7NlGVtk",
+    weekTitle: "Exit Interview",
+    dayTitle: "Covenant with Devil",
+    daySubTitle: null,
+    devotionText:
+      "My brother, let me share this analogy with you regarding freewill.  Yes, we all have freewill… up to a point when it relates to the spiritual.  If you found yourself at a house party, and one of your friends took out some serious drugs for you to try.  You have the freewill to say no.  If he put it right in front of you, you could still say no.  If he put it right to your lips, you could still refuse.  But once you use your freewill to choose to take those drugs.  You have surrendered your freewill.  You are now subject to the will of the drugs.  This is how sin works.  Once you choose to sin, you open the door to the enemy and give that enemy license to operate in your life.  Even worse, if the door to a sin was opened in your family within your bloodline, the consequence of the sin can now operate in your life.  But don’t fall out yet.\nNow, what is important to understand is that the enemy does not bother you until you start to fight back.  Praying to be set free from soul ties and praying to be set free from generational curses starts a fight against the enemy.  Refusing to sin willfully starts a fight against the enemy.  Telling others about the glory of God starts a fight against the enemy.  You may just be understanding this, but your disobedience toward God was a form of obedience toward the enemy.  Hence, our covenant with the Devil. \nFreewill works the other way as well.  If you choose God, and call on the holy name of Jesus, you can break the covenant made with sin whether for your own sins or those operating in your family.  The cleansing blood of Jesus can cover any past sin.\nPaul goes further to imply that if you choose Jesus Christ that He will both impact your will for His good pleasure and for you to do for His good pleasure.  What does this mean?  It means that your only job is to be obedient to Christ, he will operate the other things for you.  He will operate your desire (purpose) toward Him and cause you to do (purpose) for Him.\nKeep fighting brothers!",
+    reflectionQuestion:
+      "Since you began to break these covenants through sin, what fights have you experienced?  In the physical realm?  In the dream realm?",
+    Scriptures: [
+      {
+        book: "Phillipians",
+        chapter: "2",
+        verse: "13",
+        translation: null,
+        text: "For it is God who works in you both to will and to do for His good pleasure.",
+      },
+    ],
+  },
+  {
+    numberId: 32,
+    week: 5,
+    day: 4,
+    videoId: "uG4wW6_M9nw",
+    weekTitle: "Exit Interview",
+    dayTitle: "Share Your Testimony",
+    daySubTitle: null,
+    devotionText:
+      "My brother, you have to share your testimony! Sharing your testimony is the way that you shame the Devil. You take what he used to destroy you and put it on display for all to see.  Once you do that and you overcome it, then the enemy has nothing left to hold against you.  You think that sharing your testimony is about changing the lives of others facing your same challenges?  Yes, it does that too!  But really what it does is, it serves as a reminder of what God brought you through!  Every time you share it.  Every time you lift someone out of their predicament, God is glorified and you move farther from that sin that once had you in bondage.\nSo let the redeemed say so and let them declare how much God has done for them.  Sharing your testimony should begin easily with the brothers that you know.  And, you should grow confidently into sharing with brothers that you don’t know.  Your testimony is one part of the accountability process and keeping those chains broken.  Share freely and share widely.  The only thing that God cannot do for you is share your testimony.  That part is up to you.",
+    reflectionQuestion:
+      "Who can you share your testimony with?  Who needs to hear your story?  Will you share what God is doing for you?",
+    Scriptures: [
+      {
+        book: "Psalms",
+        chapter: "107",
+        verse: "2",
+        translation: null,
+        text: "Let the redeemed of the Lord say so, whom he has redeemed from trouble.",
+      },
+      {
+        book: "Luke",
+        chapter: "8",
+        verse: "39",
+        translation: null,
+        text: "Return to your home, and declare how much God has done for you.” And he went away, proclaiming throughout the whole city how much Jesus had done for him.",
+      },
+    ],
+  },
+  {
+    numberId: 33,
+    week: 5,
+    day: 5,
+    videoId: "ENwp_qPR2rU",
+    weekTitle: "Exit Interview",
+    dayTitle: "Accountability",
+    daySubTitle: null,
+    devotionText:
+      "My brother, you have to remain accountable to someone.  At the end of the group, I recommend that you stay in contact with your Right-Hand as well as the Group Facilitator for your Clean group.  These should be your brothers-in-arms moving forward, and the start of that threefold cord.  And like Solomon, this type of bond is not easily broken.  Maybe on your journey you will be able to pull other brothers up by sharing this group, serving as a Right-Hand, and/or leading as a Group Facilitator.\nI also suggest seeking out and joining other Christ-centered men’s groups.  Through Thirty Mighty Men Ministries, we created Bible Study groups in order to both keep brothers who have gone through Clean in the Word of God, and to invite any seeking man an opportunity to read the Word for themselves in group fellowship.  If you are reading this and you have completed Clean, then this is an invitation to join any Bible Study group that you can find or to join one of the Bible Study groups at 30MMM.  I advise you to check your church and/or the local churches in the area for small groups.\nYet and still, the ultimate accountability partner is really a friend, Jesus Christ, that sticks closer than a brother.",
+    reflectionQuestion:
+      "Can you identify a small group that you can join within the next month? ",
+    Scriptures: [
+      {
+        book: "Ecclesiates",
+        chapter: "4",
+        verse: "12",
+        translation: null,
+        text: "Though one may be overpowered by another, two can withstand him.  And a threefold cord is not quickly broken.”",
+      },
+    ],
+  },
+  {
+    numberId: 34,
+    week: 5,
+    day: 6,
+    videoId: "9qbQZvkG1bA",
+    weekTitle: "Exit Interview",
+    dayTitle: "Forgiveness",
+    daySubTitle: null,
+    devotionText:
+      "If you fall, get back up and keep going with your fight against the sin.  You only fell because you were using your own willpower.  In willpower alone, the Devil let’s you mount you on proverbial horse, so you can fall.  Don’t let the Devil win.  The enemy’s job is to make you fall away from God.  You have to use sin to draw closer to God through repentance and forgiveness of yourself.  God may chastise you, but that is what a good father does.   But, He will forgive you, if you ask.  In my walk with God, I realized that Jesus Christ would have forgiven Judas, the man who it would have been better if he was never born, if He only asked.  If Christ would have forgiven Judas, then he can forgive me.\nBut not only that, you must forgive others of their trespasses against you. There is no need to hold that over others anymore. You have to forgive. God commands you to first reconcile with your brother or sister, before coming to Him with your offering.\nI found that Clean is just the beginning of the journey. All this time that we lived in sexual confusion and disobedience, we could not hear God’s verse as clearly as we can under self-control. With that, there are so many other things that God now wants to develop in us so that we can be more Christ. The good news is, in my opinion, there is nothing more difficult in your upcoming walk with God that will have been as difficult as this bout for sexual obedience. I am not saying that it is smooth sailing from here, but I do know, you now have the right tools on hand to take on any problem head on.  For if God be for us, who can be against us?",
+    reflectionQuestion:
+      "Can you forgive yourself? Can you forgive others? Can you let God open the door to reconciliation with those that He calls you to reconcile with?",
+    Scriptures: [
+      {
+        book: "Matthew",
+        chapter: "6",
+        verse: "14",
+        translation: "NKJV",
+        text: "For if you forgive men their trespasses, your heavenly Father will also forgive you.",
+      },
+      {
+        book: "Matthew",
+        chapter: "5",
+        verse: "23-24",
+        translation: "NKJV",
+        text: "Therefore if you bring your gift to the altar, and there remember that your brother has something against you, leave your gift there before the altar, and go your way. First be reconciled to your brother, and then come and offer your gift.",
+      },
+      {
+        book: "Isaiah",
+        chapter: "12",
+        verse: "1",
+        translation: null,
+        text: "You will say in that day: I will give thanks to you, O Lord, for though you were angry with me, your anger turned away, and you comforted me.",
+      },
+    ],
+  },
+  {
+    numberId: 35,
+    week: 5,
+    day: 7,
+    videoId: "rDi-Kd6-MV4",
+    weekTitle: "Exit Interview",
+    dayTitle: "The Spirit of Lust",
+    daySubTitle: null,
+    devotionText:
+      "My brother, this is the final devotion. If you made it all the way through, I pray that God touched you in a special way over these past few weeks. I know that He did!\nThis is what I learned ultimately about Clean.  Clean has little to do with a battle for sexual integrity, and everything to do with a spiritual battle against the Spirit of lust (or the flesh). Once I got Clean, through the development of the Holy Spirit, I noticed that other things that I used to pine over were also killed within me. That lust in me did not just fuel sexual perversion, but it also served as an unhealthy fuel in ambition, for greed, for discontent, etc. All these things that I thought were so important to my survival and livelihood--whether well intentioned or not--were no longer a necessity to me.  That house or car that I always wanted. Or the legacy that I wanted for my children and my children’s children.  I was surprised how easily I was able to let go of those things and chart a new path in my life with Christ at the center.\nI still remember one specific revelation where God distinctly told me that even if I built something to pass down to my children and their children, there was no guarantee that it would stand.  He reminded me in my Spirit that it was He that built the house, not me. And it was He that ensured that the house would stand for those who loved him and obeyed Him. The only legacy that I was required to give my children and their children was a love and understanding of God. The rest of it was up to Him. If I did this, He promised to uphold His end of the bargain. Psalm 127 captured the sentiment of that revelation with pinpoint accuracy, for me, illustrating the mercy of God in my life.\nThis revelation and numerous others were so clear to me as I continued on this journey.  Putting God first became so much clearer in my mind.  I pray that this journey fuels you to chase after God as never before.  God deserves your attention.  And you deserve this God.",
+    reflectionQuestion:
+      "Let God continue to speak to you.  Have you already experienced distinct differences between you today and you of yesterday?  Don’t worry, continue to chase God with these new tools and revisit this question periodically.  I know I do, and remain amazed at all He has done in my life.",
+    Scriptures: [
+      {
+        book: "Psalms",
+        chapter: "127",
+        verse: null,
+        translation: "NKJV",
+        text: "Unless the Lord builds the house,\nthose who build it labor in vain.\nUnless the Lord watches over the city,\nthe watchman stays awake in vain.\nIt is in vain that you rise up early\nand go late to rest,\neating the bread of anxious toil;\nfor he gives to his beloved sleep.\nBehold, children are a heritage from the Lord,\nthe fruit of the womb a reward.\nLike arrows in the hand of a warrior\nare the children of one's youth.\nBlessed is the man\nwho fills his quiver with them!\nHe shall not be put to shame\nwhen he speaks with his enemies in the gate.",
+      },
+    ],
+  },
+];

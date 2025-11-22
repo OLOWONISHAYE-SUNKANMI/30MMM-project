@@ -1,10 +1,12 @@
-import { prisma } from "@/db";
+import prisma from "@/db";
+import { UserProgress } from "@prisma/client";
 import { compare } from "bcrypt";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
 export const authConfig = {
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
@@ -52,7 +54,7 @@ export const authConfig = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account }) {
       // For Google provider, check if user exists and create if needed
       if (account?.provider === "google") {
         try {
@@ -161,6 +163,7 @@ export const authConfig = {
               id: true,
               role: true,
               profileCompleted: true,
+              userProgress: true,
             },
           });
 
@@ -168,6 +171,7 @@ export const authConfig = {
             token.id = dbUser.id;
             token.role = dbUser.role;
             token.profileCompleted = dbUser.profileCompleted;
+            token.userProgress = dbUser.userProgress;
           }
         } catch (error) {
           console.error("Error updating token:", error);
@@ -181,6 +185,7 @@ export const authConfig = {
         session.user.id = token.id as string;
         session.user.role = token.role as string;
         session.user.profileCompleted = token.profileCompleted as boolean;
+        session.user.userProgress = token.userProgress as UserProgress;
       }
       return session;
     },

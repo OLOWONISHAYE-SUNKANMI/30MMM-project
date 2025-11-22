@@ -1,12 +1,67 @@
-import { useDashboardContext } from "@/contexts/dashboard/dashboard-provider";
+import { useEffect, useState } from "react";
+import { getAllDevotionals } from "@/actions/devotional";
+import { getUserProgress } from "@/actions/user-progress";
 import { FaChevronDown, FaRegCalendarAlt } from "react-icons/fa";
-import WeekCard from "./WeekCard";
 import WeekCards from "./WeekCards";
 
-export default function CardSection() {
-  const { userInfo, userProgress } = useDashboardContext();
+export default function CardSection({ userId }) {
+  const [userProgress, setUserProgress] = useState(null);
+  const [devotionals, setDevotionals] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const cohortText = userInfo.cohortRoman;
+  useEffect(() => {
+    const fetchData = async () => {
+      // Don't fetch if userId is not available
+      if (!userId) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Fetch user progress
+        const progressResult = await getUserProgress(userId);
+
+        if (progressResult.success) {
+          setUserProgress(progressResult.userProgress);
+        } else {
+          setError(progressResult.error);
+        }
+
+        // Fetch all devotionals
+        const devotionalsResult = await getAllDevotionals();
+
+        if (devotionalsResult.success) {
+          setDevotionals(devotionalsResult.devotionals);
+        } else {
+          setError(devotionalsResult.error);
+        }
+      } catch (error) {
+        setError("Failed to fetch dashboard data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [userId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!userId) {
+    return <div>User not found</div>;
+  }
+
+  const cohortText = userProgress?.cohortRoman || "I";
 
   return (
     <>
@@ -19,7 +74,6 @@ export default function CardSection() {
             In Progress
           </span>
           <span className="rounded-[34px] px-2.5 py-2 text-xs font-light leading-tight tracking-wider text-slate-600 hover:bg-almost-black hover:font-medium hover:text-white max-sm:hidden">
-            {" "}
             Upcoming
           </span>
           <span className="rounded-[34px] px-2.5 py-2 text-xs font-light leading-tight tracking-wider text-slate-600 hover:bg-almost-black hover:font-medium hover:text-white">
@@ -34,8 +88,8 @@ export default function CardSection() {
         </div>
       </div>
       <WeekCards
-        userInfo={userInfo}
         userProgress={userProgress}
+        devotionals={devotionals}
       />
     </>
   );

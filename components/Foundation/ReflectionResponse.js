@@ -1,66 +1,71 @@
 "use client";
 
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+import React from "react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function TextArea() {
-  const [reflection, setReflection] = useState("");
-  const [submittedReflections, setSubmittedReflections] = useState([]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Reflection has been submitted!");
-
-    if (reflection.trim()) {
-      // Add the reflection to submitted reflections
-      setSubmittedReflections((prev) => [...prev, reflection]);
-
-      // Clear the textarea after submission
-      setReflection("");
+export default function ReflectionResponse({
+  value = "",
+  onChange,
+  disabled = false,
+  placeholder = "Write your reflection here.",
+}) {
+  const handleTextChange = (e) => {
+    if (onChange && !disabled) {
+      onChange(e.target.value);
     }
   };
 
   return (
     <div className="w-full space-y-4">
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-4"
-      >
-        <div className="grid w-full gap-1.5">
-          <Label htmlFor="reflection">
-            <Textarea
-              id="reflection"
-              placeholder="Write your reflection here."
-              value={reflection}
-              onChange={(e) => setReflection(e.target.value)}
-              className="mx-auto w-full md:w-full lg:w-3/4"
-              rows={5}
-            />
-          </Label>
-        </div>
-        <Button
-          type="submit"
-          className="mx-auto block"
-        >
-          submit
-        </Button>
-      </form>
+      <div className="grid w-full gap-1.5">
+        <Label htmlFor="reflection">
+          <Textarea
+            id="reflection"
+            placeholder={disabled ? "Reflection completed" : placeholder}
+            value={value}
+            onChange={handleTextChange}
+            disabled={disabled}
+            className={`mx-auto w-full md:w-full lg:w-3/4 ${
+              disabled
+                ? "cursor-not-allowed border-gray-200 bg-gray-50 text-gray-600"
+                : "border-gray-300 bg-white"
+            }`}
+            rows={5}
+          />
+        </Label>
+      </div>
 
-      {submittedReflections.length > 0 && (
-        <div className="mt-4">
-          <h3 className="mb-2 text-lg font-semibold">Submitted Reflections:</h3>
-          <ul className="space-y-2">
-            {submittedReflections.map((ref, index) => (
-              <li
-                key={index}
-                className="rounded bg-gray-100 p-2"
-              >
-                {ref}
-              </li>
-            ))}
-          </ul>
+      {/* Character count indicator */}
+      {!disabled && (
+        <div className="flex justify-end">
+          <span className="text-sm text-gray-500">
+            {value.length} characters
+          </span>
+        </div>
+      )}
+
+      {/* Completion indicator */}
+      {disabled && value && (
+        <div className="mt-2 rounded-lg border border-green-200 bg-green-50 p-3">
+          <div className="flex items-center gap-2">
+            <svg
+              className="h-5 w-5 text-green-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            <span className="font-medium text-green-700">
+              Your reflection has been saved
+            </span>
+          </div>
         </div>
       )}
     </div>

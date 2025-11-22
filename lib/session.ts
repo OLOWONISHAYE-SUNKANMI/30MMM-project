@@ -1,4 +1,4 @@
-import { prisma } from "@/db";
+import prisma from "@/db";
 import { auth } from "@/lib/auth";
 
 /** -----------------------------------------------------------------
@@ -24,6 +24,7 @@ export async function getUser() {
       },
       include: {
         userProfile: true,
+        userProgress: true,
       },
     });
 

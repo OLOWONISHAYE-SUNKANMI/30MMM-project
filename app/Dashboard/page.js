@@ -7,11 +7,12 @@ import PaymentVerification from "@/components/Dashboard/payment-verification";
 export default function Dashboard() {
   const { authState } = useAuth();
 
+  // Show loading state while auth is being determined
   if (authState.loading) {
     return (
       <div className="relative mx-16 flex min-h-screen flex-col items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600"></div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-red-700"></div>
           <p className="text-gray-600">
             {authState.signingOut ? "Signing out..." : "Loading dashboard..."}
           </p>
@@ -20,16 +21,8 @@ export default function Dashboard() {
     );
   }
 
-  // Only render dashboard if user is authenticated
-  if (authState.isAuthenticated) {
-    return (
-      <div className="relative mx-16 flex min-h-screen flex-col items-center justify-start">
-        <PaymentVerification>
-          <MainBody />
-        </PaymentVerification>
-      </div>
-    );
-  } else {
+  // Show message if not authenticated
+  if (!authState.isAuthenticated || !authState.user?.id) {
     return (
       <div className="relative mx-16 flex min-h-screen flex-col items-center justify-center">
         <div className="flex flex-col items-center gap-4">
@@ -40,4 +33,13 @@ export default function Dashboard() {
       </div>
     );
   }
+
+  // Only render dashboard if user is fully authenticated with valid ID
+  return (
+    <div className="relative mx-16 flex min-h-screen flex-col items-center justify-start">
+      <PaymentVerification>
+        <MainBody />
+      </PaymentVerification>
+    </div>
+  );
 }

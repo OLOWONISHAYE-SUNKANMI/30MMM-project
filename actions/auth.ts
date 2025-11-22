@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/db";
+import prisma from "@/db";
 import { hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "@/lib/auth";
