@@ -6,6 +6,7 @@ import {
   updateUserProgress,
 } from "@/actions/dashboard";
 import { initialWeekStaticInfo } from "@/contexts/dashboard/dashboard-data";
+import { useSession } from "next-auth/react";
 
 const DashboardContext = createContext(undefined);
 
@@ -17,18 +18,19 @@ export default function DashboardProvider({ children }) {
   const [error, setError] = useState(null);
   const [isHydrated, setIsHydrated] = useState(false);
   const weekStaticInfo = initialWeekStaticInfo;
-
-  // Mark as hydrated after mount
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
+  const { data: session, status } = useSession();
 
   // Fetch user progress after hydration
   useEffect(() => {
-    if (isHydrated) {
+    if (status === "authenticated") {
       fetchUserProgress();
+    } else if (status === "unauthenticated") {
+      setUserInfo(null);
+      setUserProgress(null);
+      setLoading(false);
+      setError(null);
     }
-  }, [isHydrated]);
+  }, [status]);
 
   const fetchUserProgress = async () => {
     try {
@@ -131,10 +133,11 @@ export default function DashboardProvider({ children }) {
     userProgress,
     setUserProgress,
     weekStaticInfo,
-    loading: loading && isHydrated, // Only show loading after hydration
+    loading: loading || status === "loading", // Only show loading after hydration
     error,
     updateProgress,
     refreshProgress,
+    isAuthenticated: status === "authenticated",
   };
 
   return (
