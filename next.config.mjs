@@ -26,20 +26,6 @@ const nextConfig = {
     AZURE_STORAGE_ACCOUNT_KEY: process.env.AZURE_STORAGE_ACCOUNT_KEY,
     AZURE_STORAGE_CONTAINER_NAME: process.env.AZURE_STORAGE_CONTAINER_NAME,
   },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        path: false,
-        os: false,
-        module: false,
-        crypto: false,
-      };
-    }
-    return config;
-  },
-  transpilePackages: ["db/client"],
 };
 
 export default nextConfig;
