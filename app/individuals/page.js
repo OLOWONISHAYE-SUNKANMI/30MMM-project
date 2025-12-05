@@ -2,13 +2,14 @@ import { CheckCircle, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export default function CleanForIndividuals() {
   return (
     <div className="mt-16 min-h-screen bg-gray-50 px-10">
       <section className="py-12 md:py-16">
-        <div className="container mx-auto px-4">
-          <h1 className="mb-4 text-center text-3xl font-bold text-gray-800 md:mb-6 md:text-4xl">
+        <div className="mx-auto px-1 md:container md:px-4">
+          <h1 className="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 md:text-4xl">
             Discover Freedom, Purpose, and Integrity with CLEAN
           </h1>
           <p className="mb-8 text-center text-lg text-gray-600 md:mb-12 md:text-xl">
@@ -16,14 +17,14 @@ export default function CleanForIndividuals() {
             for you.
           </p>
 
-          <h2 className="mb-6 text-center text-2xl font-semibold text-gray-800 md:text-3xl">
+          <h2 className="mb-6 text-center text-2xl font-semibold text-gray-800 md:text-3xl lg:text-5xl">
             The Two Faces of CLEAN: Your Path to Transformation
           </h2>
 
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 md:gap-8">
             <Card>
               <CardHeader>
-                <CardTitle className="text-xl font-semibold text-gray-800">
+                <CardTitle className="text-lg font-semibold text-gray-800 md:text-xl lg:text-2xl">
                   1. The External Face: Freedom from Sexual Struggles
                 </CardTitle>
               </CardHeader>
@@ -42,7 +43,7 @@ export default function CleanForIndividuals() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-xl font-semibold text-gray-800">
+                <CardTitle className="text-lg font-semibold text-gray-800 md:text-xl lg:text-2xl">
                   2. The Internal Face: Discovering Your God-Given Purpose
                 </CardTitle>
               </CardHeader>
@@ -62,7 +63,7 @@ export default function CleanForIndividuals() {
 
           <Card className="mt-12">
             <CardHeader>
-              <CardTitle className="text-2xl font-semibold text-gray-800">
+              <CardTitle className="text-xl font-semibold text-gray-800 md:text-2xl lg:text-3xl">
                 Why CLEAN Works for You
               </CardTitle>
             </CardHeader>
@@ -86,10 +87,11 @@ export default function CleanForIndividuals() {
           </Card>
 
           <h2 className="mb-6 mt-12 text-center text-2xl font-semibold text-gray-800 md:text-3xl">
-            Your CLEAN Journey Starts Here
+            Your <em class="font-bold not-italic text-primary-red">CLEAN</em>{" "}
+            Journey Starts Here
           </h2>
 
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 lg:grid-cols-3">
             {[
               {
                 title: "CLEAN Starter",
@@ -117,13 +119,19 @@ export default function CleanForIndividuals() {
             ].map((plan, index) => (
               <Card
                 key={index}
-                className="flex flex-col"
+                className="flex flex-col md:py-4 lg:py-12"
               >
                 <CardHeader>
-                  <CardTitle className="text-xl font-semibold text-gray-800">
+                  <CardTitle className="text-xl font-semibold text-gray-800 md:text-2xl lg:text-3xl">
                     {plan.title}
                   </CardTitle>
-                  <p className="text-lg font-bold text-primary-red">
+                  <p
+                    className={cn(
+                      "indent-2 text-base font-semibold text-primary-red md:text-xl",
+                      plan.price.startsWith("$") &&
+                        "indent-1 text-xl font-extrabold md:text-3xl",
+                    )}
+                  >
                     {plan.price}
                   </p>
                 </CardHeader>
@@ -145,7 +153,7 @@ export default function CleanForIndividuals() {
           </div>
 
           <div className="mt-12 text-center">
-            <h2 className="mb-6 text-2xl font-semibold text-gray-800">
+            <h2 className="mb-6 text-2xl font-semibold text-gray-800 lg:text-4xl">
               Take the first step toward transformation. Join CLEAN today!
             </h2>
             <Button

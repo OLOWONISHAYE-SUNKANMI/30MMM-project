@@ -4,7 +4,7 @@ import YouTubeVideo from "./YouTubeVideoPlayerv2";
 export function ChurchRoleSection() {
   return (
     <section className="bg-gray-50 py-12">
-      <div className="container mx-auto px-4">
+      <div className="mx-auto px-4 md:container">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Left Column: Content */}
           <div className="space-y-6">
