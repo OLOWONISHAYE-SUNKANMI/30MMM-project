@@ -4,15 +4,15 @@ import YouTubeVideo from "./YouTubeVideoPlayerv2";
 
 export function AboutSection() {
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container px-4 mx-auto">
+    <section className="bg-gray-50 py-12">
+      <div className="mx-auto px-4 md:container">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Left Column: Video and Brief Intro */}
           <div className="space-y-6">
             <h2 className="text-3xl font-bold md:text-4xl">
               About Thirty Mighty Men Ministries
             </h2>
-            <p className="text-xl italic md:text-2xl text-primary">
+            <p className="text-xl italic text-primary md:text-2xl">
               30MMM: A Ministry for Men, by Men
             </p>
             <YouTubeVideo videoId="tXCZLYmgmVc" />
@@ -20,7 +20,7 @@ export function AboutSection() {
               For more videos, visit our{" "}
               <Link
                 href="//linktr.ee/30mmm"
-                className="ml-2 underline transition-colors duration-200 text-primary hover:text-primary/80"
+                className="ml-2 text-primary underline transition-colors duration-200 hover:text-primary/80"
               >
                 Linktree
               </Link>
@@ -53,14 +53,14 @@ export function AboutSection() {
                 Ready to see the impact of CLEAN?
               </h4>
               <p className="flex items-center gap-2 font-semibold">
-                <ArrowLeft className="w-5 h-5" /> Watch the Video Now
+                <ArrowLeft className="h-5 w-5" /> Watch the Video Now
               </p>
             </div>
 
             <div className="pt-4">
               <Link
                 href="/founders-bio"
-                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white rounded-md bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               >
                 Read Full Bio
               </Link>
