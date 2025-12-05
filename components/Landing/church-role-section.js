@@ -1,5 +1,5 @@
+import { YouTubeEmbed } from "@next/third-parties/google";
 import Link from "next/link";
-import YouTubeVideo from "./YouTubeVideoPlayerv2";
 
 export function ChurchRoleSection() {
   return (
@@ -152,7 +152,7 @@ export function ChurchRoleSection() {
 
           {/* Right Column: Video and Stats */}
           <div className="space-y-6">
-            <YouTubeVideo videoId="3reik8Pkt60" />
+            <YouTubeEmbed videoId={"3reik8Pkt60"} />
             <div className="rounded-lg bg-white p-6 shadow-md">
               <h4 className="mb-4 text-lg font-semibold">Impact of CLEAN</h4>
               <p className="mb-4 text-sm text-muted-foreground">
