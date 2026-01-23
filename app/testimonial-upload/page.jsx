@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { MobileUploadOptimizer } from "@/lib/mobile-upload-optimizer";
+import { useRef, useState, useEffect } from "react";
 
 export default function TestimonialUploadPage() {
   const [cohort, setCohort] = useState("");
@@ -15,6 +16,12 @@ export default function TestimonialUploadPage() {
   const [dragActive, setDragActive] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const inputRef = useRef(null);
+  const [mobileOptimizer, setMobileOptimizer] = useState(null);
+
+  // Initialize mobile optimizer on client side only
+  useEffect(() => {
+    setMobileOptimizer(new MobileUploadOptimizer());
+  }, []);
 
   // Generate options for select inputs
   const weekOptions = Array.from({ length: 5 }, (_, i) => i + 1);
@@ -75,8 +82,12 @@ export default function TestimonialUploadPage() {
   };
 
   // Handle button click to trigger file input
-  const handleButtonClick = () => {
-    inputRef.current.click();
+  const handleButtonClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
   };
 
   // Handle form submission with progress tracking
@@ -127,53 +138,66 @@ export default function TestimonialUploadPage() {
       const result = await sasResponse.json();
       const sasUrl = result.uploadUrl;
 
-      // STEP 2: Upload the file with progress tracking
-      console.log("Step 1 complete, uploading video to azure...");
+      // STEP 2: Optimize file for mobile and upload
+      console.log("Step 1 complete, optimizing and uploading video...");
       setUploadStatus({
         success: true,
-        message: "Uploading video to Azure...",
+        message: mobileOptimizer?.isMobile ? "Optimizing for mobile..." : "Uploading video to Azure...",
         step: 2,
         totalSteps: 3,
       });
 
-      // Create a new XMLHttpRequest to track upload progress
-      const xhr = new XMLHttpRequest();
+      // Compress video if on mobile
+      let optimizedFile = file;
+      if (mobileOptimizer?.isMobile) {
+        try {
+          optimizedFile = await mobileOptimizer.compressVideo(file) || file;
+        } catch (error) {
+          console.warn("Compression failed, using original file:", error);
+        }
+      }
 
-      // Create a promise that resolves when the upload is complete
-      const uploadPromise = new Promise((resolve, reject) => {
-        xhr.open("PUT", sasUrl, true);
-        xhr.setRequestHeader("x-ms-blob-type", "BlockBlob");
-        xhr.setRequestHeader("Content-Type", file.type);
+      // Use chunked upload for mobile, regular upload for desktop
+      if (mobileOptimizer?.isMobile) {
+        await mobileOptimizer.uploadWithChunks(
+          optimizedFile,
+          sasUrl,
+          (progress) => setUploadProgress(progress)
+        );
+      } else {
+        // Original XMLHttpRequest for desktop
+        const xhr = new XMLHttpRequest();
+        const uploadPromise = new Promise((resolve, reject) => {
+          xhr.open("PUT", sasUrl, true);
+          xhr.setRequestHeader("x-ms-blob-type", "BlockBlob");
+          xhr.setRequestHeader("Content-Type", optimizedFile.type);
 
-        // Track upload progress
-        xhr.upload.onprogress = (event) => {
-          if (event.lengthComputable) {
-            const percentComplete = Math.round(
-              (event.loaded / event.total) * 100,
-            );
-            setUploadProgress(percentComplete);
-          }
-        };
+          xhr.upload.onprogress = (event) => {
+            if (event.lengthComputable) {
+              const percentComplete = Math.round(
+                (event.loaded / event.total) * 100,
+              );
+              setUploadProgress(percentComplete);
+            }
+          };
 
-        // Handle upload completion
-        xhr.onload = () => {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            resolve(xhr.response);
-          } else {
-            reject(new Error(`Upload failed with status: ${xhr.status}`));
-          }
-        };
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              resolve(xhr.response);
+            } else {
+              reject(new Error(`Upload failed with status: ${xhr.status}`));
+            }
+          };
 
-        // Handle upload error
-        xhr.onerror = () => {
-          reject(new Error("Network error occurred during upload"));
-        };
+          xhr.onerror = () => {
+            reject(new Error("Network error occurred during upload"));
+          };
 
-        // Start the upload
-        xhr.send(file);
-      });
+          xhr.send(optimizedFile);
+        });
 
-      await uploadPromise;
+        await uploadPromise;
+      }
       setUploadProgress(100);
 
       // STEP 3: Store metadata

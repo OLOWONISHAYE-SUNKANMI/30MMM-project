@@ -67,6 +67,6 @@ export const validateState = (state) => {
 
 export const validateZipcode = (zipcode) => {
   if (!zipcode.trim()) return "Zipcode is required";
-  if (!/^\d{5}(-\d{4})?$/.test(zipcode)) return "Please enter a valid zipcode";
+  if (!/^\d{5,6}(-\d{4})?$/.test(zipcode)) return "Please enter a valid zipcode";
   return "";
 };
