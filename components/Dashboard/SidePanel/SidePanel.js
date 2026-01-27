@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Collapse from "@mui/material/Collapse";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { FaCheck, FaChevronDown, FaChevronRight } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -22,8 +22,8 @@ export default function SidePanel() {
   const [loading, setLoading] = React.useState(true);
   const [expandedWeeks, setExpandedWeeks] = React.useState(new Set());
   const router = useRouter();
-  const { data: session, status } = useSession();
-  const userId = session?.user?.id;
+  const { authState } = useAuth();
+  const userId = authState.user?.id;
 
   React.useEffect(() => {
     const loadDevotionalsWithProgress = async () => {
@@ -35,7 +35,7 @@ export default function SidePanel() {
           throw new Error(devotionalsResult.error);
         }
 
-        if (status === "unauthenticated" || !userId) {
+        if (!authState.isAuthenticated || !userId) {
           setLoading(false);
           return;
         }
@@ -121,7 +121,7 @@ export default function SidePanel() {
     };
 
     loadDevotionalsWithProgress();
-  }, [userId, status]);
+  }, [userId, authState.isAuthenticated]);
 
   const toggleWeekExpansion = (weekId) => {
     setExpandedWeeks((prev) => {

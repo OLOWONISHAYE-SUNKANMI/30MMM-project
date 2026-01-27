@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getDevotionalById } from "@/actions/devotional";
 import { getUserProgress } from "@/actions/user-progress";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 import { FaChevronDown } from "react-icons/fa";
 import DonateHero from "@/components/Dashboard/DonateHero";
@@ -11,7 +11,7 @@ import { calculateWeekAndDay } from "@/lib/calculateWeekAndDay";
 import CardSection from "./CardSection";
 
 export default function MainBody() {
-  const { data: session, status } = useSession();
+  const { authState } = useAuth();
   const [userProgress, setUserProgress] = useState(null);
   const [currentDevotional, setCurrentDevotional] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,11 +19,11 @@ export default function MainBody() {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (status === "loading") {
+      if (authState.loading) {
         return;
       }
 
-      if (status === "unauthenticated" || !session?.user?.id) {
+      if (!authState.isAuthenticated || !authState.user?.id) {
         setLoading(false);
         return;
       }
@@ -33,7 +33,7 @@ export default function MainBody() {
         setError(null);
 
         // Fetch user progress
-        const progressResult = await getUserProgress(session.user.id);
+        const progressResult = await getUserProgress(authState.user.id);
 
         if (progressResult.success) {
           setUserProgress(progressResult.userProgress);
@@ -61,9 +61,9 @@ export default function MainBody() {
     };
 
     fetchUserData();
-  }, [session, status]);
+  }, [authState]);
 
-  if (status === "loading" || loading) {
+  if (authState.loading || loading) {
     return (
       <div className="container relative flex size-full animate-pulse flex-col items-center justify-center rounded-lg border bg-white shadow-sm">
         <div className="mb-4 h-8 w-48 rounded bg-gray-200"></div>
@@ -72,7 +72,7 @@ export default function MainBody() {
     );
   }
 
-  if (status === "unauthenticated") {
+  if (!authState.isAuthenticated) {
     return (
       <div className="container relative flex size-full flex-col items-center justify-center rounded-lg border bg-white shadow-sm">
         <p>Please log in to view your progress</p>
@@ -88,7 +88,7 @@ export default function MainBody() {
     );
   }
 
-  if (!session?.user) {
+  if (!authState.user) {
     return (
       <div className="container relative flex size-full flex-col items-center justify-center rounded-lg border bg-white shadow-sm">
         <p>Session not available</p>
@@ -111,7 +111,7 @@ export default function MainBody() {
     <div className="relative mx-auto mb-8 flex min-h-screen w-full max-w-[1200px] flex-col items-start gap-y-5 space-y-4 pt-12 max-lg:mx-2">
       <div className="flex w-full flex-wrap items-center justify-start gap-2 md:gap-y-5">
         <h1 className="text-3xl font-bold leading-relaxed md:text-4xl">
-          Hello, {session.user.name || "User"}!
+          Hello, {authState.user.name || "User"}!
         </h1>
         <FaChevronDown size={16} />
 
@@ -130,7 +130,7 @@ export default function MainBody() {
           CLEAN {cohortDisplay}
         </h4>
       </div>
-      <CardSection userId={session.user.id} />
+      <CardSection userId={authState.user.id} />
     </div>
   );
 }

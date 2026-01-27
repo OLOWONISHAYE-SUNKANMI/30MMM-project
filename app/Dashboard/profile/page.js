@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 
 export default function Settings() {
-  const { data: session, status } = useSession();
+  const { authState } = useAuth();
   const [firstTabActive, setFirstTabActive] = useState(true);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
@@ -26,7 +26,7 @@ export default function Settings() {
   // Fetch user profile data
   useEffect(() => {
     const fetchProfile = async () => {
-      if (status === "authenticated" && session?.user?.id) {
+      if (authState.isAuthenticated && authState.user?.id) {
         try {
           const response = await fetch(`/api/create-profile`);
           if (response.ok) {
@@ -41,7 +41,7 @@ export default function Settings() {
                 maritalStatus: data.profile.maritalStatus || "",
                 childrenCount: data.profile.childrenCount?.toString() || "",
                 churchAffiliation: data.profile.churchAffiliation || "",
-                email: data.profile.email || session.user.email || "",
+                email: data.profile.email || authState.user.email || "",
                 phoneNumber: data.profile.phoneNumber || "",
                 address: data.profile.address || "",
                 city: data.profile.city || "",
@@ -59,7 +59,7 @@ export default function Settings() {
     };
 
     fetchProfile();
-  }, [session, status]);
+  }, [authState]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -100,7 +100,7 @@ export default function Settings() {
       return `${formData.firstName[0]}${formData.lastName[0]}`.toUpperCase();
     }
     return (
-      session?.user?.name
+      authState.user?.name
         ?.split(" ")
         .map((n) => n[0])
         .join("")
@@ -108,7 +108,7 @@ export default function Settings() {
     );
   };
 
-  if (status === "loading" || loading) {
+  if (authState.loading || loading) {
     return (
       <div className="flex min-h-screen w-full items-center justify-center">
         <p>Loading...</p>

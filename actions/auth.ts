@@ -17,8 +17,8 @@ async function getRedirectPath() {
     }
 
     // Check if user has completed their profile
-    // This assumes userProfile contains a field indicating profile completion
-    if (user.profileCompleted) {
+    // Use the profileCompleted field from the User model
+    if ((user as any).profileCompleted) {
       return "/dashboard";
     }
 

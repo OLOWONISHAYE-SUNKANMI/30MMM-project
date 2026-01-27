@@ -16,31 +16,60 @@ export function AuthProvider({ children }) {
     error: null,
   });
 
-  // Function to refresh auth state from server
   const refreshAuthState = async () => {
     try {
       setAuthState((prev) => ({ ...prev, loading: true }));
       const authData = await getCurrentAuthState();
-      setAuthState({
+      const newState = {
         ...authData,
         loading: false,
         signingOut: false,
         error: null,
-      });
+      };
+      setAuthState(newState);
+      
+      // Save to localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('authState', JSON.stringify({
+          isAuthenticated: newState.isAuthenticated,
+          user: newState.user
+        }));
+      }
     } catch (error) {
       console.error("Failed to fetch auth:", error);
-      setAuthState({
+      const errorState = {
         isAuthenticated: false,
         user: null,
         loading: false,
         signingOut: false,
         error: error.message || "Authentication check failed",
-      });
+      };
+      setAuthState(errorState);
+      
+      // Clear localStorage on error
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('authState');
+      }
     }
   };
 
-  // Refresh auth state on mount
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('authState');
+      if (stored) {
+        try {
+          const parsedState = JSON.parse(stored);
+          setAuthState(prev => ({
+            ...prev,
+            ...parsedState,
+            loading: true // Still need to verify with server
+          }));
+        } catch (error) {
+          console.error('Error parsing stored auth state:', error);
+          localStorage.removeItem('authState');
+        }
+      }
+    }
     refreshAuthState();
   }, []);
 

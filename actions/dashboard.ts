@@ -16,13 +16,13 @@ export async function getCurrentUserWithProgress() {
     }
 
     // Check if user has progress, create if not
-    let userProgress = user.userProgress;
+    let userProgress = (user as any).userProgress;
 
     if (!userProgress) {
-      console.log("Creating initial UserProgress for user:", user.id);
+      console.log("Creating initial UserProgress for user:", (user as any).id);
       userProgress = await prisma.userProgress.create({
         data: {
-          userId: user.id,
+          userId: (user as any).id,
           cohortNumber: 1,
           cohortRoman: "I",
           currentWeek: 1,
@@ -81,14 +81,14 @@ export async function getCurrentUserWithProgress() {
     return {
       success: true,
       user: {
-        id: user.id,
-        name: user.name,
-        firstName: user.userProfile?.firstName || "",
-        lastName: user.userProfile?.lastName || "",
-        email: user.email,
-        role: user.role,
-        image: user.image,
-        profileCompleted: user.profileCompleted,
+        id: (user as any).id,
+        name: (user as any).name,
+        firstName: (user as any).userProfile?.firstName || "",
+        lastName: (user as any).userProfile?.lastName || "",
+        email: (user as any).email,
+        role: (user as any).role,
+        image: (user as any).image,
+        profileCompleted: (user as any).profileCompleted,
       },
       progress: formattedProgress
         ? {
@@ -123,7 +123,7 @@ export async function updateUserProgress(devotionalId: string) {
 
     // Get current progress
     const progress = await prisma.userProgress.findUnique({
-      where: { userId: user.id },
+      where: { userId: (user as any).id },
     });
 
     if (!progress) {
@@ -175,7 +175,7 @@ export async function updateUserProgress(devotionalId: string) {
 
     // Update progress
     const updated = await prisma.userProgress.update({
-      where: { userId: user.id },
+      where: { userId: (user as any).id },
       data: {
         [weekField]: currentWeekCompleted,
         currentWeek: nextWeek > 5 ? progress.currentWeek : nextWeek,
