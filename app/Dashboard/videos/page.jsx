@@ -1,4 +1,4 @@
-import VideoPlayer from "@/components/Dashboard/videos/video-player";
+import VideoPlayer from "@/components/dashboard/videos/video-player";
 
 export default function VideoPage() {
   return (
