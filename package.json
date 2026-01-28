@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --webpack",
     "dev.https": "cross-env BETTER_AUTH_URL=https://localhost:3000 next dev --experimental-https --turbopack",
     "build": "npx prisma generate && next build",
     "start": "next start",

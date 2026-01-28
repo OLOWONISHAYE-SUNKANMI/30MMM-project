@@ -18,11 +18,11 @@ export async function POST(request) {
 
     await prisma.videoUpload.create({
       data: {
-        cohort,
+        cohort: parseInt(cohort),
         firstName,
         lastName,
-        week,
-        day,
+        week: parseInt(week),
+        day: parseInt(day),
         fileName,
         fileType,
         blobUrl,
