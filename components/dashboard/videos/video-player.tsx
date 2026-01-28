@@ -37,6 +37,43 @@ export default function VideoPlayer() {
   const [comments, setComments] = useState<any[]>([]);
   const [newComment, setNewComment] = useState('');
   const [loadingComments, setLoadingComments] = useState(false);
+  const [showShareMenu, setShowShareMenu] = useState(false);
+
+  const shareVideo = async (platform: string) => {
+    if (!currentVideo) return;
+    
+    const videoUrl = `${window.location.origin}/dashboard/videos?v=${currentVideo.id}`;
+    const title = `Check out this video: Week ${currentVideo.week} Day ${currentVideo.day}`;
+    const text = `${title} - ${currentVideo.description || 'CLEAN Program Video'}`;
+
+    switch (platform) {
+      case 'twitter':
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(videoUrl)}`, '_blank');
+        break;
+      case 'facebook':
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(videoUrl)}`, '_blank');
+        break;
+      case 'whatsapp':
+        window.open(`https://wa.me/?text=${encodeURIComponent(`${text} ${videoUrl}`)}`, '_blank');
+        break;
+      case 'copy':
+        try {
+          await navigator.clipboard.writeText(videoUrl);
+          alert('Link copied to clipboard!');
+        } catch (err) {
+          console.error('Failed to copy:', err);
+          const textArea = document.createElement('textarea');
+          textArea.value = videoUrl;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          alert('Link copied to clipboard!');
+        }
+        break;
+    }
+    setShowShareMenu(false);
+  };
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -374,8 +411,8 @@ export default function VideoPlayer() {
           {/* Scrollable Content */}
           <div className="space-y-2 xs:space-y-3 sm:space-y-4 overflow-y-auto flex-1">
           {/* Video Title and Info */}
-          <div className="text-center">
-            <div className="text-lg sm:text-2xl font-bold leading-tight text-gray-800">
+          <div className="text-center px-2">
+            <div className="text-base xs:text-lg sm:text-xl md:text-2xl font-bold leading-tight text-gray-800">
               Week {currentVideo?.week} Day {currentVideo?.day}
             </div>
             <div className="mt-1 sm:mt-2 text-xs xs:text-sm sm:text-base text-gray-600">
