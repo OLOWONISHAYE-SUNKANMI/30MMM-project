@@ -273,16 +273,16 @@ export default function TestimonialUploadPage() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-white to-gray-bg">
-      <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <h1 className="mb-8 text-center text-3xl font-bold text-primary-red">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-100 px-2 py-4 xs:px-4 xs:py-6 sm:px-6 sm:py-8">
+      <main className="container mx-auto max-w-4xl">
+        <h1 className="mb-4 text-center text-lg font-bold text-primary-red xs:mb-6 xs:text-xl sm:mb-8 sm:text-2xl md:text-3xl lg:text-4xl">
           Upload Your Journeyman&apos;s Testimonial Video Here
         </h1>
-        <p className="mx-auto mb-4 max-w-4xl text-center font-bold">
+        <p className="mx-auto mb-2 max-w-4xl text-center text-xs font-bold xs:mb-3 xs:text-sm sm:mb-4 sm:text-base md:text-lg">
           Add the information for your journeyman to the fields below as you
           receive video testimonials from your Journeyman.
         </p>
-        <p className="mx-auto mb-8 max-w-3xl text-justify">
+        <p className="mx-auto mb-4 max-w-3xl text-xs text-justify leading-relaxed xs:mb-6 xs:text-sm sm:mb-8 sm:text-base md:text-lg">
           Please include their cohort number from Discord, their first and last
           name, the week and day of the video, as well as the video file itself.
           Hitting submit will store your file with the other testimonials to
@@ -290,25 +290,25 @@ export default function TestimonialUploadPage() {
           brother&apos;s life!
         </p>
 
-        <p className="mx-auto mb-8 max-w-3xl text-justify">
+        <p className="mx-auto mb-6 max-w-3xl text-xs text-justify leading-relaxed xs:mb-8 xs:text-sm sm:mb-10 sm:text-base md:text-lg">
           <span className="font-bold">NOTE:</span> based on common broadband
           upload speeds (~10 mbps) each video may take several minutes to
           upload. There is a progress tracker to display the upload progress as
           the videos are being stored. Please do not leave this page before
           seeing the{" "}
-          <span className="text-green-500">Video uploaded successfully!</span>{" "}
+          <span className="text-green-500 font-semibold">Video uploaded successfully!</span>{" "}
           message.
         </p>
 
-        <div className="mx-auto max-w-md">
+        <div className="mx-auto w-full max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
           {uploadStatus && uploadStatus.success && uploadStatus.completed ? (
-            <div className="rounded-lg border border-green-200 bg-green-50 p-6 text-center">
-              <p className="mb-4 text-lg text-green-700">
+            <div className="rounded-lg border border-green-200 bg-green-50 p-4 text-center shadow-sm xs:p-6 sm:p-8">
+              <p className="mb-3 text-sm text-green-700 xs:mb-4 xs:text-base sm:mb-6 sm:text-lg md:text-xl">
                 {uploadStatus.message}
               </p>
               <button
                 onClick={handleReset}
-                className="rounded-lg bg-primaryred px-6 py-2 text-white transition-colors hover:bg-primaryred-800"
+                className="w-full rounded-lg bg-primaryred px-4 py-2.5 text-sm text-white transition-colors hover:bg-primaryred-800 focus:outline-none focus:ring-2 focus:ring-primaryred focus:ring-offset-2 xs:px-6 xs:text-base sm:w-auto sm:px-8 sm:py-3 md:text-lg"
               >
                 Upload Another Video
               </button>
@@ -316,14 +316,14 @@ export default function TestimonialUploadPage() {
           ) : (
             <form
               onSubmit={handleSubmit}
-              className="rounded-lg bg-white p-6 shadow-md"
+              className="rounded-lg bg-white p-4 xs:p-6 sm:p-8 md:p-10 lg:p-12"
               onDragEnter={handleDrag}
-              onDragOver={(e) => e.preventDefault()} // Prevent default browser behavior
+              onDragOver={(e) => e.preventDefault()}
             >
-              <div className="mb-4">
+              <div className="mb-3 xs:mb-4 sm:mb-5 md:mb-6">
                 <label
                   htmlFor="cohort"
-                  className="mb-2 block font-medium text-description-gray"
+                  className="mb-1.5 block text-sm font-medium text-description-gray xs:text-base sm:mb-2 md:text-lg"
                 >
                   Cohort:
                 </label>
@@ -332,7 +332,7 @@ export default function TestimonialUploadPage() {
                   value={cohort}
                   onChange={(e) => setCohort(e.target.value)}
                   required
-                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-4 py-2 focus:border-primaryred focus:ring-primaryred"
+                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-3 py-2.5 text-sm transition-colors focus:border-primaryred focus:ring-2 focus:ring-primaryred focus:ring-offset-1 xs:px-4 xs:py-3 xs:text-base sm:px-5 sm:py-3.5 md:text-lg"
                 >
                   <option value="">-- Select Cohort --</option>
                   <option value="no-cohort">-- Not Assigned A Cohort --</option>
@@ -346,10 +346,10 @@ export default function TestimonialUploadPage() {
                   ))}
                 </select>
               </div>
-              <div className="mb-4">
+              <div className="mb-3 xs:mb-4 sm:mb-5 md:mb-6">
                 <label
                   htmlFor="firstName"
-                  className="mb-2 block font-medium text-description-gray"
+                  className="mb-1.5 block text-sm font-medium text-description-gray xs:text-base sm:mb-2 md:text-lg"
                 >
                   First Name:
                 </label>
@@ -357,13 +357,14 @@ export default function TestimonialUploadPage() {
                   id="firstName"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-4 py-2 focus:border-primaryred focus:ring-primaryred"
+                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-3 py-2.5 text-sm transition-colors focus:border-primaryred focus:ring-2 focus:ring-primaryred focus:ring-offset-1 xs:px-4 xs:py-3 xs:text-base sm:px-5 sm:py-3.5 md:text-lg"
+                  placeholder="Enter first name"
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3 xs:mb-4 sm:mb-5 md:mb-6">
                 <label
                   htmlFor="lastName"
-                  className="mb-2 block font-medium text-description-gray"
+                  className="mb-1.5 block text-sm font-medium text-description-gray xs:text-base sm:mb-2 md:text-lg"
                 >
                   Last Name:
                 </label>
@@ -371,13 +372,14 @@ export default function TestimonialUploadPage() {
                   id="lastName"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-4 py-2 focus:border-primaryred focus:ring-primaryred"
+                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-3 py-2.5 text-sm transition-colors focus:border-primaryred focus:ring-2 focus:ring-primaryred focus:ring-offset-1 xs:px-4 xs:py-3 xs:text-base sm:px-5 sm:py-3.5 md:text-lg"
+                  placeholder="Enter last name"
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3 xs:mb-4 sm:mb-5 md:mb-6">
                 <label
                   htmlFor="week"
-                  className="mb-2 block font-medium text-description-gray"
+                  className="mb-1.5 block text-sm font-medium text-description-gray xs:text-base sm:mb-2 md:text-lg"
                 >
                   Select Week:
                 </label>
@@ -386,7 +388,7 @@ export default function TestimonialUploadPage() {
                   value={week}
                   onChange={(e) => setWeek(e.target.value)}
                   required
-                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-4 py-2 focus:border-primaryred focus:ring-primaryred"
+                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-3 py-2.5 text-sm transition-colors focus:border-primaryred focus:ring-2 focus:ring-primaryred focus:ring-offset-1 xs:px-4 xs:py-3 xs:text-base sm:px-5 sm:py-3.5 md:text-lg"
                 >
                   <option value="">-- Select Week --</option>
                   {weekOptions.map((num) => (
@@ -400,10 +402,10 @@ export default function TestimonialUploadPage() {
                 </select>
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4 xs:mb-5 sm:mb-6 md:mb-8">
                 <label
                   htmlFor="day"
-                  className="mb-2 block font-medium text-description-gray"
+                  className="mb-1.5 block text-sm font-medium text-description-gray xs:text-base sm:mb-2 md:text-lg"
                 >
                   Select Day:
                 </label>
@@ -412,7 +414,7 @@ export default function TestimonialUploadPage() {
                   value={day}
                   onChange={(e) => setDay(e.target.value)}
                   required
-                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-4 py-2 focus:border-primaryred focus:ring-primaryred"
+                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-3 py-2.5 text-sm transition-colors focus:border-primaryred focus:ring-2 focus:ring-primaryred focus:ring-offset-1 xs:px-4 xs:py-3 xs:text-base sm:px-5 sm:py-3.5 md:text-lg"
                 >
                   <option value="">-- Select Day --</option>
                   {dayOptions.map((num) => (
@@ -426,10 +428,10 @@ export default function TestimonialUploadPage() {
                 </select>
               </div>
 
-              <div className="mb-6">
+              <div className="mb-3 xs:mb-4 sm:mb-6 md:mb-8">
                 <label
                   htmlFor="video"
-                  className="mb-2 block font-medium text-description-gray"
+                  className="mb-1 block text-xs font-medium text-description-gray xs:text-sm sm:mb-2 sm:text-base md:text-lg"
                 >
                   Upload Video:
                 </label>
@@ -438,7 +440,7 @@ export default function TestimonialUploadPage() {
                     dragActive
                       ? "border-primaryred bg-red-50"
                       : "border-gray-300"
-                  } px-6 pb-6 pt-5`}
+                  } px-2 pb-3 pt-2 xs:px-3 xs:pb-4 xs:pt-3 sm:px-6 sm:pb-6 sm:pt-5 md:px-8 md:pb-8 md:pt-6`}
                   onDragEnter={handleDrag}
                   onDragLeave={handleDrag}
                   onDragOver={handleDrag}
@@ -447,14 +449,14 @@ export default function TestimonialUploadPage() {
                   {/* Invisible overlay for drag & drop handling */}
                   {dragActive && (
                     <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-red-50 bg-opacity-80">
-                      <p className="text-lg font-medium text-primaryred">
+                      <p className="text-xs font-medium text-primaryred xs:text-sm sm:text-lg md:text-xl">
                         Drop your video file here
                       </p>
                     </div>
                   )}
                   <div className="space-y-1 text-center">
                     <svg
-                      className="mx-auto h-12 w-12 text-gray-400"
+                      className="mx-auto h-6 w-6 text-gray-400 xs:h-8 xs:w-8 sm:h-12 sm:w-12 md:h-16 md:w-16"
                       stroke="currentColor"
                       fill="none"
                       viewBox="0 0 48 48"
@@ -467,7 +469,7 @@ export default function TestimonialUploadPage() {
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <div className="flex text-sm text-gray-600">
+                    <div className="flex flex-col text-xs text-gray-600 xs:text-sm sm:flex-row md:text-base">
                       <button
                         type="button"
                         onClick={handleButtonClick}
@@ -483,13 +485,13 @@ export default function TestimonialUploadPage() {
                         onChange={handleFileChange}
                         className="sr-only"
                       />
-                      <p className="pl-1">or drag and drop</p>
+                      <p className="sm:pl-1">or drag and drop</p>
                     </div>
-                    <p className="text-xs text-gray-500">MP4, MOV, AVI, etc.</p>
+                    <p className="text-xs text-gray-500 xs:text-sm md:text-base">MP4, MOV, AVI, etc.</p>
                     {file && !previewUrl && (
-                      <div className="mt-2 flex items-center justify-center">
-                        <p className="mr-2 text-sm text-green-600">
-                          Selected: {file.name}
+                      <div className="mt-1 flex flex-col items-center justify-center space-y-1 xs:mt-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+                        <p className="text-xs text-green-600 xs:text-sm md:text-base">
+                          Selected: {file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name}
                         </p>
                         <button
                           type="button"
@@ -497,7 +499,7 @@ export default function TestimonialUploadPage() {
                             e.stopPropagation();
                             setFile(null);
                           }}
-                          className="text-xs text-red-600 hover:text-red-800"
+                          className="text-xs text-red-600 hover:text-red-800 xs:text-sm md:text-base"
                         >
                           Remove
                         </button>
@@ -508,9 +510,9 @@ export default function TestimonialUploadPage() {
               </div>
 
               {previewUrl && (
-                <div className="mb-6">
-                  <div className="mb-2 flex items-center justify-between">
-                    <h3 className="font-medium text-description-gray">
+                <div className="mb-3 xs:mb-4 sm:mb-6 md:mb-8">
+                  <div className="mb-1 flex items-center justify-between xs:mb-2">
+                    <h3 className="text-xs font-medium text-description-gray xs:text-sm sm:text-base md:text-lg">
                       Preview:
                     </h3>
                     <button
@@ -519,7 +521,7 @@ export default function TestimonialUploadPage() {
                         setFile(null);
                         setPreviewUrl(null);
                       }}
-                      className="flex items-center text-sm text-red-600 hover:text-red-800"
+                      className="flex items-center text-xs text-red-600 hover:text-red-800 xs:text-sm md:text-base"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -576,7 +578,7 @@ export default function TestimonialUploadPage() {
                     !cohort ||
                     isUploading
                   }
-                  className={`rounded-lg px-6 py-2 text-white transition-colors ${
+                  className={`w-full rounded-lg px-3 py-2 text-xs text-white transition-colors xs:px-4 xs:text-sm sm:w-auto sm:px-6 sm:text-base md:px-8 md:py-3 md:text-lg ${
                     !week ||
                     !day ||
                     !file ||
@@ -593,27 +595,27 @@ export default function TestimonialUploadPage() {
               </div>
 
               {isUploading && (
-                <div className="mt-6 text-center">
+                <div className="mt-3 text-center xs:mt-4 sm:mt-6 md:mt-8">
                   <div className="relative pt-1">
                     <div className="flex items-center justify-between">
-                      <div>
-                        <span className="inline-block text-xs font-semibold text-description-gray">
+                      <div className="flex-1">
+                        <span className="inline-block text-xs font-semibold text-description-gray xs:text-sm md:text-base">
                           {uploadStatus?.message || "Uploading..."}
                         </span>
                       </div>
                       <div className="text-right">
-                        <span className="inline-block text-xs font-semibold text-description-gray">
+                        <span className="inline-block text-xs font-semibold text-description-gray xs:text-sm md:text-base">
                           {uploadProgress}%
                         </span>
                       </div>
                     </div>
-                    <div className="mb-4 mt-2 flex h-2 overflow-hidden rounded bg-gray-200 text-xs">
+                    <div className="mb-2 mt-1 flex h-1.5 overflow-hidden rounded bg-gray-200 text-xs xs:mb-3 xs:mt-2 xs:h-2 sm:mb-4 md:h-3">
                       <div
                         style={{ width: `${uploadProgress}%` }}
                         className="flex flex-col justify-center whitespace-nowrap bg-primaryred text-center text-white shadow-none"
                       ></div>
                     </div>
-                    <div className="flex items-center justify-between text-xs text-description-gray">
+                    <div className="flex flex-col items-center justify-between space-y-1 text-xs text-description-gray xs:text-sm sm:flex-row sm:space-y-0 md:text-base">
                       <div>
                         {uploadStatus?.step && uploadStatus?.totalSteps && (
                           <span>
@@ -636,7 +638,7 @@ export default function TestimonialUploadPage() {
               )}
 
               {uploadStatus && !uploadStatus.success && (
-                <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-center text-red-700">
+                <div className="mt-2 rounded-lg border border-red-200 bg-red-50 p-2 text-center text-xs text-red-700 xs:mt-3 xs:p-3 xs:text-sm sm:mt-4 md:text-base">
                   <p>{uploadStatus.message}</p>
                 </div>
               )}
