@@ -16,7 +16,8 @@ const PledgeWidget: React.FC<PledgeWidgetProps> = ({
 	className = "",
 	maxWidth = "max-w-3xl"
 }) => {
-        const [mounted, setMounted] = useState(false);
+    const [mounted, setMounted] = useState(false);
+    console.log("PledgeWidget rendered with widgetId:", widgetId);
 
         // Only set mounted to true after the component has been hydrated
         useEffect(() => {
