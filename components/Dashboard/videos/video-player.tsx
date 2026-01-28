@@ -252,10 +252,10 @@ export default function VideoPlayer() {
 
   return (
     <TooltipProvider>
-      <div className="mx-auto flex min-h-screen w-full max-w-[900px] flex-col">
-        {/* Video Player Container - Exactly 70% of viewport height */}
+      <div className="mx-auto flex min-h-screen w-full max-w-[900px] flex-col px-2 sm:px-4">
+        {/* Video Player Container - Responsive height */}
         <div
-          className="m-2 h-[70vh] w-full overflow-hidden rounded-lg border border-gray-200 bg-black shadow-2xl"
+          className="m-1 sm:m-2 h-[50vh] sm:h-[60vh] lg:h-[70vh] w-full overflow-hidden rounded-lg border border-gray-200 bg-black shadow-2xl"
           ref={containerRef}
         >
           {/* Video container - completely clean */}
@@ -295,23 +295,23 @@ export default function VideoPlayer() {
           </div>
         </div>
 
-        {/* All Content Below Video - Uses remaining 30% of viewport */}
-        <div className="flex-1 flex flex-col px-4 pb-4">
+        {/* All Content Below Video - Uses remaining viewport */}
+        <div className="flex-1 flex flex-col px-2 sm:px-4 pb-4">
           {/* Fixed Navigation Controls */}
-          <div className="flex items-center justify-between py-4 bg-white sticky top-0 z-10 border-b">
+          <div className="flex items-center justify-between py-2 sm:py-4 bg-white sticky top-0 z-10 border-b">
             {/* Previous Button */}
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
                   variant="ghost"
-                  size="default"
-                  className="rounded-full border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+                  size="sm"
+                  className="rounded-full border border-gray-300 px-2 sm:px-4 py-1 sm:py-2 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
                   onClick={goToPreviousVideo}
                   disabled={currentVideoIndex === 0}
                   aria-label="Previous video"
                 >
-                  <ChevronUp className="mr-2 h-5 w-5" />
-                  <span className="text-sm">Previous</span>
+                  <ChevronUp className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                  <span className="text-xs sm:text-sm hidden xs:inline">Previous</span>
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
@@ -321,7 +321,7 @@ export default function VideoPlayer() {
 
             {/* Video Progress Indicators */}
             <div
-              className="flex gap-3 overflow-x-auto max-w-md px-2 scrollbar-hide"
+              className="flex gap-1 sm:gap-3 overflow-x-auto max-w-[120px] xs:max-w-[200px] sm:max-w-md px-1 sm:px-2 scrollbar-hide"
               role="tablist"
               aria-label="Video navigation"
               style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}
@@ -331,7 +331,7 @@ export default function VideoPlayer() {
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => setCurrentVideoIndex(index)}
-                      className={`h-3 w-10 rounded-full transition-all duration-200 flex-shrink-0 ${
+                      className={`h-2 sm:h-3 w-6 sm:w-10 rounded-full transition-all duration-200 flex-shrink-0 ${
                         index === currentVideoIndex
                           ? "bg-gray-800"
                           : "bg-gray-300 hover:bg-gray-500"
@@ -355,14 +355,14 @@ export default function VideoPlayer() {
               <TooltipTrigger asChild>
                 <Button
                   variant="ghost"
-                  size="default"
-                  className="rounded-full border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+                  size="sm"
+                  className="rounded-full border border-gray-300 px-2 sm:px-4 py-1 sm:py-2 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
                   onClick={goToNextVideo}
                   disabled={currentVideoIndex === videos.length - 1}
                   aria-label="Next video"
                 >
-                  <span className="text-sm">Next</span>
-                  <ChevronDown className="ml-2 h-5 w-5" />
+                  <span className="text-xs sm:text-sm hidden xs:inline">Next</span>
+                  <ChevronDown className="ml-1 sm:ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
@@ -372,31 +372,31 @@ export default function VideoPlayer() {
           </div>
 
           {/* Scrollable Content */}
-          <div className="space-y-4 overflow-y-auto flex-1">
+          <div className="space-y-3 sm:space-y-4 overflow-y-auto flex-1">
           {/* Video Title and Info */}
           <div className="text-center">
-            <div className="text-2xl font-bold leading-tight text-gray-800">
+            <div className="text-lg sm:text-2xl font-bold leading-tight text-gray-800">
               Week {currentVideo?.week} Day {currentVideo?.day}
             </div>
-            <div className="mt-2 text-base text-gray-600">
+            <div className="mt-1 sm:mt-2 text-sm sm:text-base text-gray-600">
               {currentVideo?.firstName} {currentVideo?.lastName} • Cohort {currentVideo?.cohort}
             </div>
           </div>
 
           {/* Video Controls and Profile */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             {/* Mute/Unmute button */}
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
                   variant="outline"
-                  size="default"
+                  size="sm"
                   onClick={toggleMute}
-                  className="rounded-full px-4 py-2"
+                  className="rounded-full px-2 sm:px-4 py-1 sm:py-2"
                   aria-label={isMuted ? "Unmute video" : "Mute video"}
                 >
-                  {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-                  <span className="ml-2 text-sm">
+                  {isMuted ? <VolumeX size={16} className="sm:w-[18px] sm:h-[18px]" /> : <Volume2 size={16} className="sm:w-[18px] sm:h-[18px]" />}
+                  <span className="ml-1 sm:ml-2 text-xs sm:text-sm">
                     {isMuted ? "Unmute" : "Mute"}
                   </span>
                 </Button>
@@ -407,20 +407,20 @@ export default function VideoPlayer() {
             </Tooltip>
 
             {/* Profile */}
-            <div className="flex items-center gap-3">
-              <Avatar className="h-12 w-12 border-2 border-gray-300">
-                <AvatarFallback>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Avatar className="h-8 w-8 sm:h-12 sm:w-12 border-2 border-gray-300">
+                <AvatarFallback className="text-xs sm:text-sm">
                   {currentVideo?.firstName?.[0]}{currentVideo?.lastName?.[0]}
                 </AvatarFallback>
               </Avatar>
-              <div className="text-sm text-gray-600">
+              <div className="text-xs sm:text-sm text-gray-600">
                 {currentVideo?.firstName} {currentVideo?.lastName}
               </div>
             </div>
           </div>
 
           {/* Interaction Buttons */}
-          <div className="flex items-center justify-center gap-10">
+          <div className="flex items-center justify-center gap-4 sm:gap-10">
             {/* Like */}
             <div className="flex flex-col items-center">
               <Tooltip>
@@ -428,12 +428,12 @@ export default function VideoPlayer() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-14 w-14 rounded-full text-gray-700 hover:bg-red-50 hover:text-red-500"
+                    className="h-10 w-10 sm:h-14 sm:w-14 rounded-full text-gray-700 hover:bg-red-50 hover:text-red-500"
                     onClick={() => toggleLike(currentVideo?.id)}
                     aria-label={currentVideo && likedVideos.includes(currentVideo.id) ? "Unlike video" : "Like video"}
                   >
                     <Heart
-                    className={`h-7 w-7 ${currentVideo && likedVideos.includes(currentVideo.id) ? "fill-red-500 text-red-500" : "fill-transparent"}`}
+                    className={`h-5 w-5 sm:h-7 sm:w-7 ${currentVideo && likedVideos.includes(currentVideo.id) ? "fill-red-500 text-red-500" : "fill-transparent"}`}
                     />
                   </Button>
                 </TooltipTrigger>
@@ -441,7 +441,7 @@ export default function VideoPlayer() {
                   <p>{currentVideo && likedVideos.includes(currentVideo.id) ? "Unlike" : "Like"}</p>
                 </TooltipContent>
               </Tooltip>
-              <span className="mt-1 text-sm font-semibold text-gray-700">{currentStats.likes}</span>
+              <span className="mt-1 text-xs sm:text-sm font-semibold text-gray-700">{currentStats.likes}</span>
             </div>
 
             {/* Comments */}
@@ -451,7 +451,7 @@ export default function VideoPlayer() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-14 w-14 rounded-full text-gray-700 hover:bg-blue-50 hover:text-blue-500"
+                    className="h-10 w-10 sm:h-14 sm:w-14 rounded-full text-gray-700 hover:bg-blue-50 hover:text-blue-500"
                     onClick={() => {
                       setShowComments(!showComments);
                       if (!showComments && currentVideo) {
@@ -459,14 +459,14 @@ export default function VideoPlayer() {
                       }
                     }}
                   >
-                    <MessageCircle className="h-7 w-7" />
+                    <MessageCircle className="h-5 w-5 sm:h-7 sm:w-7" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Comments</p>
                 </TooltipContent>
               </Tooltip>
-              <span className="mt-1 text-sm font-semibold text-gray-700">{currentStats.comments}</span>
+              <span className="mt-1 text-xs sm:text-sm font-semibold text-gray-700">{currentStats.comments}</span>
             </div>
 
             {/* Bookmark */}
@@ -476,12 +476,12 @@ export default function VideoPlayer() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-14 w-14 rounded-full text-gray-700 hover:bg-yellow-50 hover:text-yellow-500"
+                    className="h-10 w-10 sm:h-14 sm:w-14 rounded-full text-gray-700 hover:bg-yellow-50 hover:text-yellow-500"
                     onClick={() => toggleBookmark(currentVideo?.id)}
                     aria-label={currentVideo && bookmarkedVideos.includes(currentVideo.id) ? "Remove bookmark" : "Bookmark video"}
                   >
                     <Bookmark
-                      className={`h-7 w-7 ${currentVideo && bookmarkedVideos.includes(currentVideo.id) ? "fill-yellow-500 text-yellow-500" : "fill-transparent"}`}
+                      className={`h-5 w-5 sm:h-7 sm:w-7 ${currentVideo && bookmarkedVideos.includes(currentVideo.id) ? "fill-yellow-500 text-yellow-500" : "fill-transparent"}`}
                     />
                   </Button>
                 </TooltipTrigger>
@@ -489,7 +489,7 @@ export default function VideoPlayer() {
                   <p>{currentVideo && bookmarkedVideos.includes(currentVideo.id) ? "Remove Bookmark" : "Bookmark"}</p>
                 </TooltipContent>
               </Tooltip>
-              <span className="mt-1 text-sm font-semibold text-gray-700">0</span>
+              <span className="mt-1 text-xs sm:text-sm font-semibold text-gray-700">0</span>
             </div>
 
             {/* Share */}
@@ -499,38 +499,38 @@ export default function VideoPlayer() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-14 w-14 rounded-full text-gray-700 hover:bg-green-50 hover:text-green-500"
+                    className="h-10 w-10 sm:h-14 sm:w-14 rounded-full text-gray-700 hover:bg-green-50 hover:text-green-500"
                     aria-label="Share video"
                   >
-                    <Share2 className="h-7 w-7" />
+                    <Share2 className="h-5 w-5 sm:h-7 sm:w-7" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Share</p>
                 </TooltipContent>
               </Tooltip>
-              <span className="mt-1 text-sm font-semibold text-gray-700">0</span>
+              <span className="mt-1 text-xs sm:text-sm font-semibold text-gray-700">0</span>
             </div>
           </div>
 
           {/* Video Info */}
           <div className="text-center text-gray-600">
-            <div className="text-sm">
+            <div className="text-xs sm:text-sm">
               Uploaded: {currentVideo && new Date(currentVideo.createdAt).toLocaleDateString()}
             </div>
-            <div className="text-sm">
+            <div className="text-xs sm:text-sm break-all">
               File: {currentVideo?.fileName}
             </div>
           </div>
 
-          <div className="text-center text-gray-500 text-sm">
+          <div className="text-center text-gray-500 text-xs sm:text-sm">
             Video {currentVideoIndex + 1} of {videos.length}
           </div>
 
           {/* Comments Section */}
           {showComments && (
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h3 className="font-semibold mb-3">Comments</h3>
+            <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+              <h3 className="font-semibold mb-3 text-sm sm:text-base">Comments</h3>
               
               {/* Add Comment */}
               <div className="flex gap-2 mb-4">
@@ -539,26 +539,26 @@ export default function VideoPlayer() {
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Add a comment..."
-                  className="flex-1 px-3 py-2 border rounded-lg"
+                  className="flex-1 px-2 sm:px-3 py-1 sm:py-2 border rounded-lg text-sm sm:text-base"
                   onKeyPress={(e) => e.key === 'Enter' && addComment()}
                 />
-                <Button onClick={addComment} size="sm">
+                <Button onClick={addComment} size="sm" className="text-xs sm:text-sm">
                   Post
                 </Button>
               </div>
               
               {/* Comments List */}
-              <div className="space-y-3 max-h-40 overflow-y-auto">
+              <div className="space-y-3 max-h-32 sm:max-h-40 overflow-y-auto">
                 {loadingComments ? (
                   <div className="flex justify-center py-4">
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-600"></div>
-                    <span className="ml-2 text-gray-600">Loading comments...</span>
+                    <div className="animate-spin rounded-full h-4 w-4 sm:h-6 sm:w-6 border-b-2 border-gray-600"></div>
+                    <span className="ml-2 text-gray-600 text-xs sm:text-sm">Loading comments...</span>
                   </div>
                 ) : (
                   Array.isArray(comments) && comments.map((comment: any, index: number) => (
-                    <div key={comment.id || index} className="bg-white p-3 rounded">
-                      <div className="font-medium text-sm">{comment.userId}</div>
-                      <div className="text-gray-700">{comment.text}</div>
+                    <div key={comment.id || index} className="bg-white p-2 sm:p-3 rounded">
+                      <div className="font-medium text-xs sm:text-sm">{comment.userId}</div>
+                      <div className="text-gray-700 text-xs sm:text-sm">{comment.text}</div>
                       <div className="text-xs text-gray-500 mt-1">
                         {new Date(comment.createdAt).toLocaleString()}
                       </div>
