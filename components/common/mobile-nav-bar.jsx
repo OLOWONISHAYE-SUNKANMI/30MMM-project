@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Menu } from "lucide-react";
-import SidePanel from "@/components/dashboard/SidePanel/SidePanel";
+import SidePanel from "@/components/Dashboard/SidePanel/SidePanel";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
