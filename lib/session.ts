@@ -10,25 +10,47 @@ import { auth } from "@/lib/auth";
  */
 export async function getUser() {
   try {
-    // Get the session from Next-Auth
-    const session = await auth();
+    // Add timeout to prevent hanging requests
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Database timeout')), 5000)
+    );
 
-    if (!session || !session.user?.id) {
-      return null;
-    }
+    const getUserPromise = async () => {
+      // Get the session from Next-Auth
+      const session = await auth();
 
-    // Use the user ID from the session to fetch the complete user record
-    const user = await prisma.user.findUnique({
-      where: {
-        id: session.user.id,
-      },
-      include: {
-        userProfile: true,
-        userProgress: true,
-      },
-    });
+      if (!session || !session.user) {
+        return null;
+      }
 
-    return user;
+      // Try to get user by ID first, then by email as fallback
+      let user: any = null;
+      
+      if (session.user.id) {
+        user = await prisma.user.findUnique({
+          where: { id: session.user.id },
+          include: {
+            userProfile: true,
+            userProgress: true,
+          },
+        });
+      }
+      
+      // If no user found by ID, try by email
+      if (!user && session.user.email) {
+        user = await prisma.user.findUnique({
+          where: { email: session.user.email },
+          include: {
+            userProfile: true,
+            userProgress: true,
+          },
+        });
+      }
+
+      return user;
+    };
+
+    return await Promise.race([getUserPromise(), timeoutPromise]);
   } catch (error) {
     console.error("Error getting user from session:", error);
     return null;

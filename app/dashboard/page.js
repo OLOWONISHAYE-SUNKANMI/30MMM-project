@@ -22,19 +22,19 @@ export default function Dashboard() {
   }
 
   // Show message if not authenticated
-  if (!authState.isAuthenticated || !authState.user?.id) {
+  if (!authState.isAuthenticated || !authState.user) {
     return (
       <div className="relative mx-16 flex min-h-screen flex-col items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <p className="text-gray-600">
-            You must be logged in to view the dashboard.
+            Please log in to view your progress.
           </p>
         </div>
       </div>
     );
   }
 
-  // Only render dashboard if user is fully authenticated with valid ID
+  // Only render dashboard if user is fully authenticated
   return (
     <div className="relative mx-16 flex min-h-screen flex-col items-center justify-start">
       <PaymentVerification>
