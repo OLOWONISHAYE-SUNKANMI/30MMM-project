@@ -6,9 +6,9 @@ import { getUserProgress } from "@/actions/user-progress";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 import { FaChevronDown } from "react-icons/fa";
-import DonateHero from "@/components/Dashboard/DonateHero";
+import DonateHero from "@/components/dashboard/DonateHero";
 import { calculateWeekAndDay } from "@/lib/calculateWeekAndDay";
-import CardSection from "./CardSection";
+import CardSection from "@/components/dashboard/CardSection";
 
 export default function MainBody() {
   const { authState } = useAuth();

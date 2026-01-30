@@ -1,8 +1,8 @@
 "use client";
 
 import { useAuth } from "@/contexts/AuthContext";
-import MainBody from "@/components/Dashboard/MainBody";
-import PaymentVerification from "@/components/Dashboard/payment-verification";
+import MainBody from "@/components/dashboard/MainBody";
+import PaymentVerification from "@/components/dashboard/payment-verification";
 
 export default function Dashboard() {
   const { authState } = useAuth();

@@ -1,4 +1,4 @@
-import SidePanel from "@/components/Dashboard/SidePanel/SidePanel";
+import SidePanel from "@/components/dashboard/SidePanel/SidePanel";
 import AuthButtons from "./nav-auth-buttons";
 import NavLogo from "./nav-bar-logo";
 import NavLinks from "./nav-links";
