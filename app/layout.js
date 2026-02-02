@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
       <body className={`${alexandria.className} antialiased`}>
         <Providers>
           <NavBar />
-          <main className="mt-20">{children}</main>
+          <main className="mt-16 sm:mt-20">{children}</main>
           <Toaster />
           <Footer />
         </Providers>

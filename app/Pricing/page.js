@@ -82,19 +82,19 @@ const PricingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen py-10 pt-24 bg-gray-100">
-      <div className="max-w-6xl px-4 mx-auto">
-        <h1 className="mb-8 text-4xl font-bold text-center text-gray-800">
+    <div className="min-h-screen py-6 sm:py-10 pt-20 sm:pt-24 bg-gray-100">
+      <div className="max-w-6xl px-4 sm:px-6 mx-auto">
+        <h1 className="mb-6 sm:mb-8 text-3xl sm:text-4xl font-bold text-center text-gray-800">
           Our Pricing Plans
         </h1>
-        <p className="mb-8 text-center">
+        <p className="mb-6 sm:mb-8 text-center text-sm sm:text-base">
           Ready to get started? Here are our options to start your Clean Journey
         </p>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-4">
           {resourceDetails.map((resource, index) => (
             <div
               key={index}
-              className="flex flex-col justify-between p-6 text-center bg-white rounded-lg shadow-md"
+              className="flex flex-col justify-between p-4 sm:p-6 text-center bg-white rounded-lg shadow-md"
             >
               <div>
                 <Image
@@ -102,24 +102,24 @@ const PricingPage = () => {
                   alt={resource.title}
                   width={200}
                   height={150}
-                  className="mb-4 rounded"
+                  className="mb-3 sm:mb-4 rounded mx-auto"
                 />
-                <h2 className="mb-2 text-2xl font-semibold text-gray-700 capitalize">
+                <h2 className="mb-2 text-lg sm:text-xl lg:text-2xl font-semibold text-gray-700 capitalize">
                   {resource.title}
                 </h2>
-                <h3 className="mb-2 text-xl font-bold text-gray-800">
+                <h3 className="mb-2 text-base sm:text-lg lg:text-xl font-bold text-gray-800">
                   {resource.headline}
                 </h3>
-                <p className="mb-4 text-gray-600">{resource.subheadline}</p>
-                <ul className="mb-4 text-gray-600 list-disc list-inside">
+                <p className="mb-3 sm:mb-4 text-sm sm:text-base text-gray-600">{resource.subheadline}</p>
+                <ul className="mb-3 sm:mb-4 text-xs sm:text-sm text-gray-600 list-disc list-inside text-left">
                   {resource.description.map((item, i) => (
-                    <li key={i}>{item}</li>
+                    <li key={i} className="mb-1">{item}</li>
                   ))}
                 </ul>
               </div>
-              <div className="flex flex-col items-center justify-between w-full gap-4 mt-4">
-                <span>{resource.cta1}</span>
-                <span className="text-xl font-bold text-gray-800">
+              <div className="flex flex-col items-center justify-between w-full gap-3 sm:gap-4 mt-3 sm:mt-4">
+                <span className="text-xs sm:text-sm">{resource.cta1}</span>
+                <span className="text-lg sm:text-xl font-bold text-gray-800">
                   {resource.price}
                 </span>
                 <button
@@ -128,7 +128,7 @@ const PricingPage = () => {
                       ? null
                       : router.push("/payment", "_blank")
                   }
-                  className="w-full px-4 py-2 text-sm text-white uppercase transition rounded bg-primary-red hover:bg-red-800"
+                  className="w-full px-3 sm:px-4 py-2 text-xs sm:text-sm text-white uppercase transition rounded bg-primary-red hover:bg-red-800"
                 >
                   {resource.cta2}
                 </button>

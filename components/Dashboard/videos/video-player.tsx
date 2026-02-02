@@ -32,6 +32,7 @@ export default function VideoPlayer() {
   const [isMuted, setIsMuted] = useState(true);
   const [likedVideos, setLikedVideos] = useState<any[]>([]);
   const [bookmarkedVideos, setBookmarkedVideos] = useState<any[]>([]);
+  const [brokenVideoIds, setBrokenVideoIds] = useState<Set<number>>(new Set());
   const [videoStats, setVideoStats] = useState<{[key: string]: {likes: number, comments: number}}>({});
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<any[]>([]);
@@ -95,7 +96,7 @@ export default function VideoPlayer() {
             try {
               const url = new URL(video.blobUrl);
               const pathParts = url.pathname.split('/').filter(Boolean);
-              const blobPath = pathParts.slice(1).join('/'); // Remove URL encoding
+              const blobPath = pathParts.slice(1).join('/'); 
               const decodedBlobPath = decodeURIComponent(blobPath);
               
               console.log('Extracted blob path:', decodedBlobPath);
@@ -297,7 +298,7 @@ export default function VideoPlayer() {
         >
           {/* Video container - completely clean */}
           <div className="relative h-full w-full">
-            {videos.map((video, index) => (
+            {videos.filter(video => !brokenVideoIds.has(video.id)).map((video, index) => (
               <div
                 key={video.id}
                 className={`absolute left-0 top-0 h-full w-full transition-opacity duration-300 ${
@@ -318,8 +319,19 @@ export default function VideoPlayer() {
                     preload="none"
                     aria-label={`Video: Week ${video.week} Day ${video.day}`}
                     onError={(e) => {
-                      console.error('Video error for', (video as any).fileName, ':', (e.target as any).error);
-                      console.error('Error code:', (e.target as any).error?.code, 'Message:', (e.target as any).error?.message);
+                      const error = (e.target as any).error;
+                      console.error('Video error for', (video as any).fileName, '- removing from playlist');
+                      if (error) {
+                        console.error('Error details:', { code: error.code, message: error.message });
+                      }
+                      // Mark video as broken instead of removing from array
+                      setBrokenVideoIds(prev => new Set([...prev, video.id]));
+                      // Move to next available video
+                      const availableVideos = videos.filter(v => !brokenVideoIds.has(v.id) && v.id !== video.id);
+                      if (availableVideos.length > 0) {
+                        const nextIndex = Math.min(currentVideoIndex, availableVideos.length - 1);
+                        setCurrentVideoIndex(nextIndex);
+                      }
                     }}
                     onLoadStart={() => console.log('Loading video:', (video as any).fileName, 'Type:', (video as any).fileType)}
                     onLoadedMetadata={() => console.log('Metadata loaded for:', video.fileName)}
@@ -363,7 +375,7 @@ export default function VideoPlayer() {
               aria-label="Video navigation"
               style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}
             >
-              {videos.map((video, index) => (
+              {videos.filter(video => !brokenVideoIds.has(video.id)).map((video, index) => (
                 <Tooltip key={index}>
                   <TooltipTrigger asChild>
                     <button
@@ -648,7 +660,7 @@ export default function VideoPlayer() {
             </div>
           </div>
 
-          <div className="text-center text-gray-500 text-xs xs:text-sm px-2">
+          <div className="text-center text-gray-500 text-sm">
             Video {currentVideoIndex + 1} of {videos.length}
           </div>
 
