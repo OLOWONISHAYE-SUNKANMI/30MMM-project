@@ -18,25 +18,25 @@ export function TestimonialsSection() {
   ];
 
   return (
-    <section className="bg-primary-red py-16 text-white">
-      <div className="mx-auto px-4 md:container">
-        <h2 className="mb-12 text-center text-3xl font-bold md:text-4xl">
+    <section className="bg-primary-red py-12 sm:py-16 text-white">
+      <div className="mx-auto px-4 sm:px-6 md:container">
+        <h2 className="mb-8 sm:mb-12 text-center text-2xl sm:text-3xl md:text-4xl font-bold">
           What People Are Saying
         </h2>
-        <p className="mb-12 text-center text-xl md:text-xl">
+        <p className="mb-8 sm:mb-12 text-center text-base sm:text-lg md:text-xl">
           These testimonials are kept anonymous for the privacy and safety of
           our community.
         </p>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="rounded-lg bg-white p-6 text-gray-800 shadow-md"
+              className="rounded-lg bg-white p-4 sm:p-6 text-gray-800 shadow-md"
             >
-              <blockquote className="mb-4 text-lg">
-                &quot;{testimonial.quote}&quot;
+              <blockquote className="mb-3 sm:mb-4 text-sm sm:text-base lg:text-lg">
+                "{testimonial.quote}"
               </blockquote>
-              <blockquote className="text-md mb-4">
+              <blockquote className="text-xs sm:text-sm font-medium">
                 {testimonial.name}
               </blockquote>
             </div>

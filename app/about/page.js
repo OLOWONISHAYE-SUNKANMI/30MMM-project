@@ -57,59 +57,60 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-primary-red pt-4 text-white md:pt-8">
-        <div className="relative mx-auto px-5 md:px-8 lg:pt-16">
+      <section className="relative bg-primary-red pt-16 text-white sm:pt-20 md:pt-24 lg:pt-28">
+        <div className="relative mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
           <motion.div
             {...fadeIn}
-            className="mx-auto max-w-3xl text-justify"
+            className="mx-auto max-w-4xl text-center lg:max-w-5xl xl:max-w-6xl"
           >
-            <h1 className="mb-6 mt-8 text-center text-2xl font-semibold tracking-wide text-off-white sm:text-3xl md:text-5xl lg:mb-8 lg:text-6xl xl:text-7xl">
+            <h1 className="mb-4 text-3xl font-bold tracking-tight sm:mb-6 sm:text-4xl md:text-5xl lg:mb-8 lg:text-6xl xl:text-7xl">
               About{" "}
-              <span className="px-1 text-[1.22em] font-extrabold not-italic tracking-wider text-white">
+              <span className="font-extrabold tracking-wider text-white">
                 CLEAN
               </span>
             </h1>
-            <p className="text-sm leading-5 first-line:font-medium max-md:px-2 md:text-lg lg:text-xl lg:leading-relaxed 2xl:text-balance">
-              &nbsp;&nbsp;&nbsp;<span class="ml-2 font-semibold">CLEAN</span>{" "}
-              exists to help men find freedom, purpose, and brotherhood. We
-              believe that every man has the potential to live a life of
-              integrity and impact, but too often, struggles with sexual sin and
-              lack of purpose hold men back from becoming who God created them
-              to be.
-            </p>
-            <p className="mt-8 pb-16 pt-[0.3rem] text-center text-xl font-semibold tracking-wide sm:pt-3.5 md:text-2xl lg:pt-2 lg:tracking-wider xl:mt-10 xl:text-3xl">
-              CLEAN is here to change that.
-            </p>
+            <div className="space-y-4 px-2 sm:px-4 md:space-y-6 md:px-6">
+              <p className="text-base leading-relaxed sm:text-lg md:text-xl lg:text-lg xl:text-xl">
+                <span className="font-semibold">CLEAN</span> exists to help men find 
+                freedom, purpose, and brotherhood. We believe that every man has the 
+                potential to live a life of integrity and impact, but too often, 
+                struggles with sexual sin and lack of purpose hold men back from 
+                becoming who God created them to be.
+              </p>
+              <p className="pt-4 text-lg font-semibold sm:pt-6 sm:text-xl md:text-2xl lg:text-3xl">
+                CLEAN is here to change that.
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
 
       {/* Mission Section */}
-      <section className="bg-white py-16">
-        <div className="mx-auto">
+      <section className="bg-white py-12 sm:py-16 md:py-20 lg:py-24">
+        <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
           <motion.div
             {...fadeIn}
-            className="mx-auto xl:xl:max-w-3xl"
+            className="mx-auto max-w-4xl lg:max-w-5xl"
           >
-            <h2 className="mb-8 text-center text-4xl font-bold md:text-5xl lg:my-16 lg:text-7xl">
+            <h2 className="mb-8 text-center text-3xl font-bold sm:mb-12 sm:text-4xl md:text-5xl lg:mb-16 lg:text-6xl">
               Our Mission
             </h2>
-            <div className="space-y-8">
-              <div className="bg-gray-50 px-8 py-6 md:px-12 lg:rounded-xl">
-                <h3 className="mb-8 text-center text-2xl font-semibold sm:tracking-wide lg:tracking-wider">
+            <div className="space-y-6 sm:space-y-8 md:space-y-10">
+              <div className="rounded-xl bg-gray-50 p-6 shadow-sm sm:p-8 md:p-10">
+                <h3 className="mb-4 text-center text-xl font-semibold sm:mb-6 sm:text-2xl md:text-3xl">
                   External Freedom
                 </h3>
-                <p className="text-pretty indent-4 text-gray-700">
+                <p className="text-base leading-relaxed text-gray-700 sm:text-lg md:text-xl">
                   To help men break free from the chains of sexual sin by
                   equipping them with the tools and community they need to climb
                   out of any hole—no matter how deep it may seem.
                 </p>
               </div>
-              <div className="bg-gray-50 px-8 py-6 md:px-12 lg:rounded-xl">
-                <h3 className="mb-8 text-center text-2xl font-semibold sm:tracking-wide lg:tracking-wider">
+              <div className="rounded-xl bg-gray-50 p-6 shadow-sm sm:p-8 md:p-10">
+                <h3 className="mb-4 text-center text-xl font-semibold sm:mb-6 sm:text-2xl md:text-3xl">
                   Internal Purpose
                 </h3>
-                <p className="text-pretty indent-4 text-gray-700">
+                <p className="text-base leading-relaxed text-gray-700 sm:text-lg md:text-xl">
                   To help men discover and step into their God-given purpose. We
                   believe that once men gain self-control in this vital area,
                   they open the door for God to reveal their true purpose. If
@@ -125,27 +126,33 @@ export default function AboutPage() {
       </section>
 
       {/* Statistics Section */}
-      <section className="bg-linear-to-b from-gray-50 to-gray-100 py-16 text-black">
-        <div className="container mx-auto">
+      <section className="bg-gradient-to-b from-gray-50 to-gray-100 py-12 text-black sm:py-16 md:py-20">
+        <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
           <motion.div
             {...fadeIn}
-            className="mx-auto w-full"
+            className="mx-auto max-w-6xl"
           >
-            <h2 className="mb-16 text-center text-3xl font-bold">Why CLEAN?</h2>
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:px-5">
+            <h2 className="mb-8 text-center text-2xl font-bold sm:mb-12 sm:text-3xl md:text-4xl">
+              Why CLEAN?
+            </h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {statistics.map((item, index) => (
                 <div
                   key={index}
-                  className="text-center"
+                  className="rounded-lg bg-white p-6 sm:p-8"
                 >
-                  <div className="mb-4 text-4xl font-bold text-primary-red">
-                    {item.stat}
+                  <div className="text-center">
+                    <div className="mb-3 text-4xl font-bold text-primary-red sm:text-5xl md:text-6xl">
+                      {item.stat}
+                    </div>
+                    <p className="text-base text-gray-600 sm:text-lg">
+                      {item.description}
+                    </p>
                   </div>
-                  <p className="text-gray-600">{item.description}</p>
                 </div>
               ))}
             </div>
-            <p className="mx-auto mt-12 max-w-3xl text-center text-lg md:px-5 lg:pt-5">
+            <p className="mx-auto mt-8 max-w-3xl text-center text-base leading-relaxed sm:mt-12 sm:text-lg md:text-xl">
               CLEAN fills this gap by providing practical tools, biblical
               teaching, and a supportive community to help men find lasting
               freedom and purpose.
@@ -155,25 +162,25 @@ export default function AboutPage() {
       </section>
 
       {/* Core Principles Section */}
-      <section className="bg-white py-16">
-        <div className="mx-auto lg:px-4">
+      <section className="bg-white py-12 sm:py-16 md:py-20 lg:py-24">
+        <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
           <motion.div
             {...fadeIn}
-            className="mx-auto max-w-4xl"
+            className="mx-auto max-w-6xl"
           >
-            <h2 className="mb-12 text-center text-3xl font-bold">
+            <h2 className="mb-8 text-center text-2xl font-bold sm:mb-12 sm:text-3xl md:text-4xl">
               Our Approach
             </h2>
-            <div className="grid gap-8 md:grid-cols-2">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
               {corePrinciples.map((principle, index) => (
                 <div
                   key={index}
-                  className="rounded-lg bg-gray-50 p-6"
+                  className="rounded-xl bg-gray-50 p-6 shadow-sm transition-transform duration-300 hover:scale-[1.02] sm:p-8"
                 >
-                  <h3 className="mb-4 text-center text-xl font-semibold">
+                  <h3 className="mb-4 text-center text-lg font-semibold sm:text-xl md:text-2xl">
                     {principle.title}
                   </h3>
-                  <p className="indent-5 text-gray-700 lg:indent-10">
+                  <p className="text-center text-base leading-relaxed text-gray-700 sm:text-lg">
                     {principle.description}
                   </p>
                 </div>
@@ -184,36 +191,38 @@ export default function AboutPage() {
       </section>
 
       {/* Vision Section */}
-      <section className="my-8 min-h-fit bg-gray-50">
-        <div className="px-4 py-8 md:px-6">
+      <section className="bg-gray-50 py-12 sm:py-16 md:py-20 lg:py-24">
+        <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
           <motion.div
             {...fadeIn}
-            className="mx-auto flex max-w-3xl flex-wrap justify-center"
+            className="mx-auto flex max-w-4xl flex-col items-center text-center lg:max-w-5xl"
           >
-            <h2 className="mb-8 text-3xl font-bold md:text-4xl lg:text-5xl">
+            <h2 className="mb-6 text-3xl font-bold sm:mb-8 sm:text-4xl md:text-5xl">
               Our Vision
             </h2>
-            <p className="mb-8 text-pretty indent-5 text-xl leading-relaxed">
+            <p className="mb-6 text-base leading-relaxed text-gray-700 sm:mb-8 sm:text-lg md:text-xl">
               We envision a world where men lead with integrity, families are
               restored, and churches become places of healing and
-              transformation. CLEAN is more than a program — it&apos;s a
+              transformation. CLEAN is more than a program — it's a
               movement to equip men and churches to address the challenges of
               sexual sin and betrayal trauma with grace and truth.
             </p>
-            <div className="mt-12">
-              <h3 className="mb-4 pt-3 text-center text-3xl font-bold md:text-4xl lg:text-5xl">
+            
+            <div className="mb-8 sm:mb-10 md:mb-12">
+              <h3 className="mb-4 text-2xl font-bold sm:mb-6 sm:text-3xl md:text-4xl">
                 Join Us!
               </h3>
-              <p className="mb-8 text-pretty indent-5 text-lg md:px-4">
-                Whether you&apos;re a man seeking freedom, a church leader
+              <p className="text-base leading-relaxed text-gray-700 sm:text-lg">
+                Whether you're a man seeking freedom, a church leader
                 looking for resources, or someone who wants to support this
                 mission, CLEAN has a place for you. Together, we can build true
                 brotherhood and help men step into their God-given purpose.
               </p>
             </div>
+            
             <Link
               href="/Pricing"
-              className="mt-5 place-self-end rounded-md bg-primary-red px-4 py-3 text-white transition-colors hover:bg-red-700 lg:px-8"
+              className="rounded-lg bg-primary-red px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-red-700 hover:shadow-lg sm:px-10 sm:py-4 sm:text-lg"
             >
               Start Your Journey
             </Link>

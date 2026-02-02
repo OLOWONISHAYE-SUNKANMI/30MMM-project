@@ -13,49 +13,48 @@ function FounderBio() {
   };
 
   const Timeline = ({ children }) => (
-    <div className="ml-4 space-y-6 border-l-2 border-primary-red pl-6">
+    <div className="ml-2 sm:ml-4 space-y-4 sm:space-y-6 border-l-2 border-primary-red pl-4 sm:pl-6">
       {children}
     </div>
   );
 
   const TimelineItem = ({ year, title, children }) => (
     <div className="relative">
-      <div className="absolute -left-[2.19rem] h-4 w-4 rounded-full bg-primary-red" />
+      <div className="absolute -left-[1.5rem] sm:-left-[2.19rem] h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-primary-red" />
       <div>
-        <span className="text-sm text-gray-500">{year}</span>
-        <h4 className="text-lg font-semibold">{title}</h4>
+        {year && <span className="text-xs sm:text-sm text-gray-500">{year}</span>}
+        <h4 className="text-base sm:text-lg font-semibold">{title}</h4>
         {children}
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white mt-16">
       {/* Hero Section */}
-      <section className="relative bg-gray-900 py-20 text-white">
+      <section className="relative bg-gray-900 py-12 sm:py-16 md:py-20 text-white">
         <div className="absolute inset-0 bg-black/50" />
-        <div className="container relative mx-auto px-4">
+        <div className="container relative mx-auto px-4 sm:px-6">
           <motion.div
             {...fadeIn}
-            className="mx-auto flex max-w-4xl flex-col items-center gap-8 md:flex-row"
+            className="mx-auto flex max-w-4xl flex-col items-center gap-6 sm:gap-8 md:flex-row"
           >
-            <div className="mt-16 md:w-1/3">
-              {/* Replace with actual image path */}
-              <div className="h-90 w-64 overflow-hidden rounded-full bg-gray-300">
+            <div className="mt-8 sm:mt-12 md:mt-16 md:w-1/3">
+              <div className="h-48 w-48 sm:h-56 sm:w-56 md:h-64 md:w-64 overflow-hidden rounded-full bg-gray-300 mx-auto">
                 <Image
                   src="/donovan.png"
                   alt="Dr. Donovan Anderson"
                   width={256}
                   height={300}
-                  className="object-contain"
+                  className="object-contain w-full h-full"
                 />
               </div>
             </div>
-            <div className="text-center md:w-2/3 md:text-left">
-              <h1 className="mb-4 text-4xl font-bold md:text-5xl">
+            <div className="text-center md:w-2/3 md:text-left px-4 sm:px-0">
+              <h1 className="mb-3 sm:mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
                 Dr. Donovan Anderson
               </h1>
-              <p className="text-xl text-gray-300 md:text-2xl">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300">
                 Visionary Leader and Founder of Thirty Mighty Men Ministries
               </p>
             </div>
@@ -64,13 +63,13 @@ function FounderBio() {
       </section>
 
       {/* Introduction Section */}
-      <section className="bg-white py-16">
-        <div className="container mx-auto px-4">
+      <section className="bg-white py-8 sm:py-12 md:py-16">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             {...fadeIn}
             className="mx-auto max-w-3xl"
           >
-            <p className="text-lg leading-relaxed text-gray-700">
+            <p className="text-sm sm:text-base md:text-lg leading-relaxed text-gray-700">
               Dr. Donovan Anderson is a trailblazer in the fields of ministry,
               academia, and urban development. With a passion for guiding men
               toward lives of obedience, purpose, and brotherhood, he founded 30
@@ -82,13 +81,13 @@ function FounderBio() {
       </section>
 
       {/* Academic Journey Section */}
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
+      <section className="bg-gray-50 py-8 sm:py-12 md:py-16">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             {...fadeIn}
             className="mx-auto max-w-3xl"
           >
-            <h2 className="mb-8 text-center text-3xl font-bold">
+            <h2 className="mb-6 sm:mb-8 text-center text-xl sm:text-2xl md:text-3xl font-bold">
               Academic Excellence
             </h2>
             <Timeline>
@@ -96,7 +95,7 @@ function FounderBio() {
                 year="2004"
                 title="Bachelor of Arts in History"
               >
-                <p className="text-gray-600">
+                <p className="text-sm sm:text-base text-gray-600">
                   Howard University, magna cum laude
                 </p>
               </TimelineItem>
@@ -104,7 +103,7 @@ function FounderBio() {
                 year="2006"
                 title="Master of Arts in History"
               >
-                <p className="text-gray-600">
+                <p className="text-sm sm:text-base text-gray-600">
                   Howard University, magna cum laude
                 </p>
               </TimelineItem>
@@ -112,18 +111,18 @@ function FounderBio() {
                 year="2015"
                 title="PhD in City and Regional Planning"
               >
-                <p className="text-gray-600">UNC Chapel Hill</p>
+                <p className="text-sm sm:text-base text-gray-600">UNC Chapel Hill</p>
               </TimelineItem>
               <TimelineItem
                 year="2024"
                 title="Master of Arts in Theology"
               >
-                <p className="text-gray-600">
+                <p className="text-sm sm:text-base text-gray-600">
                   Wesley Theological Seminary, with honors
                 </p>
                 <div className="mt-2">
-                  <p className="font-semibold">Awards:</p>
-                  <ul className="ml-4 list-disc text-gray-600">
+                  <p className="font-semibold text-sm sm:text-base">Awards:</p>
+                  <ul className="ml-4 list-disc text-gray-600 text-sm sm:text-base">
                     <li>Harry Hoosier Spirit Award</li>
                     <li>Margaret Pittman Award in Urban Ministry</li>
                   </ul>

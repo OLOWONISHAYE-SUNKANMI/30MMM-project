@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        "2xs": "200px",
+        "2xs": "360px",
         xs: "400px",
         sm: "600px",
         iphone: "430px", // iPhone 14 Pro Max portrait
