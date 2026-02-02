@@ -3,28 +3,28 @@ import Image from "next/image";
 export function TwoFacesSection() {
   return (
     <section
-      className="py-24 bg-linear-to-b from-gray-50 to-gray-100"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 bg-linear-to-b from-gray-50 to-gray-100"
       id="TwoFaces"
     >
-      <div className="container max-w-5xl px-4 mx-auto">
+      <div className="container max-w-5xl px-4 sm:px-6 mx-auto">
         {/* Header with visual emphasis - using decorative underline to reinforce importance */}
-        <div className="mb-16 text-center">
-          <h2 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
+        <div className="mb-8 sm:mb-12 md:mb-16 text-center">
+          <h2 className="mb-3 sm:mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900">
             The Two Faces of CLEAN
           </h2>
-          <div className="w-24 h-1 mx-auto rounded bg-primary-red"></div>
+          <div className="w-16 sm:w-20 md:w-24 h-1 mx-auto rounded bg-primary-red"></div>
         </div>
 
         {/* Content layout with cards and connecting statement */}
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {/* External Focus Card */}
-          <div className="p-8 bg-white rounded-lg shadow-lg">
-            <div className="flex flex-col items-center gap-8 md:flex-row md:items-start">
-              <div className="flex-1">
-                <h3 className="mb-6 text-2xl font-semibold text-gray-900">
+          <div className="p-4 sm:p-6 md:p-8 bg-white rounded-lg shadow-lg">
+            <div className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 md:flex-row md:items-start">
+              <div className="flex-1 order-2 md:order-1">
+                <h3 className="mb-3 sm:mb-4 md:mb-6 text-xl sm:text-2xl font-semibold text-gray-900">
                   The External Face
                 </h3>
-                <p className="text-lg leading-relaxed text-gray-700">
+                <p className="text-base sm:text-lg leading-relaxed text-gray-700">
                   From the outside looking in, CLEAN is a program focused on
                   sexual integrity. It equips men with the tools to achieve
                   sexual obedience and overcome challenges like pornography,
@@ -39,34 +39,34 @@ export function TwoFacesSection() {
                   any hole over time.
                 </p>
               </div>
-              <div className="relative md:w-1/3 aspect-square h-[300] w-[300]">
+              <div className="relative order-1 md:order-2 w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 flex-shrink-0">
                 <Image
                   src="/images-2/IMG_8371.png"
                   alt="External Face of CLEAN"
+                  fill
                   style={{ objectFit: "cover" }}
                   priority
-                  width={300}
-                  height={300}
+                  className="rounded-lg"
                 />
               </div>
             </div>
           </div>
 
           {/* Connecting statement positioned between cards */}
-          <div className="py-6 text-center">
-            <p className="text-xl font-medium text-gray-900">
+          <div className="py-4 sm:py-6 text-center">
+            <p className="text-lg sm:text-xl font-medium text-gray-900">
               But that&apos;s just the beginning.
             </p>
           </div>
 
           {/* Internal Purpose Card */}
-          <div className="p-8 bg-white rounded-lg shadow-lg">
-            <div className="flex flex-col items-center gap-8 md:flex-row-reverse md:items-start">
-              <div className="flex-1">
-                <h3 className="mb-6 text-2xl font-semibold text-gray-900">
+          <div className="p-4 sm:p-6 md:p-8 bg-white rounded-lg shadow-lg">
+            <div className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 md:flex-row-reverse md:items-start">
+              <div className="flex-1 order-2 md:order-1">
+                <h3 className="mb-3 sm:mb-4 md:mb-6 text-xl sm:text-2xl font-semibold text-gray-900">
                   The Internal Face
                 </h3>
-                <p className="text-lg leading-relaxed text-gray-700">
+                <p className="text-base sm:text-lg leading-relaxed text-gray-700">
                   Internally, CLEAN is about helping men discover and step into
                   their God-given purpose. When men gain self-control in this
                   vital area of their lives, they create the space for God to
@@ -80,13 +80,13 @@ export function TwoFacesSection() {
                   for them.
                 </p>
               </div>
-              <div className="relative md:w-1/3 aspect-square h-[300] w-[300]">
+              <div className="relative order-1 md:order-2 w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 flex-shrink-0">
                 <Image
                   src="/images-2/IMG_8365.png"
                   alt="Internal Face of CLEAN"
+                  fill
                   style={{ objectFit: "cover" }}
-                  width={300}
-                  height={300}
+                  className="rounded-lg"
                 />
               </div>
             </div>

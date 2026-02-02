@@ -26,14 +26,14 @@ export default function MobileNavBar({
 
   return (
     <nav className="fixed left-0 right-0 top-0 z-50 bg-white shadow-sm backdrop-blur-sm">
-      <div className="mx-4 flex items-center justify-between p-4 text-black">
+      <div className="mx-2 xs:mx-4 flex items-center justify-between p-3 xs:p-4 text-black">
         {/* Left section: Logo */}
-        <div className="flex w-1/4 items-center">
+        <div className="flex items-center">
           <NavLogo />
         </div>
 
         {/* Right section: Mobile Menu */}
-        <div className="flex w-1/4 items-center justify-end">
+        <div className="flex items-center justify-end">
           <Sheet
             open={open}
             onOpenChange={setOpen}
@@ -42,13 +42,14 @@ export default function MobileNavBar({
               <Button
                 variant="ghost"
                 size="icon"
+                className="h-8 w-8 xs:h-10 xs:w-10"
               >
-                <Menu className="h-6 w-6" />
+                <Menu className="h-5 w-5 xs:h-6 xs:w-6" />
               </Button>
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="w-full sm:w-80"
+              className="w-full max-w-sm p-4"
             >
               <SheetHeader>
                 <SheetTitle>Menu</SheetTitle>

@@ -6,30 +6,30 @@ import { cn } from "@/lib/utils";
 
 export default function CleanForIndividuals() {
   return (
-    <div className="mt-16 min-h-screen bg-gray-50 px-10">
-      <section className="py-12 md:py-16">
-        <div className="mx-auto px-1 md:container md:px-4">
-          <h1 className="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 md:text-4xl">
+    <div className="mt-16 min-h-screen bg-gray-50 px-3 2xs:px-4 xs:px-5 sm:px-6 md:px-8 lg:px-10">
+      <section className="py-8 2xs:py-10 xs:py-12 md:py-16">
+        <div className="mx-auto px-1 2xs:px-2 xs:px-3 md:container md:px-4">
+          <h1 className="mb-3 2xs:mb-4 xs:mb-5 md:mb-6 text-center text-xl 2xs:text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800">
             Discover Freedom, Purpose, and Integrity with CLEAN
           </h1>
-          <p className="mb-8 text-center text-lg text-gray-600 md:mb-12 md:text-xl">
+          <p className="mb-6 2xs:mb-7 xs:mb-8 md:mb-12 text-center text-sm 2xs:text-base xs:text-lg md:text-xl text-gray-600">
             Break free from sexual struggles and step into the life God designed
             for you.
           </p>
 
-          <h2 className="mb-6 text-center text-2xl font-semibold text-gray-800 md:text-3xl lg:text-5xl">
+          <h2 className="mb-4 2xs:mb-5 xs:mb-6 text-center text-lg 2xs:text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-800">
             The Two Faces of CLEAN: Your Path to Transformation
           </h2>
 
-          <div className="grid gap-4 md:grid-cols-2 md:gap-8">
+          <div className="grid gap-3 2xs:gap-4 xs:gap-5 md:grid-cols-2 md:gap-8">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg font-semibold text-gray-800 md:text-xl lg:text-2xl">
+                <CardTitle className="text-base 2xs:text-lg xs:text-xl md:text-2xl font-semibold text-gray-800">
                   1. The External Face: Freedom from Sexual Struggles
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600">
+                <p className="text-xs 2xs:text-sm xs:text-base text-gray-600 leading-relaxed">
                   CLEAN equips you with practical tools to overcome challenges
                   like pornography, masturbation, fornication, adultery, and
                   other forms of sexual sin. No matter how deep your struggle,
@@ -43,12 +43,12 @@ export default function CleanForIndividuals() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg font-semibold text-gray-800 md:text-xl lg:text-2xl">
+                <CardTitle className="text-base 2xs:text-lg xs:text-xl md:text-2xl font-semibold text-gray-800">
                   2. The Internal Face: Discovering Your God-Given Purpose
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600">
+                <p className="text-xs 2xs:text-sm xs:text-base text-gray-600 leading-relaxed">
                   True transformation goes beyond behavior—it&apos;s about
                   becoming the man God created you to be. When you gain
                   self-control in this critical area of your life, you create
@@ -87,7 +87,7 @@ export default function CleanForIndividuals() {
           </Card>
 
           <h2 className="mb-6 mt-12 text-center text-2xl font-semibold text-gray-800 md:text-3xl">
-            Your <em class="font-bold not-italic text-primary-red">CLEAN</em>{" "}
+            Your <em className="font-bold not-italic text-primary-red">CLEAN</em>{" "}
             Journey Starts Here
           </h2>
 

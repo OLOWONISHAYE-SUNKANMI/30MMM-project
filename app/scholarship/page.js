@@ -7,50 +7,53 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ScholarshipPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-8 text-center text-4xl font-bold">
+    <div className="container mx-auto w-full max-w-7xl px-4 sm:px-6 py-6 sm:py-8 overflow-x-hidden">
+      <h1 className="mb-6 sm:mb-8 text-center text-2xl sm:text-3xl md:text-4xl font-bold">
         CLEAN for All Scholarship Program
       </h1>
 
-      <div className="mb-12 grid gap-8 md:grid-cols-2">
+      <div className="mb-10 sm:mb-12 grid gap-6 sm:gap-8 md:grid-cols-2">
         <div>
-          <h2 className="mb-4 text-2xl font-semibold">Our Mission</h2>
-          <p className="mb-4">
+          <h2 className="mb-3 sm:mb-4 text-xl sm:text-2xl font-semibold">
+            Our Mission
+          </h2>
+
+          <p className="mb-4 text-sm sm:text-base">
             At CLEAN, we believe that personal growth and transformation should
             be accessible to all men, regardless of their financial situation.
             That&apos;s why we&apos;ve created the &quot;CLEAN for All&quot;
             Scholarship Program.
           </p>
-          <p className="mb-4">
+
+          <p className="mb-4 text-sm sm:text-base">
             For every 9 paid accounts, we award one scholarship to a participant
             who cannot afford the program but demonstrates a strong commitment
             to personal growth.
           </p>
 
-          <Button
-            variant="default"
-            asChild
-          >
+          <Button variant="default" asChild>
             <Link href="/scholarship-application">
-              Apply for a Scholarship{" "}
+              Apply for a Scholarship
             </Link>
           </Button>
         </div>
-        <div>
+
+        <div className="flex justify-center md:justify-end">
           <Image
             src="/jesus_hero.png"
             alt="Men supporting each other"
             width={400}
             height={300}
-            className="rounded-lg"
+            className="w-full max-w-sm rounded-lg object-contain"
           />
         </div>
       </div>
 
-      <h2 className="mb-4 text-2xl font-semibold">
+      <h2 className="mb-4 text-xl sm:text-2xl font-semibold">
         Benefits of Our Scholarship Program
       </h2>
-      <div className="mb-12 grid gap-6 md:grid-cols-3">
+
+      <div className="mb-10 sm:mb-12 grid gap-4 sm:gap-6 md:grid-cols-3">
         {[
           {
             title: "Increased Accessibility",
@@ -69,10 +72,12 @@ export default function ScholarshipPage() {
           },
         ].map((benefit, index) => (
           <Card key={index}>
-            <CardHeader>
-              <CardTitle>{benefit.title}</CardTitle>
+            <CardHeader className="px-4 sm:px-6">
+              <CardTitle className="text-base sm:text-lg">
+                {benefit.title}
+              </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-4 sm:px-6 text-sm sm:text-base">
               <p>{benefit.description}</p>
             </CardContent>
           </Card>
@@ -81,10 +86,13 @@ export default function ScholarshipPage() {
 
       <div
         id="apply"
-        className="mb-12 rounded-lg bg-gray-100 p-8"
+        className="mb-10 sm:mb-12 rounded-lg bg-gray-100 p-4 sm:p-8"
       >
-        <h2 className="mb-4 text-2xl font-semibold">How to Apply</h2>
-        <ol className="mb-4 list-inside list-decimal space-y-2">
+        <h2 className="mb-4 text-xl sm:text-2xl font-semibold">
+          How to Apply
+        </h2>
+
+        <ol className="mb-4 list-inside list-decimal space-y-2 text-sm sm:text-base">
           <li>
             Submit a brief form explaining your financial need and why you want
             to join CLEAN.
@@ -96,19 +104,19 @@ export default function ScholarshipPage() {
           </li>
         </ol>
 
-        <Button
-          variant="link"
-          asChild
-        >
-          <Link href="/scholarship-application">Start Your Application</Link>
+        <Button variant="link" asChild>
+          <Link href="/scholarship-application">
+            Start Your Application
+          </Link>
         </Button>
       </div>
 
       <div className="text-center">
-        <h2 className="mb-4 text-2xl font-semibold">
+        <h2 className="mb-4 text-xl sm:text-2xl font-semibold">
           Support the Scholarship Program
         </h2>
-        <p className="mb-4">
+
+        <p className="mb-4 text-sm sm:text-base">
           By joining CLEAN or contributing to our &quot;Pay It Forward&quot;
           option, you&apos;re not only investing in your own growth but also
           helping provide scholarships for men in need. Please comment
@@ -116,10 +124,7 @@ export default function ScholarshipPage() {
           towards helping other men grow in Christ.
         </p>
 
-        <Button
-          variant="outline"
-          asChild
-        >
+        <Button variant="outline" asChild>
           <Link href="/donate">Contribute to Scholarships</Link>
         </Button>
       </div>
