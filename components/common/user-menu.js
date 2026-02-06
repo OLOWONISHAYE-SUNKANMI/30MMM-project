@@ -96,13 +96,13 @@ export default function UserMenu({ mobile }) {
           <span>Profile</span>
         </Link>
 
-        <Link
+        {/* <Link
           href="/dashboard/settings"
           className="flex items-center gap-2 rounded-md p-2 hover:bg-gray-100"
         >
           <Settings size={16} />
           <span>Settings</span>
-        </Link>
+        </Link> */}
 
         <button
           onClick={handleLogout}
@@ -164,7 +164,7 @@ export default function UserMenu({ mobile }) {
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem asChild>
+        {/* <DropdownMenuItem asChild>
           <Link
             href="/dashboard/settings"
             className="flex cursor-pointer items-center"
@@ -172,7 +172,7 @@ export default function UserMenu({ mobile }) {
             <Settings className="mr-2 h-4 w-4" />
             <span>Settings</span>
           </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
 
         <DropdownMenuSeparator />
 
