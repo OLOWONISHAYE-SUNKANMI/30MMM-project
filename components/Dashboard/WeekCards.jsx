@@ -60,7 +60,7 @@ export default function WeekCards({ userProgress, devotionals }) {
   });
 
   return (
-    <div className="flex w-full flex-row flex-wrap justify-center gap-3 py-3 md:gap-5">
+    <div className="flex w-full flex-row flex-wrap justify-center gap-2 2xs:gap-3 xs:gap-4 sm:gap-5 md:gap-6 py-2 2xs:py-3 xs:py-4">
       {/* Map over weeks 1-5 to render each WeekCard */}
       {weekProgress.map((week) => {
         // Now 'week' is a single week object with all the calculated data

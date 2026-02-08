@@ -61,7 +61,7 @@ export default function Form({ isSignUp = true }) {
       <form onSubmit={handleSubmit}>
         <CardContent>
           <div className="grid gap-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 xs:grid-cols-2 gap-4">
               {isSignUp && (
                 <>
                   <div className="grid gap-2">

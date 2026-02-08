@@ -50,7 +50,6 @@ const PaymentVerification = ({ children }) => {
         });
         setVerificationComplete(true);
 
-        // Clean up URL immediately since we're using toast
         setTimeout(() => {
           router.replace("/dashboard");
         }, 1000);
@@ -77,13 +76,13 @@ const PaymentVerification = ({ children }) => {
   // Show verification loading state
   if (isVerifying) {
     return (
-      <div className="relative mx-16 flex min-h-screen flex-col items-center justify-center">
-        <div className="text-center">
+      <div className="relative mx-4 sm:mx-8 md:mx-16 flex min-h-screen flex-col items-center justify-center px-4">
+        <div className="text-center max-w-md">
           <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-red-500"></div>
-          <h2 className="mb-2 text-xl font-semibold">
+          <h2 className="mb-2 text-lg sm:text-xl font-semibold">
             Verifying your payment...
           </h2>
-          <p className="text-gray-600">
+          <p className="text-sm sm:text-base text-gray-600">
             Please wait while we confirm your transaction.
           </p>
         </div>
@@ -96,7 +95,7 @@ const PaymentVerification = ({ children }) => {
       {/* Toast Notification */}
       {toast && (
         <div
-          className={`fixed bottom-4 right-4 z-50 max-w-md rounded-lg border px-4 py-3 shadow-lg transition-all duration-300 ease-in-out ${
+          className={`fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:max-w-md z-50 rounded-lg border px-4 py-3 shadow-lg transition-all duration-300 ease-in-out ${
             toast.type === "success"
               ? "border-green-400 bg-green-100 text-green-700"
               : "border-red-400 bg-red-100 text-red-700"
