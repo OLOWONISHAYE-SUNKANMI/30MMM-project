@@ -6,6 +6,7 @@ interface DonateButtonProps {
   amount: number;
   disabled?: boolean;
   className?: string;
+  label?: string;
 }
 
 export default function DonateButton({
@@ -14,6 +15,7 @@ export default function DonateButton({
   amount,
   disabled = false,
   className = "",
+  label,
 }: DonateButtonProps) {
   const baseClassName = "w-full rounded-md bg-primary-red px-8 py-3 text-lg font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-gray-400";
   
@@ -46,7 +48,7 @@ export default function DonateButton({
             ></path>
           </svg>
         )}
-        {isProcessing ? "Processing..." : `Donate $${(amount / 100).toFixed(2)} with Stripe`}
+        {isProcessing ? "Processing..." : (label || `Donate $${(amount / 100).toFixed(2)} with Stripe`)}
       </span>
     </button>
   );

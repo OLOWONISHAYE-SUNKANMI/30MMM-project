@@ -32,7 +32,6 @@ const DonationPage: React.FC<DonationPageProps> = ({
 }) => {
   const router = useMockRouter();
 
-  const [isRedirecting, setIsRedirecting] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState<DiscountCode | null>(
     null,
@@ -126,12 +125,12 @@ const DonationPage: React.FC<DonationPageProps> = ({
 
   useEffect(() => {
     if (isPremium) {
-      setIsRedirecting(true);
-      setTimeout(() => {
-        router.push("/dashboard");
+      const timer = setTimeout(() => {
+        window.location.href = "/dashboard";
       }, 1000);
+      return () => clearTimeout(timer);
     }
-  }, [isPremium, router]);
+  }, [isPremium]);
 
   // Calculate final donation amount after discount
   const getFinalAmount = () => {
@@ -141,6 +140,46 @@ const DonationPage: React.FC<DonationPageProps> = ({
 
   // Stripe Checkout handler
   const handleDonate = async () => {
+    const finalAmount = getFinalAmount();
+    
+    // If amount is $0, skip Stripe and mark as premium directly
+    if (finalAmount === 0) {
+      setIsProcessingPayment(true);
+      setValidationError(null);
+      
+      try {
+        const response = await fetch("/api/create-checkout-dashboard", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount: 0,
+            email: userEmail,
+            discountCode: appliedDiscount?.code || null,
+            paymentMethod: "free_discount",
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Failed to process free signup");
+        }
+
+        const data = await response.json();
+        
+        // Redirect to dashboard
+        window.location.href = data.redirectUrl || "/dashboard";
+      } catch (error) {
+        console.error("Free signup error:", error);
+        setValidationError(
+          error instanceof Error
+            ? error.message
+            : "Could not complete signup. Please try again.",
+        );
+        setIsProcessingPayment(false);
+      }
+      return;
+    }
+    
     setIsProcessingPayment(true);
     setValidationError(null);
 
@@ -150,7 +189,7 @@ const DonationPage: React.FC<DonationPageProps> = ({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: getFinalAmount(), // in cents
+          amount: finalAmount, // in cents
           email: userEmail,
           discountCode: appliedDiscount?.code || null,
           widgetId: appliedDiscount?.widgetId || null,
@@ -181,7 +220,7 @@ const DonationPage: React.FC<DonationPageProps> = ({
     }
   };
 
-  if (isPremium && isRedirecting) {
+  if (isPremium) {
     return (
       <div className="mx-auto max-w-4xl p-6">
         <div className="flex h-64 items-center justify-center">
@@ -298,6 +337,7 @@ const DonationPage: React.FC<DonationPageProps> = ({
             isProcessing={isProcessingPayment}
             amount={getFinalAmount()}
             className="mt-4"
+            label={getFinalAmount() === 0 ? "Complete Free Signup" : undefined}
           />
         </div>
       </div>
