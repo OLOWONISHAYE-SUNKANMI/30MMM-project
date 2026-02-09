@@ -254,9 +254,9 @@ model VideoUpload {
 }
 
 model VideoLike {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String
-  videoId String @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  videoId   String   @db.ObjectId
   createdAt DateTime @default(now())
 
   user  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -267,10 +267,10 @@ model VideoLike {
 }
 
 model VideoComment {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String
-  videoId String @db.ObjectId
-  text    String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  videoId   String   @db.ObjectId
+  text      String
   createdAt DateTime @default(now())
 
   user  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
