@@ -72,10 +72,9 @@ export default function Devotional({ params }) {
     const fetchUserProgress = async () => {
       try {
         const result = await getCurrentUserWithProgress();
-        setUserProgressData(result);
 
         if (!result.success) {
-          throw new Error(result.error);
+          throw new Error(result.error || "Failed to get user data");
         }
 
         setUserProgressData(result);
@@ -145,80 +144,91 @@ export default function Devotional({ params }) {
    */
 
   return (
-    <div className="mt-16 flex w-full flex-col justify-between px-2 py-2 md:px-4 md:py-4 lg:px-[1vw] lg:py-[1vh]">
-      <div className="mt-8 flex flex-col items-center">
-        <div className="lg:max-w-10xl flex flex-col md:max-w-7xl">
-          {/* Back Button */}
-          <button
-            onClick={() => router.push("/dashboard")}
-            className="group mb-6 flex items-center gap-2 self-start rounded-lg px-4 py-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900"
+    <div className="min-h-screen w-full bg-gray-50">
+      {/* Main Container - Responsive padding and max-width */}
+      <div className="mx-auto w-full max-w-lg px-4 py-4 sm:max-w-2xl sm:px-6 sm:py-6 md:max-w-3xl md:px-8 md:py-8 lg:max-w-5xl lg:px-10 lg:py-10 xl:max-w-6xl xl:px-12">
+        
+        {/* Back Button - Responsive sizing */}
+        <button
+          onClick={() => router.push("/dashboard")}
+          className="group mb-6 mt-4 inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 sm:px-4 sm:py-2 sm:text-base"
+        >
+          <svg
+            className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1 sm:h-5 sm:w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              className="h-5 w-5 transition-transform duration-200 group-hover:-translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            <span className="font-medium">Back to Dashboard</span>
-          </button>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          <span className="font-medium">Back</span>
+        </button>
 
-          <div className="mb-8 flex flex-col items-start bg-white md:flex-col">
-            <div className="mt-[3vh]">
-              <Title
-                weekTitle={devotionalData.weekTitle}
-                dayTitle={devotionalData.dayTitle}
-                daySubtitle={devotionalData.daySubTitle}
-              />
-            </div>
+        {/* Content Container - Responsive spacing and layout */}
+        <div className="rounded-lg bg-white p-4 shadow-sm sm:p-6 md:p-8">
+          
+          {/* Title Section - Responsive spacing */}
+          <div className="mb-4 sm:mb-6 md:mb-8">
+            <Title
+              weekTitle={devotionalData.weekTitle}
+              dayTitle={devotionalData.dayTitle}
+              daySubtitle={devotionalData.daySubTitle}
+            />
+          </div>
 
-            <div className="mb-[2vh] mt-[1vh]">
-              <SubTitle
-                week={devotionalData.week}
-                day={devotionalData.day}
-              />
-            </div>
+          {/* SubTitle Section - Responsive spacing */}
+          <div className="mb-4 sm:mb-6">
+            <SubTitle
+              week={devotionalData.week}
+              day={devotionalData.day}
+            />
+          </div>
 
-            <div className="flex w-full justify-center">
-              <div className="flex items-center justify-center">
-                <MainImage videoId={devotionalData.videoId} />
-              </div>
-            </div>
+          {/* Main Image - Responsive container */}
+          <div className="mb-6 flex h-auto w-full items-center justify-center overflow-hidden rounded-lg bg-gray-100 sm:mb-8 md:mb-10">
+            <MainImage videoId={devotionalData.videoId} />
+          </div>
 
-            <div className="flex w-full justify-center">
-              <Quotes />
-            </div>
+          {/* Quotes Section - Responsive spacing */}
+          <div className="mb-6 sm:mb-8 md:mb-10">
+            <Quotes />
+          </div>
 
-            <div className="mb-[3vh] flex w-full justify-center">
-              <ScripturesSection scriptures={devotionalData.Scriptures} />
-            </div>
+          {/* Scriptures Section - Responsive spacing */}
+          <div className="mb-6 sm:mb-8 md:mb-10">
+            <ScripturesSection scriptures={devotionalData.Scriptures} />
+          </div>
 
-            <div className="justify-left mt-[1vh] flex w-full">
-              <ReadingTime devotionText={devotionalData.devotionText || ""} />
-            </div>
+          {/* Reading Time - Responsive spacing */}
+          <div className="mb-6 sm:mb-8">
+            <ReadingTime devotionText={devotionalData.devotionText || ""} />
+          </div>
 
-            <div className="justify-left wfull mt-[3vh] flex">
-              <MainLesson devotionText={devotionalData.devotionText || ""} />
-            </div>
+          {/* Main Lesson - Responsive spacing */}
+          <div className="mb-8 sm:mb-10 md:mb-12">
+            <MainLesson devotionText={devotionalData.devotionText || ""} />
+          </div>
 
-            <div className="flex w-full flex-col items-center">
-              <div className="mt-[6vh] flex w-full justify-center">
-                <ReflectionBox
-                  reflectionQuestion={devotionalData.reflectionQuestion}
-                />
-              </div>
-            </div>
+          {/* Reflection Box - Responsive spacing */}
+          <div className="mb-8 sm:mb-10 md:mb-12">
+            <ReflectionBox
+              reflectionQuestion={devotionalData.reflectionQuestion}
+            />
+          </div>
 
+          {/* Divider */}
+          <div className="my-6 xs:my-8 sm:my-10 md:my-12">
             <Divider />
+          </div>
 
-            {/* ReflectionTextBox */}
+          {/* Reflection Form - Full width responsive */}
+          <div className="w-full">
             <ReflectionProcessingForm
               devotionalDataId={devotionalData.id}
               devotionalNumberId={devotionalData.numberId}

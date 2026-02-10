@@ -1,25 +1,56 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { BlobServiceClient, BlobSASPermissions } from '@azure/storage-blob';
+import { auth } from '@/lib/auth';
+import { filterVideosByUserProgress } from '@/lib/video-filtering-utility';
 
 const prisma = new PrismaClient();
 const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
 
 export async function GET() {
   try {
+    // Get user session for progress filtering
+    const session = await auth();
+    
     const videos = await prisma.videoUpload.findMany({
       orderBy: {
         createdAt: 'desc'
+      },
+      include: {
+        user: true,
       }
     });
 
+    // Filter videos based on user's progress if user is authenticated
+    let filteredVideos = videos;
+    if (session?.user?.id) {
+      try {
+        const userProgress = await prisma.userProgress.findUnique({
+          where: { userId: session.user.id },
+        });
+
+        if (userProgress) {
+          filteredVideos = filterVideosByUserProgress(videos, {
+            currentWeek: userProgress.currentWeek,
+            currentDay: userProgress.currentDay,
+          }) as typeof videos;
+        }
+      } catch (error) {
+        console.error('Error filtering videos by user progress:', error);
+        // If filtering fails, return all videos (fallback)
+      }
+    } else {
+      // If not authenticated, return no videos (security measure)
+      filteredVideos = [];
+    }
+
     if (!connectionString) {
-      return NextResponse.json(videos);
+      return NextResponse.json(filteredVideos);
     }
 
     const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
     
-    const videosWithReadUrls = videos.map((video) => {
+    const videosWithReadUrls = filteredVideos.map((video) => {
       if (!video.blobUrl) return video;
       
       try {

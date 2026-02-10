@@ -23,7 +23,7 @@ export default function ScripturesSection({ scriptures }) {
           </div>
 
           {/* Divider */}
-          <div className="mx-auto flex w-80 border-t-[5px] border-t-[#F5BD4F]"></div>
+          <div className="mx-auto w-2/3 border-t-2 border-t-[#F5BD4F] xs:w-3/4 xs:border-t-[3px] sm:w-4/5 md:w-96 md:border-t-[4px] lg:border-t-[5px]"></div>
 
           {/* Scripture Reference */}
           <div className="mx-auto pt-3 text-center font-semibold lg:text-xl">
