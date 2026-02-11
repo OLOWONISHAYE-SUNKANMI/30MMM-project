@@ -1,6 +1,22 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
+
+// Mock the auth and session modules before importing components that use them
+jest.mock('@/lib/auth', () => ({
+  auth: jest.fn(async () => ({
+    user: { id: 'user123', email: 'test@example.com' },
+  })),
+}));
+
+jest.mock('@/lib/session', () => ({
+  getUser: jest.fn(async () => ({
+    id: 'user123',
+    email: 'test@example.com',
+    name: 'Test User',
+  })),
+}));
+
 import DashboardProvider, { useDashboardContext } from '@/contexts/dashboard/dashboard-provider';
 import * as dashboardActions from '@/actions/dashboard';
 
@@ -255,7 +271,7 @@ describe('DashboardProvider', () => {
         expect(screen.getByTestId('loading')).toHaveTextContent('loaded');
       });
 
-      // Progress values should be converted to strings
+      // Progress values should remain as numbers (converted to strings by JSX rendering)
       expect(screen.getByTestId('current-week')).toHaveTextContent('3');
       expect(screen.getByTestId('current-day')).toHaveTextContent('5');
     });

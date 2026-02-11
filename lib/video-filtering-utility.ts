@@ -11,6 +11,10 @@ export interface Video {
   [key: string]: any;
 }
 
+/**
+ * User's progress in the program
+ * currentWeek and currentDay must be numbers, not strings
+ */
 export interface UserProgress {
   currentWeek: number;
   currentDay: number;
