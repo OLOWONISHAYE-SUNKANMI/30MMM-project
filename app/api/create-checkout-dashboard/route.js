@@ -1,14 +1,43 @@
-// app/api/create-checkout-session/route.js
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import prisma from "@/db";
+import { auth } from "@/lib/auth";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request) {
   try {
-    const { amount, donationType, metadata } = await request.json();
+    const { amount, donationType, metadata, email, discountCode, paymentMethod } = await request.json();
 
-    // Validate the amount
+    // Handle free signup with 100% discount
+    if (amount === 0 && paymentMethod === "free_discount") {
+      const session = await auth();
+      
+      if (!session?.user?.id) {
+        return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+      }
+
+      // Update user to premium
+      await prisma.user.update({
+        where: { id: session.user.id },
+        data: {
+          premium: true,
+          paymentDetails: {
+            push: {
+              paymentMethod: "free_discount",
+              paymentType: "signup_fee",
+              amountPaid: 0,
+              paidAt: new Date(),
+              pledgeEmail: email,
+            },
+          },
+        },
+      });
+
+      return NextResponse.json({ success: true, redirectUrl: "/dashboard" });
+    }
+
+    // Validate the amount for paid transactions
     if (!amount || amount <= 0) {
       return NextResponse.json({ error: "Invalid amount" }, { status: 400 });
     }
