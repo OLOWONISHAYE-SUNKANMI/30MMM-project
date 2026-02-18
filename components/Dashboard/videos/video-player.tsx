@@ -660,8 +660,8 @@ export default function VideoPlayer() {
             </div>
           </div>
 
-          <div className="text-center text-gray-500 text-xs xs:text-sm px-2">
-            Video {currentVideoIndex + 1} of {videos.filter(video => !brokenVideoIds.has(video.id)).length}
+          <div className="text-center text-gray-500 text-sm">
+            Video {currentVideoIndex + 1} of {videos.length}
           </div>
 
           {/* Comments Section */}
